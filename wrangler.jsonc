@@ -15,4 +15,14 @@
   },
   "upload_source_maps": true,
   "compatibility_flags": ["nodejs_compat"],
+  "secrets": {
+    "required": ["API_TOKEN_GOOGLE_FORM"],
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ohariko-db",
+      "database_id": "8828381e-bb0a-4771-b86f-a3024a389076",
+    },
+  ],
 }
