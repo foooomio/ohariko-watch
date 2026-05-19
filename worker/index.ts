@@ -16,12 +16,12 @@ app.post("/api/add-url", async (c) => {
   const postInfo = extractPostInfo(body);
 
   if (!postInfo) {
-    return c.json({ message: "Invalid input" }, 400);
+    return c.text("Invalid input", 400);
   }
 
   await insertPost(c.env.DB, postInfo);
 
-  return c.json({ message: "OK" });
+  return c.text("OK");
 });
 
 export default app;
