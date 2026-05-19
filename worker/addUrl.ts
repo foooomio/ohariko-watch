@@ -8,23 +8,15 @@ export interface PostInfo {
 }
 
 export function extractPostInfo(text: string): PostInfo | null {
-  const regexp = /https:\/\/x\.com\/([0-9a-zA-Z_]+)\/status\/(\d+)/;
+  const regexp = /https:\/\/x\.com\/(?:Shigariko_|i)\/status\/(\d+)/;
 
-  const [match, username, snowflakeId] = text.match(regexp) ?? [];
+  const [match, snowflakeId] = text.match(regexp) ?? [];
 
-  if (!match || !snowflakeId) {
+  if (!match) {
     return null;
   }
 
-  let url: string;
-
-  if (username === "Shigariko_") {
-    url = match;
-  } else if (username === "i") {
-    url = match.replace("x.com/i", "x.com/Shigariko_");
-  } else {
-    return null;
-  }
+  const url = match.replace("x.com/i", "x.com/Shigariko_");
 
   const timestamp = snowflakeIdToTimestamp(BigInt(snowflakeId));
 
@@ -36,9 +28,8 @@ export function extractPostInfo(text: string): PostInfo | null {
 export function insertPost(DB: D1Database, info: PostInfo) {
   return DB.prepare(
     `
-    INSERT INTO posts (timestamp, date, url)
+    REPLACE INTO posts (timestamp, date, url)
     VALUES (?, ?, ?)
-    ON CONFLICT DO NOTHING
     `,
   )
     .bind(info.timestamp, info.date, info.url)
