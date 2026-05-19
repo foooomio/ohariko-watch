@@ -1,4 +1,4 @@
-import { timestampToDateJST } from "./lib/date";
+import { timestampToDateString } from "./lib/date";
 import { snowflakeIdToTimestamp } from "./lib/snowflake";
 
 export interface PostInfo {
@@ -20,7 +20,7 @@ export function extractPostInfo(text: string): PostInfo | null {
 
   const timestamp = snowflakeIdToTimestamp(BigInt(snowflakeId));
 
-  const date = timestampToDateJST(timestamp);
+  const date = timestampToDateString(timestamp, "Asia/Tokyo");
 
   return { timestamp, date, url };
 }
