@@ -43,8 +43,14 @@ app.post("/api/rebuild-json", async (c) => {
 
 app.get("/assets/*", async (c) => {
   const key = c.req.path.replace("/assets/", "");
-  const json = await c.env.BUCKET.get(key);
-  return c.json(json);
+  const object = await c.env.BUCKET.get(key);
+  if (!object) {
+    return c.notFound();
+  }
+  return c.body(object.body, 200, {
+    "Content-Type":
+      object.httpMetadata?.contentType ?? "application/octet-stream",
+  });
 });
 
 export default app;
