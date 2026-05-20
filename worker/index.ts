@@ -41,4 +41,10 @@ app.post("/api/rebuild-json", async (c) => {
   return c.text("OK");
 });
 
+app.get("/assets/*", async (c) => {
+  const key = c.req.path.replace("/assets/", "");
+  const json = await c.env.BUCKET.get(key);
+  return c.json(json);
+});
+
 export default app;
