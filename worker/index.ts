@@ -3,6 +3,7 @@ import { bearerAuth } from "hono/bearer-auth";
 import { extractPost } from "./services/extractPost";
 import { buildStatsData } from "./services/buildStatsData";
 import { insertPost, listPosts } from "./db/posts";
+import { putStatsJson } from "./storage/stats";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -29,9 +30,13 @@ app.post("/api/add-url", async (c) => {
 app.post("/api/rebuild-json", async (c) => {
   const posts = await listPosts(c.env.DB);
 
-  const stats = buildStatsData(posts);
+  const { records, summary, streaks } = buildStatsData(posts);
 
-  console.log(stats);
+  await Promise.all([
+    putStatsJson(c.env.BUCKET, "records", records),
+    putStatsJson(c.env.BUCKET, "summary", summary),
+    putStatsJson(c.env.BUCKET, "streaks", streaks),
+  ]);
 
   return c.text("OK");
 });

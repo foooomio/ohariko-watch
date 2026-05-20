@@ -25,4 +25,10 @@
       "database_id": "8828381e-bb0a-4771-b86f-a3024a389076",
     },
   ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "ohariko-data",
+    },
+  ],
 }

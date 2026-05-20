@@ -1,18 +1,14 @@
-import type { DailyRecord, Streak, Summary } from "./stats";
+import type { DailyRecord, Summary, Streak } from "./stats";
 
-export interface StatsJson {
+export interface StatsJson<T> {
   generatedAt: number;
+  payload: T;
 }
 
-export interface RecordsJson extends StatsJson {
+export interface StatsValueMap {
   records: DailyRecord[];
-}
-
-export interface SummaryJson extends StatsJson {
   summary: Summary;
+  streaks: Streak[];
 }
 
-export interface StreakJson extends StatsJson {
-  current: Streak;
-  longest: Streak;
-}
+export type StatsJsonName = keyof StatsValueMap;
