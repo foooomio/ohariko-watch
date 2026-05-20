@@ -2,6 +2,12 @@ export const SECOND = 1000;
 export const MINUTE = 60 * SECOND;
 export const HOUR = 60 * MINUTE;
 export const DAY = 24 * HOUR;
+export const JST_OFFSET = 9 * HOUR;
+
+export function isBeforeNoon(timestamp: number, offset: number = 0) {
+  const date = new Date(timestamp + offset);
+  return date.getUTCHours() < 12;
+}
 
 export function timestampToDateString(
   timestamp: number,
