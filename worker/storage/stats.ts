@@ -2,7 +2,7 @@ import type {
   StatsJson,
   StatsJsonName,
   StatsValueMap,
-} from "../../shared/types/json";
+} from "~/shared/types/json";
 
 export async function putStatsJson<T extends StatsJsonName>(
   bucket: R2Bucket,

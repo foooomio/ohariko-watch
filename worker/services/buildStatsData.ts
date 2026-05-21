@@ -1,4 +1,4 @@
-import type { DailyRecord, Streak, Summary } from "../../shared/types/stats";
+import type { DailyRecord, Streak, Summary } from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
 import { dateRange, isBeforeNoon, JST_OFFSET } from "../lib/date";
 

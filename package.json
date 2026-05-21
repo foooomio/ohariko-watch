@@ -13,6 +13,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.11",
     "hono": "^4.12.19",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
