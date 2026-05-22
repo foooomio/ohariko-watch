@@ -1,13 +1,17 @@
+import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@mantine/core/styles.css";
+
+import { Home } from "./pages/Home";
 
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <main>
-        <h1>おはりこ観測所</h1>
-      </main>
-    </QueryClientProvider>
+    <MantineProvider>
+      <QueryClientProvider client={queryClient}>
+        <Home />
+      </QueryClientProvider>
+    </MantineProvider>
   );
 }

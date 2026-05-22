@@ -6,6 +6,6 @@ import type { DailyRecord } from "~/shared/types/stats";
 export function useDailyRecords() {
   return useQuery({
     queryKey: ["stats/dailyRecords"],
-    queryFn: () => fetchJson<StatsJson<DailyRecord[]>>("stats/records.json"),
+    queryFn: () => fetchJson<StatsJson<DailyRecord[]>>("/stats/records.json"),
   });
 }

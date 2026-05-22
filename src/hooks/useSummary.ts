@@ -6,6 +6,6 @@ import type { Summary } from "~/shared/types/stats";
 export function useSummary() {
   return useQuery({
     queryKey: ["stats/summary"],
-    queryFn: () => fetchJson<StatsJson<Summary>>("stats/summary.json"),
+    queryFn: () => fetchJson<StatsJson<Summary>>("/stats/summary.json"),
   });
 }

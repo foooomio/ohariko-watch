@@ -6,6 +6,6 @@ import type { Streak } from "~/shared/types/stats";
 export function useDailyRecords() {
   return useQuery({
     queryKey: ["stats/streaks"],
-    queryFn: () => fetchJson<StatsJson<Streak[]>>("stats/streaks.json"),
+    queryFn: () => fetchJson<StatsJson<Streak[]>>("/stats/streaks.json"),
   });
 }
