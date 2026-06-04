@@ -46,7 +46,7 @@ export function PostTimeScatterChart({ records }: Props) {
       formatter: ([params]: any) => {
         const dateStr = time.format(params.value[0], "{yyyy}-{MM}-{dd}", true);
         const timeStr = time.format(params.value[1], "{HH}:{mm}", true);
-        return `${dateStr}<br />${params.marker}${params.seriesName} <b>${timeStr}</b>`;
+        return `${dateStr} ${timeStr}<br />${params.marker}${params.seriesName}`;
       },
     },
     xAxis: {
