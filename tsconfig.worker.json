@@ -7,5 +7,5 @@
       "~/*": ["./*"]
     }
   },
-  "include": ["worker"]
+  "include": ["worker", "shared"]
 }

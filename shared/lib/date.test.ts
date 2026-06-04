@@ -1,32 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  dateRange,
-  isBeforeNoon,
-  JST_OFFSET,
-  timestampToDateString,
-} from "./date";
-
-describe("isBeforeNoon", () => {
-  it("returns true at 11:59:59 UTC", () => {
-    const ts = Date.parse("2024-06-19T11:59:59Z");
-    expect(isBeforeNoon(ts)).toBe(true);
-  });
-
-  it("returns false at 12:00:00 UTC", () => {
-    const ts = Date.parse("2024-06-19T12:00:00Z");
-    expect(isBeforeNoon(ts)).toBe(false);
-  });
-
-  it("returns true at 11:59:59 JST", () => {
-    const ts = Date.parse("2024-06-19T11:59:59+09:00");
-    expect(isBeforeNoon(ts, JST_OFFSET)).toBe(true);
-  });
-
-  it("returns false at 12:00:00 JST", () => {
-    const ts = Date.parse("2024-06-19T12:00:00+09:00");
-    expect(isBeforeNoon(ts, JST_OFFSET)).toBe(false);
-  });
-});
+import { dateRange, timestampToDateString } from "./date";
 
 describe("timestampToDateString", () => {
   it("returns date string in UTC", () => {

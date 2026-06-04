@@ -1,6 +1,12 @@
-import type { DailyRecord, Streak, Summary } from "~/shared/types/stats";
+import type {
+  DailyRecord,
+  EmptyDailyRecord,
+  FilledDailyRecord,
+  Streak,
+  Summary,
+} from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
-import { dateRange, isBeforeNoon, JST_OFFSET } from "../lib/date";
+import { dateRange, DAY, HOUR, JST_OFFSET } from "~/shared/lib/date";
 
 export interface Stats {
   records: DailyRecord[];
@@ -46,11 +52,16 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
     summary.totalDays++;
 
     if (post.date === dateString) {
-      records.push(post);
+      const timeOfDay = (post.timestamp + JST_OFFSET) % DAY;
+
+      records.push({
+        ...post,
+        timeOfDay,
+      } satisfies FilledDailyRecord);
 
       summary.postDays++;
 
-      if (isBeforeNoon(post.timestamp, JST_OFFSET)) {
+      if (timeOfDay / HOUR < 12) {
         summary.successDays++;
 
         streak.days++;
@@ -64,7 +75,12 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
 
       postIndex++;
     } else {
-      records.push({ date: dateString, timestamp: null, url: null });
+      records.push({
+        date: dateString,
+        timestamp: null,
+        url: null,
+        timeOfDay: null,
+      } satisfies EmptyDailyRecord);
 
       summary.noPostDays++;
 

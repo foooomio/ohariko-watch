@@ -1,8 +1,18 @@
-export interface DailyRecord {
+export interface FilledDailyRecord {
   date: string;
-  timestamp: number | null;
-  url: string | null;
+  timestamp: number;
+  url: string;
+  timeOfDay: number;
 }
+
+export interface EmptyDailyRecord {
+  date: string;
+  timestamp: null;
+  url: null;
+  timeOfDay: null;
+}
+
+export type DailyRecord = FilledDailyRecord | EmptyDailyRecord;
 
 /**
  * totalDays = postDays + noPostDays
