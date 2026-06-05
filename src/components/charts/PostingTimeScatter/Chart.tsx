@@ -2,39 +2,19 @@ import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import { echarts } from "@/lib/echarts";
 import { color } from "@/lib/color";
-import { DAY, HOUR, JST_OFFSET } from "~/shared/lib/date";
+import { HOUR } from "~/shared/lib/date";
 import type { DailyRecord } from "~/shared/types/stats";
+import { buildScatterData } from "./buildScatterData";
 
 interface Props {
   records: DailyRecord[];
 }
 
-export function PostTimeScatterChart({ records }: Props) {
-  const successData = [];
-  const failureData = [];
-
-  let startValue = 0;
-
-  for (const { timestamp, timeOfDay, url } of records) {
-    if (!timeOfDay) {
-      continue;
-    }
-
-    const dayStartUTC = timestamp - timeOfDay + JST_OFFSET;
-
-    const data = {
-      value: [dayStartUTC, timeOfDay],
-      extra: { url },
-    };
-
-    if (timeOfDay / HOUR < 12) {
-      successData.push(data);
-    } else {
-      failureData.push(data);
-    }
-
-    startValue = dayStartUTC - 30 * DAY;
-  }
+export function PostingTimeScatterChart({ records }: Props) {
+  const { successData, failureData, startValue } = buildScatterData(
+    records,
+    30,
+  );
 
   const option: EChartsOption = {
     legend: {

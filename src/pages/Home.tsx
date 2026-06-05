@@ -1,4 +1,5 @@
-import { PostTimeScatterChart } from "@/components/charts/PostTimeScatterChart";
+import { PostingTimeScatterChart } from "@/components/charts/PostingTimeScatter/Chart";
+import { PostingTimeHistogramChart } from "@/components/charts/PostingTimeHistogram/Chart";
 import { useDailyRecords } from "@/hooks/useDailyRecords";
 
 export function Home() {
@@ -11,7 +12,8 @@ export function Home() {
   return (
     <main>
       <h1>おはりこ観測所</h1>
-      <PostTimeScatterChart records={data.payload} />
+      <PostingTimeScatterChart records={data.payload} />
+      <PostingTimeHistogramChart records={data.payload} />
     </main>
   );
 }
