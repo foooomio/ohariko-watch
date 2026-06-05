@@ -1,6 +1,6 @@
 import * as echarts from "echarts/core";
 
-import { ScatterChart } from "echarts/charts";
+import { LineChart, BarChart, ScatterChart } from "echarts/charts";
 
 import {
   LegendPlainComponent,
@@ -13,6 +13,8 @@ import {
 import { CanvasRenderer } from "echarts/renderers";
 
 echarts.use([
+  LineChart,
+  BarChart,
   ScatterChart,
   LegendPlainComponent,
   GridSimpleComponent,

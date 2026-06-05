@@ -6,7 +6,7 @@ import type {
   Summary,
 } from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
-import { dateRange, DAY, HOUR, JST_OFFSET } from "~/shared/lib/date";
+import { dateRange, DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
 
 export interface Stats {
   records: DailyRecord[];
@@ -61,7 +61,7 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
 
       summary.postDays++;
 
-      if (timeOfDay / HOUR < 12) {
+      if (isBeforeNoon(timeOfDay)) {
         summary.successDays++;
 
         streak.days++;

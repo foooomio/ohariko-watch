@@ -24,7 +24,7 @@ export function buildHistogramData(records: DailyRecord[]): HistogramData[] {
 
     const hour = Math.floor(timeOfDay / HOUR);
 
-    histogram.at(hour)!.value++;
+    histogram[hour].value++;
   }
 
   return histogram;

@@ -1,4 +1,4 @@
-import { DAY, HOUR, JST_OFFSET } from "~/shared/lib/date";
+import { DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
 import type { DailyRecord } from "~/shared/types/stats";
 
 export interface ScatterData {
@@ -31,7 +31,7 @@ export function buildScatterData(
       extra: { url },
     };
 
-    if (timeOfDay / HOUR < 12) {
+    if (isBeforeNoon(timeOfDay)) {
       successData.push(data);
     } else {
       failureData.push(data);

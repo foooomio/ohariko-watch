@@ -4,6 +4,10 @@ export const HOUR = 60 * MINUTE;
 export const DAY = 24 * HOUR;
 export const JST_OFFSET = 9 * HOUR;
 
+export function isBeforeNoon(timeOfDay: number): boolean {
+  return timeOfDay / HOUR < 12;
+}
+
 export function timestampToDateString(
   timestamp: number,
   timeZone: string = "UTC",
