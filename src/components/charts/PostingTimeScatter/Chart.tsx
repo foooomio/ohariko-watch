@@ -1,5 +1,5 @@
 import { time, type EChartsOption } from "echarts";
-import ReactEChartsCore from "echarts-for-react/lib/core";
+import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
 import { color } from "@/lib/color";
 import { HOUR } from "~/shared/lib/date";
@@ -13,7 +13,7 @@ interface Props {
 export function PostingTimeScatterChart({ records }: Props) {
   const { successData, failureData, startValue } = buildScatterData(
     records,
-    30,
+    180,
   );
 
   const option: EChartsOption = {

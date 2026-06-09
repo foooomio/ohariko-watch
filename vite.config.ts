@@ -9,7 +9,4 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
-  legacy: {
-    inconsistentCjsInterop: true,
-  },
 });

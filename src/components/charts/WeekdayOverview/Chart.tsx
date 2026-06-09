@@ -1,5 +1,5 @@
 import { time, type EChartsOption } from "echarts";
-import ReactEChartsCore from "echarts-for-react/lib/core";
+import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
 import { color } from "@/lib/color";
 import type { DailyRecord } from "~/shared/types/stats";
