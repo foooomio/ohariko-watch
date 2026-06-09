@@ -1,4 +1,4 @@
-import type { DailyRecord, Summary, Streak } from "./stats";
+import type { DailyRecord, Streak } from "./stats";
 
 export interface StatsJson<T> {
   generatedAt: number;
@@ -7,7 +7,6 @@ export interface StatsJson<T> {
 
 export interface StatsValueMap {
   records: DailyRecord[];
-  summary: Summary;
   streaks: Streak[];
 }
 

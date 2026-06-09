@@ -3,14 +3,12 @@ import type {
   EmptyDailyRecord,
   FilledDailyRecord,
   Streak,
-  Summary,
 } from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
 import { dateRange, DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
 
 export interface Stats {
   records: DailyRecord[];
-  summary: Summary;
   streaks: Streak[];
 }
 
@@ -23,14 +21,6 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
   }
 
   const records: DailyRecord[] = [];
-
-  const summary: Summary = {
-    totalDays: 0,
-    postDays: 0,
-    noPostDays: 0,
-    successDays: 0,
-    failureDays: 0,
-  };
 
   const streaks: Streak[] = [];
   let streak: Streak = {
@@ -49,8 +39,6 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
       throw new Error("Invalid post index");
     }
 
-    summary.totalDays++;
-
     if (post.date === dateString) {
       const timeOfDay = (post.timestamp + JST_OFFSET) % DAY;
 
@@ -59,17 +47,11 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
         timeOfDay,
       } satisfies FilledDailyRecord);
 
-      summary.postDays++;
-
       if (isBeforeNoon(timeOfDay)) {
-        summary.successDays++;
-
         streak.days++;
         streak.startDate ||= dateString;
         streak.endDate = dateString;
       } else {
-        summary.failureDays++;
-
         isStreakOngoing = false;
       }
 
@@ -81,8 +63,6 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
         url: null,
         timeOfDay: null,
       } satisfies EmptyDailyRecord);
-
-      summary.noPostDays++;
 
       isStreakOngoing = false;
     }
@@ -98,5 +78,5 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
     }
   }
 
-  return { records, summary, streaks };
+  return { records, streaks };
 }

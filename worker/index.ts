@@ -30,11 +30,10 @@ app.post("/api/add-url", async (c) => {
 app.post("/api/rebuild-json", async (c) => {
   const posts = await listPosts(c.env.DB);
 
-  const { records, summary, streaks } = buildStatsData(posts);
+  const { records, streaks } = buildStatsData(posts);
 
   await Promise.all([
     putStatsJson(c.env.BUCKET, "records", records),
-    putStatsJson(c.env.BUCKET, "summary", summary),
     putStatsJson(c.env.BUCKET, "streaks", streaks),
   ]);
 

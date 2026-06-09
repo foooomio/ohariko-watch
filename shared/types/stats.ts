@@ -14,19 +14,6 @@ export interface EmptyDailyRecord {
 
 export type DailyRecord = FilledDailyRecord | EmptyDailyRecord;
 
-/**
- * totalDays = postDays + noPostDays
- *
- * postDays = successDays + failureDays
- */
-export interface Summary {
-  totalDays: number;
-  postDays: number;
-  noPostDays: number;
-  successDays: number;
-  failureDays: number;
-}
-
 export interface Streak {
   days: number;
   startDate: string;
