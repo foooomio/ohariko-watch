@@ -10,7 +10,7 @@ interface Props {
   records: DailyRecord[];
 }
 
-export function MonthlyTrendChart({ records }: Props) {
+export function MonthlyTrend({ records }: Props) {
   const stats = buildMonthlyStats(records);
 
   const option: EChartsOption = {

@@ -10,7 +10,7 @@ interface Props {
   records: DailyRecord[];
 }
 
-export function PostingTimeScatterChart({ records }: Props) {
+export function PostingTimeScatter({ records }: Props) {
   const { successData, failureData, startValue } = buildScatterData(
     records,
     180,

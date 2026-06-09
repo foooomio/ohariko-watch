@@ -8,7 +8,7 @@ interface Props {
   records: DailyRecord[];
 }
 
-export function PostingTimeHistogramChart({ records }: Props) {
+export function PostingTimeHistogram({ records }: Props) {
   const histogram = buildHistogramData(records);
 
   const option: EChartsOption = {

@@ -1,7 +1,7 @@
-import { PostingTimeScatterChart } from "@/components/charts/PostingTimeScatter/Chart";
-import { PostingTimeHistogramChart } from "@/components/charts/PostingTimeHistogram/Chart";
-import { MonthlyTrendChart } from "@/components/charts/MonthlyTrend/Chart";
-import { WeekdayOverview } from "@/components/charts/WeekdayOverview/Chart";
+import { PostingTimeScatter } from "@/components/charts/PostingTimeScatter";
+import { PostingTimeHistogram } from "@/components/charts/PostingTimeHistogram";
+import { MonthlyTrend } from "@/components/charts/MonthlyTrend";
+import { WeekdayOverview } from "@/components/charts/WeekdayOverview";
 import { useDailyRecords } from "@/hooks/useDailyRecords";
 
 export function Home() {
@@ -14,9 +14,9 @@ export function Home() {
   return (
     <main>
       <h1>おはりこ観測所</h1>
-      <PostingTimeScatterChart records={data.payload} />
-      <PostingTimeHistogramChart records={data.payload} />
-      <MonthlyTrendChart records={data.payload} />
+      <PostingTimeScatter records={data.payload} />
+      <PostingTimeHistogram records={data.payload} />
+      <MonthlyTrend records={data.payload} />
       <WeekdayOverview records={data.payload} />
     </main>
   );
