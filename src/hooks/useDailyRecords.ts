@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchJson } from "@/api/client";
+import { fetchJson } from "@/lib/storage";
 import type { StatsJson } from "~/shared/types/json";
 import type { DailyRecord } from "~/shared/types/stats";
 

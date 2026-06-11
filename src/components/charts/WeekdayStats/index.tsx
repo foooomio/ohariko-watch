@@ -4,14 +4,14 @@ import { echarts } from "@/lib/echarts";
 import { color } from "@/lib/color";
 import type { DailyRecord } from "~/shared/types/stats";
 import { HOUR } from "~/shared/lib/date";
-import { buildMonthlyStats } from "./buildMonthlyStats";
+import { buildWeekdayStats } from "./buildWeekdayStats";
 
 interface Props {
   records: DailyRecord[];
 }
 
-export function MonthlyTrend({ records }: Props) {
-  const stats = buildMonthlyStats(records);
+export function WeekdayStats({ records }: Props) {
+  const stats = buildWeekdayStats(records);
 
   const option: EChartsOption = {
     legend: {},
@@ -32,7 +32,7 @@ export function MonthlyTrend({ records }: Props) {
     },
     xAxis: {
       type: "category",
-      data: stats.map(({ yearMonth }) => yearMonth),
+      data: ["日", "月", "火", "水", "木", "金", "土"],
     },
     yAxis: [
       {
