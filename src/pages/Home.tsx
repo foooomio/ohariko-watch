@@ -1,23 +1,16 @@
-import { PostingTimeScatter } from "@/components/charts/PostingTimeScatter";
-import { PostingTimeHistogram } from "@/components/charts/PostingTimeHistogram";
-import { MonthlyStats } from "@/components/charts/MonthlyStats";
-import { WeekdayStats } from "@/components/charts/WeekdayStats";
-import { useDailyRecords } from "@/hooks/useDailyRecords";
+import { Container, Stack } from "@mantine/core";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Dashboard } from "@/components/Dashboard";
 
 export function Home() {
-  const { data } = useDailyRecords();
-
-  if (!data) {
-    return null;
-  }
-
   return (
-    <main>
-      <h1>おはりこ観測所</h1>
-      <PostingTimeScatter records={data.payload} />
-      <PostingTimeHistogram records={data.payload} />
-      <MonthlyStats records={data.payload} />
-      <WeekdayStats records={data.payload} />
-    </main>
+    <Container size="lg" py="lg">
+      <Stack>
+        <Header />
+        <Dashboard />
+        <Footer />
+      </Stack>
+    </Container>
   );
 }

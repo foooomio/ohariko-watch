@@ -78,5 +78,7 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
     }
   }
 
+  streaks.push(streak);
+
   return { records, streaks };
 }

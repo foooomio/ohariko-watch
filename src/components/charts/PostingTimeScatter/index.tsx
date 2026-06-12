@@ -1,25 +1,30 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import { color } from "@/lib/color";
 import { HOUR } from "~/shared/lib/date";
 import type { DailyRecord } from "~/shared/types/stats";
 import { buildScatterData } from "./buildScatterData";
 
 interface Props {
   records: DailyRecord[];
+  color: {
+    success: string;
+    failure: string;
+  };
 }
 
-export function PostingTimeScatter({ records }: Props) {
+export function PostingTimeScatter({ records, color }: Props) {
   const { successData, failureData, startValue } = buildScatterData(
     records,
     180,
   );
 
   const option: EChartsOption = {
-    legend: {
-      formatter: (name) =>
-        name === "成功" ? "成功（〜11:59）" : "失敗（12:00〜）",
+    grid: {
+      top: 0,
+      right: 8,
+      bottom: 64,
+      left: 48,
     },
     tooltip: {
       trigger: "axis",
@@ -52,8 +57,10 @@ export function PostingTimeScatter({ records }: Props) {
         type: "slider",
         xAxisIndex: 0,
         startValue,
-        labelFormatter: (value) => time.format(value, "{yyyy}-{MM}-{dd}", true),
+        showDetail: false,
         showDataShadow: false,
+        bottom: 8,
+        brushSelect: false,
       },
       {
         type: "inside",

@@ -6,17 +6,28 @@ import { buildHistogramData } from "./buildHistogramData";
 
 interface Props {
   records: DailyRecord[];
+  color: {
+    success: string;
+    failure: string;
+  };
 }
 
-export function PostingTimeHistogram({ records }: Props) {
+export function PostingTimeHistogram({ records, color }: Props) {
   const histogram = buildHistogramData(records);
 
   const option: EChartsOption = {
+    grid: {
+      top: 0,
+      right: 8,
+      bottom: 0,
+      left: 8,
+    },
     tooltip: {
       trigger: "axis",
       axisPointer: {
         type: "shadow",
       },
+      valueFormatter: (value) => value + "回",
     },
     xAxis: {
       type: "category",
@@ -29,7 +40,10 @@ export function PostingTimeHistogram({ records }: Props) {
     series: [
       {
         type: "bar",
-        data: histogram,
+        data: histogram.map((value, index) => ({
+          value,
+          itemStyle: { color: index < 12 ? color.success : color.failure },
+        })),
       },
     ],
   };

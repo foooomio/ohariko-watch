@@ -4,5 +4,12 @@
   "files.associations": {
     ".dev.vars*": "dotenv"
   },
-  "cSpell.words": ["ohariko", "Shigariko", "VITE"]
+  "cSpell.words": [
+    "ANYCOLOR",
+    "autospace",
+    "mantine",
+    "ohariko",
+    "Shigariko",
+    "VITE"
+  ]
 }
