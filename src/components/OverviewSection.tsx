@@ -3,6 +3,12 @@ import { SummaryCard } from "./SummaryCard";
 import { useDailyRecords } from "@/hooks/useDailyRecords";
 import { useStreaks } from "@/hooks/useStreaks";
 import { HOUR, isBeforeNoon, MINUTE } from "~/shared/lib/date";
+import {
+  ClockIcon,
+  SunIcon,
+  TrendUpIcon,
+  TrophyIcon,
+} from "@phosphor-icons/react";
 
 export function OverviewSection() {
   const { data: recordsJson } = useDailyRecords();
@@ -54,6 +60,7 @@ export function OverviewSection() {
           label="成功率"
           metric={successRateStr}
           description="直近30日間"
+          icon={<SunIcon />}
         />
       </Grid.Col>
 
@@ -62,6 +69,7 @@ export function OverviewSection() {
           label="平均投稿時刻"
           metric={averageTimeStr}
           description="直近30日間"
+          icon={<ClockIcon />}
         />
       </Grid.Col>
 
@@ -70,6 +78,7 @@ export function OverviewSection() {
           label="現在連続成功"
           metric={currentStreak.days + " 日"}
           description={currentStreak.startDate + " 〜 " + currentStreak.endDate}
+          icon={<TrendUpIcon />}
         />
       </Grid.Col>
 
@@ -78,6 +87,7 @@ export function OverviewSection() {
           label="最長連続成功"
           metric={longestStreak.days + " 日"}
           description={longestStreak.startDate + " 〜 " + longestStreak.endDate}
+          icon={<TrophyIcon />}
         />
       </Grid.Col>
     </Grid>

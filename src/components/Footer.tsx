@@ -1,7 +1,16 @@
-import { Card, Flex, Stack, Text } from "@mantine/core";
+import { Card, Group, Stack, Text } from "@mantine/core";
 import { FooterLink } from "./FooterLink";
+import { useDailyRecords } from "@/hooks/useDailyRecords";
 
 export function Footer() {
+  const { data } = useDailyRecords();
+
+  if (!data) {
+    return null;
+  }
+
+  const lastUpdated = new Date(data.generatedAt).toLocaleString("sv");
+
   return (
     <Card withBorder padding="lg">
       <Stack gap="xs">
@@ -14,18 +23,19 @@ export function Footer() {
           <FooterLink href="https://creativecommons.org/publicdomain/zero/1.0/">
             CC0 1.0
           </FooterLink>
-          のライセンスのもとご使用いただけます。
+          のライセンスのもと自由にご使用いただけます。
         </Text>
 
-        <Flex gap="xs">
-          <FooterLink href="https://x.com/Shigariko_">
-            司賀りこX (Twitter)
-          </FooterLink>
+        <Group gap="xs">
           <FooterLink href="https://foooomio.net">運営者について</FooterLink>
           <FooterLink href="https://github.com/foooomio/ohariko-watch">
             ソースコード
           </FooterLink>
-        </Flex>
+        </Group>
+
+        <Text size="xs" c="dimmed">
+          最終更新日時：{lastUpdated}
+        </Text>
       </Stack>
     </Card>
   );
