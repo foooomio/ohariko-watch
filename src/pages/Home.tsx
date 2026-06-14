@@ -1,13 +1,13 @@
 import { Container, Stack } from "@mantine/core";
 import { Header } from "@/components/Header";
 import { Summary } from "@/components/Summary";
-import { LongestStreaks } from "@/components/LongestStreaks";
+import { PostingTimeScatter } from "@/components/PostingTimeScatter";
+import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
 import { MonthlyStats } from "@/components/MonthlyStats";
+import { LongestStreaks } from "@/components/LongestStreaks";
 import { Footer } from "@/components/Footer";
 import { useDailyRecords } from "@/hooks/useDailyRecords";
 import { useStreaks } from "@/hooks/useStreaks";
-import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
-import { PostingTimeScatter } from "@/components/PostingTimeScatter/PostingTimeScatter";
 
 export function Home() {
   const { data: recordsJson } = useDailyRecords();
