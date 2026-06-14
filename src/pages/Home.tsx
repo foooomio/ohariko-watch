@@ -21,6 +21,8 @@ export function Home() {
   const streaks = streaksJson.payload;
   const sortedStreaks = streaks.toSorted((a, b) => b.days - a.days);
 
+  const lastUpdated = new Date(recordsJson.generatedAt).toLocaleString("sv");
+
   return (
     <Container size="lg" py="lg">
       <Stack>
@@ -36,7 +38,7 @@ export function Home() {
         <MonthlyStats records={records} />
         <LongestStreaks sortedStreaks={sortedStreaks} />
 
-        <Footer />
+        <Footer lastUpdated={lastUpdated} />
       </Stack>
     </Container>
   );

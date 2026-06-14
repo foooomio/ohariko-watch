@@ -1,16 +1,11 @@
 import { Card, Group, Stack, Text } from "@mantine/core";
 import { FooterLink } from "./FooterLink";
-import { useDailyRecords } from "@/hooks/useDailyRecords";
 
-export function Footer() {
-  const { data } = useDailyRecords();
+interface Props {
+  lastUpdated: string;
+}
 
-  if (!data) {
-    return null;
-  }
-
-  const lastUpdated = new Date(data.generatedAt).toLocaleString("sv");
-
+export function Footer({ lastUpdated }: Props) {
   return (
     <Card withBorder padding="lg">
       <Stack gap="xs">
