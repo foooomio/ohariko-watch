@@ -5,7 +5,7 @@ export function HeaderLinks() {
   return (
     <Group gap="xs">
       <Text size="sm" visibleFrom="sm">
-        司賀りこ公式リンク
+        しがりこ公式リンク
       </Text>
 
       <Tooltip label="X (Twitter)" position="bottom">

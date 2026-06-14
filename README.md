@@ -5,6 +5,3 @@
 - ヒートマップ
 - 移動平均線
 - 期間フィルター
-- favicon
-- apple-touch-icon
-- OGP
