@@ -13,7 +13,7 @@ interface Props {
   };
 }
 
-export function MonthlyStats({ records, color }: Props) {
+export function MonthlyStatsChart({ records, color }: Props) {
   const stats = buildMonthlyStats(records);
 
   const option: EChartsOption = {

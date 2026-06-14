@@ -28,6 +28,7 @@ export function Footer() {
 
         <Group gap="xs">
           <FooterLink href="https://foooomio.net">運営者について</FooterLink>
+          <FooterLink href="https://x.com/fooooooomio">問い合わせ先</FooterLink>
           <FooterLink href="https://github.com/foooomio/ohariko-watch">
             ソースコード
           </FooterLink>

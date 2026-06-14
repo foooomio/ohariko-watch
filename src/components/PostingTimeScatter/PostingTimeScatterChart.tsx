@@ -13,7 +13,7 @@ interface Props {
   };
 }
 
-export function PostingTimeScatter({ records, color }: Props) {
+export function PostingTimeScatterChart({ records, color }: Props) {
   const { successData, failureData, startValue } = buildScatterData(
     records,
     180,

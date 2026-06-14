@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-export function PostingTimeHistogram({ records, color }: Props) {
+export function PostingTimeHistogramChart({ records, color }: Props) {
   const histogram = buildHistogramData(records);
 
   const option: EChartsOption = {

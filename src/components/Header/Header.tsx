@@ -1,11 +1,34 @@
-import { ActionIcon, Card, Group, Text, Title, Tooltip } from "@mantine/core";
-import { GlobeIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
+import {
+  ActionIcon,
+  Card,
+  Group,
+  HoverCard,
+  Text,
+  Title,
+  Tooltip,
+} from "@mantine/core";
+import {
+  GlobeIcon,
+  QuestionIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
+} from "@phosphor-icons/react";
 
 export function Header() {
   return (
     <Card withBorder padding="lg" style={{ borderTop: "4px solid #ffe36c" }}>
       <Group justify="space-between">
-        <Title size="h3">おはりこ観測所</Title>
+        <Group gap="xs">
+          <Title size="h3">おはりこ観測所</Title>
+          <HoverCard>
+            <HoverCard.Target>
+              <QuestionIcon />
+            </HoverCard.Target>
+            <HoverCard.Dropdown>
+              <Text>aaa</Text>
+            </HoverCard.Dropdown>
+          </HoverCard>
+        </Group>
 
         <Group gap="xs">
           <Text size="sm" visibleFrom="sm">

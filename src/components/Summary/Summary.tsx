@@ -1,54 +1,31 @@
 import { Grid } from "@mantine/core";
 import { SummaryCard } from "./SummaryCard";
-import { useDailyRecords } from "@/hooks/useDailyRecords";
-import { useStreaks } from "@/hooks/useStreaks";
-import { HOUR, isBeforeNoon, MINUTE } from "~/shared/lib/date";
+import { buildSummaryData } from "./buildSummaryData";
+import { HOUR, MINUTE } from "~/shared/lib/date";
 import {
   ClockIcon,
   SunIcon,
   TrendUpIcon,
   TrophyIcon,
 } from "@phosphor-icons/react";
+import type { DailyRecord, Streak } from "~/shared/types/stats";
 
-export function OverviewSection() {
-  const { data: recordsJson } = useDailyRecords();
-  const { data: streaksJson } = useStreaks();
+function timeOfDayToHmm(timeOfDay: number): string {
+  const h = Math.floor(timeOfDay / HOUR);
+  const m = Math.floor((timeOfDay % HOUR) / MINUTE);
+  return h + ":" + String(m).padStart(2, "0");
+}
 
-  if (!recordsJson || !streaksJson) {
-    return null;
-  }
+interface Props {
+  records: DailyRecord[];
+  streaks: Streak[];
+}
 
-  const records = recordsJson.payload;
-  const streaks = streaksJson.payload;
-
-  let successCount = 0;
-  let failureCount = 0;
-  let totalTime = 0;
-
-  for (const { timeOfDay } of records.slice(-30)) {
-    if (!timeOfDay) {
-      continue;
-    }
-
-    if (isBeforeNoon(timeOfDay)) {
-      successCount++;
-    } else {
-      failureCount++;
-    }
-
-    totalTime += timeOfDay;
-  }
-
-  const postCount = successCount + failureCount;
-  const successRate = successCount / postCount;
-  const averageTime = totalTime / postCount;
+export function Summary({ records, streaks }: Props) {
+  const { successRate, averageTime } = buildSummaryData(records);
 
   const successRateStr = (successRate * 100).toFixed(1) + " %";
-  const averageTimeStr = (() => {
-    const h = Math.floor(averageTime / HOUR);
-    const m = Math.floor((averageTime % HOUR) / MINUTE);
-    return h + ":" + String(m).padStart(2, "0");
-  })();
+  const averageTimeStr = timeOfDayToHmm(averageTime);
 
   const currentStreak = streaks.at(-1)!;
   const longestStreak = streaks.toSorted((a, b) => b.days - a.days).at(0)!;
