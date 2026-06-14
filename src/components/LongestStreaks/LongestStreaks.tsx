@@ -1,13 +1,14 @@
 import { Card, Group, Stack, Table, Text, Title } from "@mantine/core";
 import { RankingIcon } from "@phosphor-icons/react";
 import type { Streak } from "~/shared/types/stats";
+import { buildStreaksTableData } from "./buildStreaksTableData";
 
 interface Props {
   sortedStreaks: Streak[];
 }
 
 export function LongestStreaks({ sortedStreaks }: Props) {
-  const emoji = ["🥇", "🥈", "🥉"];
+  const rows = buildStreaksTableData(sortedStreaks);
 
   return (
     <Card withBorder p={{ base: "lg", md: "xl" }}>
@@ -35,19 +36,15 @@ export function LongestStreaks({ sortedStreaks }: Props) {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {sortedStreaks.map(({ days, startDate, endDate }, index) => (
-                <Table.Tr key={startDate + "_" + endDate}>
+              {rows.map(({ key, rank, daysStr, period }) => (
+                <Table.Tr key={key}>
                   <Table.Td>
-                    <Text fw={700}>
-                      {emoji[index]} {index + 1}位
-                    </Text>
+                    <Text fw={700}>{rank}</Text>
                   </Table.Td>
                   <Table.Td>
-                    <Text fw={700}>{days}日</Text>
+                    <Text fw={700}>{daysStr}</Text>
                   </Table.Td>
-                  <Table.Td>
-                    {startDate} 〜 {endDate}
-                  </Table.Td>
+                  <Table.Td>{period}</Table.Td>
                 </Table.Tr>
               ))}
             </Table.Tbody>
