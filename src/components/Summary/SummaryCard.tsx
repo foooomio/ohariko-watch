@@ -11,7 +11,7 @@ interface Props {
 export function SummaryCard({ label, metric, description, icon }: Props) {
   return (
     <Card withBorder padding="lg">
-      <Group gap="xs">
+      <Group gap={6}>
         {icon}
         <Text size="sm">{label}</Text>
       </Group>

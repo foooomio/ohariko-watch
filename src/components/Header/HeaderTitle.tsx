@@ -3,7 +3,6 @@ import {
   HoverCard,
   Stack,
   Text,
-  ThemeIcon,
   Title,
   useMatches,
   type FloatingPosition,
@@ -17,14 +16,15 @@ export function HeaderTitle() {
   });
 
   return (
-    <Group gap={1}>
+    <Group gap={4}>
       <Title size="h3">おはりこ観測所</Title>
 
       <HoverCard width="min(80vw, 500px)" position={position} shadow="md">
         <HoverCard.Target>
-          <ThemeIcon variant="white" color="dark" style={{ cursor: "pointer" }}>
-            <QuestionIcon />
-          </ThemeIcon>
+          <QuestionIcon
+            size={24}
+            style={{ cursor: "pointer", padding: "2px" }}
+          />
         </HoverCard.Target>
         <HoverCard.Dropdown>
           <Stack gap="xs">
