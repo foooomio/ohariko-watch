@@ -18,17 +18,15 @@ function timeOfDayToHmm(timeOfDay: number): string {
 
 interface Props {
   records: DailyRecord[];
-  streaks: Streak[];
+  currentStreak: Streak;
+  longestStreak: Streak;
 }
 
-export function Summary({ records, streaks }: Props) {
+export function Summary({ records, currentStreak, longestStreak }: Props) {
   const { successRate, averageTime } = buildSummaryData(records);
 
   const successRateStr = (successRate * 100).toFixed(1) + " %";
   const averageTimeStr = timeOfDayToHmm(averageTime);
-
-  const currentStreak = streaks.at(-1)!;
-  const longestStreak = streaks.toSorted((a, b) => b.days - a.days).at(0)!;
 
   return (
     <Grid>

@@ -17,16 +17,24 @@ export function Home() {
     return null;
   }
 
+  const records = recordsJson.payload;
+  const streaks = streaksJson.payload;
+  const sortedStreaks = streaks.toSorted((a, b) => b.days - a.days);
+
   return (
     <Container size="lg" py="lg">
       <Stack>
         <Header />
 
-        <Summary records={recordsJson.payload} streaks={streaksJson.payload} />
-        <PostingTimeScatter records={recordsJson.payload} />
-        <PostingTimeHistogram records={recordsJson.payload} />
-        <MonthlyStats records={recordsJson.payload} />
-        <LongestStreaks streaks={streaksJson.payload} />
+        <Summary
+          records={records}
+          currentStreak={streaks.at(-1)!}
+          longestStreak={sortedStreaks.at(0)!}
+        />
+        <PostingTimeScatter records={records} />
+        <PostingTimeHistogram records={records} />
+        <MonthlyStats records={records} />
+        <LongestStreaks sortedStreaks={sortedStreaks} />
 
         <Footer />
       </Stack>

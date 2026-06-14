@@ -3,12 +3,10 @@ import { RankingIcon } from "@phosphor-icons/react";
 import type { Streak } from "~/shared/types/stats";
 
 interface Props {
-  streaks: Streak[];
+  sortedStreaks: Streak[];
 }
 
-export function LongestStreaks({ streaks }: Props) {
-  const sortedStreaks = streaks.toSorted((a, b) => b.days - a.days);
-
+export function LongestStreaks({ sortedStreaks }: Props) {
   const emoji = ["🥇", "🥈", "🥉"];
 
   return (
