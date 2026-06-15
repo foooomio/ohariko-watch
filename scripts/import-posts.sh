@@ -2,17 +2,21 @@
 
 set -euo pipefail
 
-set -a
-source "$1"
-set +a
+read -rsp "API Token: " token < /dev/tty
+
+case "$1" in
+  local) url="http://localhost:5173/api/add-url" ;;
+  remote) url="https://ohariko-watch.com/api/add-url" ;;
+  *) exit 1 ;;
+esac
 
 while read -r line; do
   echo -n "$line "
   curl \
     -fsSL \
     -X POST \
-    -H "Authorization: Bearer $API_TOKEN_GOOGLE_FORM" \
+    -H "Authorization: Bearer $token" \
     -d "$line" \
-    http://localhost:5173/api/add-url
+    "$url"
   echo
 done
