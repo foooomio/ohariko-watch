@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+read -rsp "API Token: " token < /dev/tty
+
+case "$1" in
+  local) url="http://localhost:5173/api/add-url" ;;
+  remote) url="https://ohariko-watch.com/api/add-url" ;;
+  *) exit 1 ;;
+esac
+
+while read -r line; do
+  echo -n "$line "
+  curl \
+    -fsSL \
+    -X POST \
+    -H "Authorization: Bearer $token" \
+    -d "$line" \
+    "$url"
+  echo
+done

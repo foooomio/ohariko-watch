@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.associations": {
+    ".dev.vars*": "dotenv"
+  },
+  "cSpell.words": [
+    "ANYCOLOR",
+    "autospace",
+    "mantine",
+    "Nums",
+    "ohariko",
+    "Shigariko",
+    "VITE"
+  ]
+}

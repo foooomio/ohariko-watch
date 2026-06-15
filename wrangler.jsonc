@@ -1,0 +1,41 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ohariko-watch",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-06-15",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "ohariko-watch.com",
+      "custom_domain": true,
+    },
+  ],
+  "assets": {
+    "not_found_handling": "single-page-application",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "upload_source_maps": true,
+  "compatibility_flags": ["nodejs_compat"],
+  "secrets": {
+    "required": ["API_TOKEN_LIST"],
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ohariko-db",
+      "database_id": "8828381e-bb0a-4771-b86f-a3024a389076",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "ohariko-data",
+    },
+  ],
+}

@@ -1,0 +1,7 @@
+-- Migration number: 0001 	 2026-05-18T07:11:26.693Z
+
+CREATE TABLE posts (
+  date TEXT NOT NULL PRIMARY KEY,
+  timestamp INTEGER NOT NULL UNIQUE,
+  url TEXT NOT NULL UNIQUE
+);
