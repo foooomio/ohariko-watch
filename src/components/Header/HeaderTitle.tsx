@@ -18,11 +18,9 @@ export function HeaderTitle() {
   });
 
   return (
-    <Group gap={4}>
-      <Group gap={8}>
-        <Image src={Logo} w={24} h={24} radius="md" />
-        <Title size="h3">おはりこ観測所</Title>
-      </Group>
+    <Group gap={8}>
+      <Image src={Logo} w={24} h={24} radius="md" />
+      <Title size="h3">おはりこ観測所</Title>
 
       <HoverCard width="min(80vw, 500px)" position={position} shadow="xs">
         <HoverCard.Target>

@@ -5,7 +5,7 @@ import { HeaderLinks } from "./HeaderLinks";
 export function Header() {
   return (
     <Card withBorder padding="lg" style={{ borderTop: "4px solid #ffe36c" }}>
-      <Group justify="space-between">
+      <Group justify="space-between" gap="xs">
         <HeaderTitle />
         <HeaderLinks />
       </Group>

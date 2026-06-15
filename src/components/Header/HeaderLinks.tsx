@@ -4,9 +4,7 @@ import { GlobeIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
 export function HeaderLinks() {
   return (
     <Group gap="xs">
-      <Text size="sm" visibleFrom="sm">
-        しがりこ公式リンク
-      </Text>
+      <Text size="sm">しがりこ公式リンク</Text>
 
       <Tooltip label="X (Twitter)" position="bottom">
         <ActionIcon
