@@ -6,7 +6,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ohariko-watch",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-05-18",
+  "compatibility_date": "2026-06-15",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "ohariko-watch.com",
+      "custom_domain": true,
+    },
+  ],
   "assets": {
     "not_found_handling": "single-page-application",
   },
@@ -16,7 +23,7 @@
   "upload_source_maps": true,
   "compatibility_flags": ["nodejs_compat"],
   "secrets": {
-    "required": ["API_TOKEN_GOOGLE_FORM"],
+    "required": ["API_TOKEN_LIST"],
   },
   "d1_databases": [
     {

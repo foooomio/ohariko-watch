@@ -8,7 +8,7 @@ import { putStatsJson } from "./storage/stats";
 const app = new Hono<{ Bindings: Env }>();
 
 app.use("/api/*", async (c, next) => {
-  const validTokens = [c.env.API_TOKEN_GOOGLE_FORM];
+  const validTokens = c.env.API_TOKEN_LIST.split(",");
   const bearer = bearerAuth<{ Bindings: Env }>({ token: validTokens });
   return bearer(c, next);
 });
