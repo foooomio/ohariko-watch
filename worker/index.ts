@@ -19,7 +19,7 @@ app.post("/api/add-url", async (c) => {
   const post = extractPost(url);
 
   if (!post) {
-    return c.text("Invalid input", 400);
+    return c.text("Invalid input: " + url, 400);
   }
 
   await insertPost(c.env.DB, post);
