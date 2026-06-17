@@ -14,9 +14,9 @@ app.use("/api/*", async (c, next) => {
 });
 
 app.post("/api/add-url", async (c) => {
-  const body = await c.req.text();
+  const { url } = await c.req.json();
 
-  const post = extractPost(body);
+  const post = extractPost(url);
 
   if (!post) {
     return c.text("Invalid input", 400);

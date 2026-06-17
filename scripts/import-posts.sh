@@ -16,7 +16,8 @@ while read -r line; do
     -fsSL \
     -X POST \
     -H "Authorization: Bearer $token" \
-    -d "$line" \
+    -H "Content-Type: application/json" \
+    -d "{\"url\":\"$line\"}" \
     "$url"
   echo
 done
