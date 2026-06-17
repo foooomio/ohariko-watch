@@ -3,7 +3,7 @@ import { timestampToDateString } from "~/shared/lib/date";
 import { snowflakeIdToTimestamp } from "~/shared/lib/snowflake";
 
 export function extractPost(text: string): PostRow | null {
-  const regexp = /https:\/\/x\.com\/(?:Shigariko_|i)\/status\/(\d+)/;
+  const regexp = /https:\/\/x\.com\/(?:Shigariko_|i)\/status\/(\d+)/i;
 
   const [match, snowflakeId] = text.match(regexp) ?? [];
 
@@ -11,7 +11,7 @@ export function extractPost(text: string): PostRow | null {
     return null;
   }
 
-  const url = match.replace("x.com/i", "x.com/Shigariko_");
+  const url = "https://x.com/Shigariko_/status/" + snowflakeId;
 
   const timestamp = snowflakeIdToTimestamp(BigInt(snowflakeId));
 
