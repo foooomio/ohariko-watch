@@ -4,6 +4,7 @@ import { Summary } from "@/components/Summary";
 import { PostingTimeScatter } from "@/components/PostingTimeScatter";
 import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
 import { MonthlyStats } from "@/components/MonthlyStats";
+import { WeekdayStats } from "@/components/WeekdayStats";
 import { LongestStreaks } from "@/components/LongestStreaks";
 import { Footer } from "@/components/Footer";
 import { useDailyRecords } from "@/hooks/useDailyRecords";
@@ -36,6 +37,7 @@ export function Home() {
         <PostingTimeScatter records={records} />
         <PostingTimeHistogram records={records} />
         <MonthlyStats records={records} />
+        <WeekdayStats records={records} />
         <LongestStreaks sortedStreaks={sortedStreaks} />
 
         <Footer lastUpdated={lastUpdated} />

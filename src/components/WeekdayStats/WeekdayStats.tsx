@@ -16,13 +16,14 @@ export function WeekdayStats({ records }: Props) {
         <Group gap="xs">
           <CalendarDotsIcon size="20" />
           <Title order={2} size="h4">
-            月別推移
+            曜日別分析
           </Title>
         </Group>
         <WeekdayStatsChart
           records={records}
           color={{
             successRate: colors.green[4],
+            failureRate: colors.red[2],
             averageTime: colors.cyan[6],
           }}
         />
