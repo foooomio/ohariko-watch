@@ -10,7 +10,7 @@ interface Props {
 
 export function SummaryCard({ label, metric, description, icon }: Props) {
   return (
-    <Card withBorder padding="lg">
+    <Card padding="lg">
       <Group gap={6}>
         {icon}
         <Text size="sm">{label}</Text>
@@ -20,7 +20,7 @@ export function SummaryCard({ label, metric, description, icon }: Props) {
         {metric}
       </Text>
 
-      <Text size="xs" c="dimmed" textWrap="balance">
+      <Text size="xs" c="brown.8" textWrap="balance">
         {description}
       </Text>
     </Card>

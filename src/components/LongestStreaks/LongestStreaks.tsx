@@ -11,7 +11,7 @@ export function LongestStreaks({ sortedStreaks }: Props) {
   const rows = buildStreaksTableData(sortedStreaks);
 
   return (
-    <Card withBorder p={{ base: "lg", md: "xl" }}>
+    <Card p={{ base: "lg", md: "xl" }}>
       <Stack>
         <Group gap="xs">
           <RankingIcon size="20" />

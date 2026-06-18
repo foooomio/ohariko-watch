@@ -4,12 +4,13 @@ import "@mantine/core/styles.css";
 import "./global.css";
 
 import { Home } from "@/pages/Home";
+import { theme } from "@/lib/mantine";
 
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Home />
       </QueryClientProvider>
