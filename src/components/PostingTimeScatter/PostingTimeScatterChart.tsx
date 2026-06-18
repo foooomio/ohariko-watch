@@ -67,7 +67,9 @@ export function PostingTimeScatterChart({ records, color }: Props) {
         xAxisIndex: 0,
         zoomOnMouseWheel: false,
         moveOnMouseWheel: true,
-        moveOnMouseMove: true,
+        moveOnMouseMove: false,
+        cursorGrab: "default",
+        cursorGrabbing: "default",
       },
     ],
     series: [
