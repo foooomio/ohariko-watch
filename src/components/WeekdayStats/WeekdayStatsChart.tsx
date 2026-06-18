@@ -9,6 +9,7 @@ interface Props {
   records: DailyRecord[];
   color: {
     successRate: string;
+    failureRate: string;
     averageTime: string;
   };
 }
@@ -71,6 +72,8 @@ export function WeekdayStatsChart({ records, color }: Props) {
         name: "成功率",
         type: "bar",
         yAxisIndex: 0,
+        showBackground: true,
+        backgroundStyle: { color: color.failureRate },
         data: stats.map(({ successRate }) => successRate),
         itemStyle: { color: color.successRate },
       },

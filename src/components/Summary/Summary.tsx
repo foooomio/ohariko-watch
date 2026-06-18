@@ -32,7 +32,7 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
     <Grid>
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
-          label="成功率"
+          label="おはりこ成功率"
           metric={successRateStr}
           description="直近30日間"
           icon={<SunIcon />}

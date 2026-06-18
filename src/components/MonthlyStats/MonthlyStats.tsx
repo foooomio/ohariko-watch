@@ -23,6 +23,7 @@ export function MonthlyStats({ records }: Props) {
           records={records}
           color={{
             successRate: colors.green[4],
+            failureRate: colors.red[2],
             averageTime: colors.cyan[6],
           }}
         />
