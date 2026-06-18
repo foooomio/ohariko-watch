@@ -11,7 +11,7 @@ export function WeekdayStats({ records }: Props) {
   const { colors } = useMantineTheme();
 
   return (
-    <Card withBorder p={{ base: "lg", md: "xl" }}>
+    <Card p={{ base: "lg", md: "xl" }}>
       <Stack gap="xl">
         <Group gap="xs">
           <CalendarDotsIcon size="20" />

@@ -1,5 +1,6 @@
-import { ActionIcon, Group, Text, Tooltip } from "@mantine/core";
+import { Group, Text, Tooltip } from "@mantine/core";
 import { GlobeIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
+import { HeaderIcon } from "./HeaderIcon";
 
 export function HeaderLinks() {
   return (
@@ -7,42 +8,21 @@ export function HeaderLinks() {
       <Text size="sm">しがりこ公式リンク</Text>
 
       <Tooltip label="X (Twitter)" position="bottom">
-        <ActionIcon
-          component="a"
-          href="https://x.com/Shigariko_"
-          target="_blank"
-          variant="default"
-          color="gray"
-          radius="xl"
-        >
+        <HeaderIcon href="https://x.com/Shigariko_">
           <XLogoIcon />
-        </ActionIcon>
+        </HeaderIcon>
       </Tooltip>
 
       <Tooltip label="YouTube" position="bottom">
-        <ActionIcon
-          component="a"
-          href="https://www.youtube.com/@ShigaRiko"
-          target="_blank"
-          variant="default"
-          color="gray"
-          radius="xl"
-        >
+        <HeaderIcon href="https://www.youtube.com/@ShigaRiko">
           <YoutubeLogoIcon />
-        </ActionIcon>
+        </HeaderIcon>
       </Tooltip>
 
       <Tooltip label="にじさんじ公式" position="bottom">
-        <ActionIcon
-          component="a"
-          href="https://www.nijisanji.jp/talents/l/riko-shiga"
-          target="_blank"
-          variant="default"
-          color="gray"
-          radius="xl"
-        >
+        <HeaderIcon href="https://www.nijisanji.jp/talents/l/riko-shiga">
           <GlobeIcon />
-        </ActionIcon>
+        </HeaderIcon>
       </Tooltip>
     </Group>
   );

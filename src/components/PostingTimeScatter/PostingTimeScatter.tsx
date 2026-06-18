@@ -11,7 +11,7 @@ export function PostingTimeScatter({ records }: Props) {
   const { colors } = useMantineTheme();
 
   return (
-    <Card withBorder p={{ base: "lg", md: "xl" }}>
+    <Card p={{ base: "lg", md: "xl" }}>
       <Stack gap="xl">
         <Group gap="xs">
           <ClockIcon size="20" />
