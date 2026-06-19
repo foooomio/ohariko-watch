@@ -19,7 +19,7 @@ export async function putStatsJson<T extends StatsJsonName>(
   await bucket.put(key, JSON.stringify(json), {
     httpMetadata: {
       contentType: "application/json",
-      cacheControl: "no-cache",
+      cacheControl: "no-store",
     },
   });
 }
