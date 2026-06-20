@@ -7,6 +7,8 @@
   "name": "ohariko-watch",
   "main": "worker/index.ts",
   "compatibility_date": "2026-06-15",
+  "workers_dev": true,
+  "preview_urls": true,
   "routes": [
     {
       "pattern": "ohariko-watch.com",
