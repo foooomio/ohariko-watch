@@ -44,9 +44,9 @@ export function PostingTimeScatterChart({ records, color }: Props) {
     },
     yAxis: {
       type: "value",
-      min: 0,
-      max: 20 * HOUR,
-      interval: 4 * HOUR,
+      min: 2 * HOUR,
+      max: 16 * HOUR,
+      interval: 2 * HOUR,
       axisLabel: {
         formatter: (value) => time.format(value, "{HH}:{mm}", true),
       },

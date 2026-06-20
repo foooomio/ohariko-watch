@@ -32,6 +32,8 @@ export function PostingTimeHistogramChart({ records, color }: Props) {
     xAxis: {
       type: "category",
       data: Array.from({ length: 24 }, (_, h) => h + "時台"),
+      min: 0,
+      max: 16,
     },
     yAxis: {
       type: "value",

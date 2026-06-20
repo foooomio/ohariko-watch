@@ -36,7 +36,7 @@ export function LongestStreaks({ sortedStreaks }: Props) {
               overscrollBehavior: "none",
             }}
           >
-            <Table striped tabularNums>
+            <Table striped stripedColor="brown.0" tabularNums>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>順位</Table.Th>
