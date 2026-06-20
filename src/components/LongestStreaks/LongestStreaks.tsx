@@ -1,4 +1,12 @@
-import { Card, Group, Stack, Table, Text, Title } from "@mantine/core";
+import {
+  Card,
+  Group,
+  Skeleton,
+  Stack,
+  Table,
+  Text,
+  Title,
+} from "@mantine/core";
 import { RankingIcon } from "@phosphor-icons/react";
 import type { Streak } from "~/shared/types/stats";
 import { buildStreaksTableData } from "./buildStreaksTableData";
@@ -19,37 +27,39 @@ export function LongestStreaks({ sortedStreaks }: Props) {
             連続成功ランキング
           </Title>
         </Group>
-        <Table.ScrollContainer
-          minWidth={400}
-          maxHeight={230}
-          scrollAreaProps={{
-            type: "auto",
-            overscrollBehavior: "none",
-          }}
-        >
-          <Table striped tabularNums>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>順位</Table.Th>
-                <Table.Th>日数</Table.Th>
-                <Table.Th>期間</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {rows.map(({ key, rank, daysStr, period }) => (
-                <Table.Tr key={key}>
-                  <Table.Td>
-                    <Text fw={700}>{rank}</Text>
-                  </Table.Td>
-                  <Table.Td>
-                    <Text fw={700}>{daysStr}</Text>
-                  </Table.Td>
-                  <Table.Td>{period}</Table.Td>
+        <Skeleton visible={sortedStreaks.length === 0} height={230}>
+          <Table.ScrollContainer
+            minWidth={400}
+            maxHeight={230}
+            scrollAreaProps={{
+              type: "auto",
+              overscrollBehavior: "none",
+            }}
+          >
+            <Table striped tabularNums>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>順位</Table.Th>
+                  <Table.Th>日数</Table.Th>
+                  <Table.Th>期間</Table.Th>
                 </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
-        </Table.ScrollContainer>
+              </Table.Thead>
+              <Table.Tbody>
+                {rows.map(({ key, rank, daysStr, period }) => (
+                  <Table.Tr key={key}>
+                    <Table.Td>
+                      <Text fw={700}>{rank}</Text>
+                    </Table.Td>
+                    <Table.Td>
+                      <Text fw={700}>{daysStr}</Text>
+                    </Table.Td>
+                    <Table.Td>{period}</Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </Table.ScrollContainer>
+        </Skeleton>
       </Stack>
     </Card>
   );

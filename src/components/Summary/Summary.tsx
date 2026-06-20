@@ -18,8 +18,8 @@ function timeOfDayToHmm(timeOfDay: number): string {
 
 interface Props {
   records: DailyRecord[];
-  currentStreak: Streak;
-  longestStreak: Streak;
+  currentStreak: Streak | undefined;
+  longestStreak: Streak | undefined;
 }
 
 export function Summary({ records, currentStreak, longestStreak }: Props) {
@@ -36,6 +36,7 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
           metric={successRateStr}
           description="直近30日間"
           icon={<SunIcon />}
+          isLoading={records.length === 0}
         />
       </Grid.Col>
 
@@ -45,24 +46,31 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
           metric={averageTimeStr}
           description="直近30日間"
           icon={<ClockIcon />}
+          isLoading={records.length === 0}
         />
       </Grid.Col>
 
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="現在連続成功"
-          metric={currentStreak.days + " 日"}
-          description={currentStreak.startDate + " 〜 " + currentStreak.endDate}
+          metric={currentStreak?.days + " 日"}
+          description={
+            currentStreak?.startDate + " 〜 " + currentStreak?.endDate
+          }
           icon={<TrendUpIcon />}
+          isLoading={!currentStreak}
         />
       </Grid.Col>
 
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="最長連続成功"
-          metric={longestStreak.days + " 日"}
-          description={longestStreak.startDate + " 〜 " + longestStreak.endDate}
+          metric={longestStreak?.days + " 日"}
+          description={
+            longestStreak?.startDate + " 〜 " + longestStreak?.endDate
+          }
           icon={<TrophyIcon />}
+          isLoading={!longestStreak}
         />
       </Grid.Col>
     </Grid>

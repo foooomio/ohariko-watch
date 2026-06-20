@@ -1,4 +1,11 @@
-import { Card, Group, Stack, Title, useMantineTheme } from "@mantine/core";
+import {
+  Card,
+  Group,
+  Skeleton,
+  Stack,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { CalendarDotsIcon } from "@phosphor-icons/react";
 import { MonthlyStatsChart } from "./MonthlyStatsChart";
 import type { DailyRecord } from "~/shared/types/stats";
@@ -19,14 +26,16 @@ export function MonthlyStats({ records }: Props) {
             月別推移
           </Title>
         </Group>
-        <MonthlyStatsChart
-          records={records}
-          color={{
-            successRate: colors.green[4],
-            failureRate: colors.red[2],
-            averageTime: colors.cyan[6],
-          }}
-        />
+        <Skeleton visible={records.length === 0} height={300}>
+          <MonthlyStatsChart
+            records={records}
+            color={{
+              successRate: colors.green[4],
+              failureRate: colors.red[2],
+              averageTime: colors.cyan[6],
+            }}
+          />
+        </Skeleton>
       </Stack>
     </Card>
   );
