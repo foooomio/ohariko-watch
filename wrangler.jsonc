@@ -7,7 +7,6 @@
   "name": "ohariko-watch",
   "main": "worker/index.ts",
   "compatibility_date": "2026-06-15",
-  "workers_dev": false,
   "routes": [
     {
       "pattern": "ohariko-watch.com",
@@ -15,6 +14,7 @@
     },
   ],
   "assets": {
+    "directory": "dist",
     "not_found_handling": "single-page-application",
   },
   "observability": {
