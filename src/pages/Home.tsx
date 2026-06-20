@@ -1,47 +1,40 @@
-import { Container, Stack } from "@mantine/core";
-import { Header } from "@/components/Header";
+import { Layout } from "@/components/Layout";
 import { Summary } from "@/components/Summary";
 import { PostingTimeScatter } from "@/components/PostingTimeScatter";
 import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
 import { MonthlyStats } from "@/components/MonthlyStats";
 import { WeekdayStats } from "@/components/WeekdayStats";
 import { LongestStreaks } from "@/components/LongestStreaks";
-import { Footer } from "@/components/Footer";
-import { useDailyRecords } from "@/hooks/useDailyRecords";
-import { useStreaks } from "@/hooks/useStreaks";
+import { useStatsJson } from "@/hooks/useStatsJson";
 
 export function Home() {
-  const { data: recordsJson } = useDailyRecords();
-  const { data: streaksJson } = useStreaks();
+  const recordsJson = useStatsJson("records");
+  const streaksJson = useStatsJson("streaks");
 
-  if (!recordsJson || !streaksJson) {
-    return null;
+  if (recordsJson.error || streaksJson.error) {
+    console.error(recordsJson.error, streaksJson.error);
   }
 
-  const records = recordsJson.payload;
-  const streaks = streaksJson.payload;
+  const records = recordsJson.data?.payload ?? [];
+  const streaks = streaksJson.data?.payload ?? [];
   const sortedStreaks = streaks.toSorted((a, b) => b.days - a.days);
 
-  const lastUpdated = new Date(recordsJson.generatedAt).toLocaleString("sv");
+  const lastUpdated = recordsJson.data?.generatedAt
+    ? new Date(recordsJson.data.generatedAt).toLocaleString("sv")
+    : "";
 
   return (
-    <Container size="lg" py="lg">
-      <Stack>
-        <Header />
-
-        <Summary
-          records={records}
-          currentStreak={streaks.at(-1)!}
-          longestStreak={sortedStreaks.at(0)!}
-        />
-        <PostingTimeScatter records={records} />
-        <PostingTimeHistogram records={records} />
-        <MonthlyStats records={records} />
-        <WeekdayStats records={records} />
-        <LongestStreaks sortedStreaks={sortedStreaks} />
-
-        <Footer lastUpdated={lastUpdated} />
-      </Stack>
-    </Container>
+    <Layout lastUpdated={lastUpdated}>
+      <Summary
+        records={records}
+        currentStreak={streaks.at(-1)}
+        longestStreak={sortedStreaks.at(0)}
+      />
+      <PostingTimeScatter records={records} />
+      <PostingTimeHistogram records={records} />
+      <MonthlyStats records={records} />
+      <WeekdayStats records={records} />
+      <LongestStreaks sortedStreaks={sortedStreaks} />
+    </Layout>
   );
 }

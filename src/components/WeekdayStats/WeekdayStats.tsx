@@ -1,4 +1,11 @@
-import { Card, Group, Stack, Title, useMantineTheme } from "@mantine/core";
+import {
+  Card,
+  Group,
+  Skeleton,
+  Stack,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { CalendarDotsIcon } from "@phosphor-icons/react";
 import { WeekdayStatsChart } from "./WeekdayStatsChart";
 import type { DailyRecord } from "~/shared/types/stats";
@@ -19,14 +26,16 @@ export function WeekdayStats({ records }: Props) {
             曜日別分析
           </Title>
         </Group>
-        <WeekdayStatsChart
-          records={records}
-          color={{
-            successRate: colors.green[4],
-            failureRate: colors.red[2],
-            averageTime: colors.cyan[6],
-          }}
-        />
+        <Skeleton visible={records.length === 0} height={300}>
+          <WeekdayStatsChart
+            records={records}
+            color={{
+              successRate: colors.green[4],
+              failureRate: colors.red[2],
+              averageTime: colors.cyan[6],
+            }}
+          />
+        </Skeleton>
       </Stack>
     </Card>
   );

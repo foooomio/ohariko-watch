@@ -1,4 +1,11 @@
-import { Card, Group, Stack, Title, useMantineTheme } from "@mantine/core";
+import {
+  Card,
+  Group,
+  Skeleton,
+  Stack,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { ClockIcon } from "@phosphor-icons/react";
 import { PostingTimeScatterChart } from "./PostingTimeScatterChart";
 import type { DailyRecord } from "~/shared/types/stats";
@@ -19,13 +26,15 @@ export function PostingTimeScatter({ records }: Props) {
             日別投稿時刻
           </Title>
         </Group>
-        <PostingTimeScatterChart
-          records={records}
-          color={{
-            success: colors.green[4],
-            failure: colors.red[4],
-          }}
-        />
+        <Skeleton visible={records.length === 0} height={300}>
+          <PostingTimeScatterChart
+            records={records}
+            color={{
+              success: colors.green[4],
+              failure: colors.red[4],
+            }}
+          />
+        </Skeleton>
       </Stack>
     </Card>
   );

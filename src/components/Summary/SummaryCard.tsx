@@ -1,4 +1,4 @@
-import { Card, Group, Text } from "@mantine/core";
+import { Card, Group, Skeleton, Text } from "@mantine/core";
 import type { ReactNode } from "react";
 
 interface Props {
@@ -6,9 +6,16 @@ interface Props {
   metric: string;
   description: string;
   icon: ReactNode;
+  isLoading: boolean;
 }
 
-export function SummaryCard({ label, metric, description, icon }: Props) {
+export function SummaryCard({
+  label,
+  metric,
+  description,
+  icon,
+  isLoading,
+}: Props) {
   return (
     <Card padding="lg">
       <Group gap={6}>
@@ -16,13 +23,15 @@ export function SummaryCard({ label, metric, description, icon }: Props) {
         <Text size="sm">{label}</Text>
       </Group>
 
-      <Text size="xl" fw={700}>
-        {metric}
-      </Text>
+      <Skeleton visible={isLoading}>
+        <Text size="xl" fw={700}>
+          {metric}
+        </Text>
 
-      <Text size="xs" c="brown.8" textWrap="balance">
-        {description}
-      </Text>
+        <Text size="xs" c="brown.8" textWrap="balance">
+          {description}
+        </Text>
+      </Skeleton>
     </Card>
   );
 }
