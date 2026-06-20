@@ -39,7 +39,6 @@ https://x.com/Shigariko_/status/1817014938768146487
 https://x.com/Shigariko_/status/1817360042620027200
 https://x.com/Shigariko_/status/1817688583656108449
 https://x.com/Shigariko_/status/1818073364919107825
-https://x.com/Shigariko_/status/1818531106796585218
 https://x.com/Shigariko_/status/1818762422918037624
 https://x.com/Shigariko_/status/1819120108520067504
 https://x.com/Shigariko_/status/1819487918312026577
@@ -106,7 +105,6 @@ https://x.com/Shigariko_/status/1841227588762751269
 https://x.com/Shigariko_/status/1841591940531589241
 https://x.com/Shigariko_/status/1841957720855093327
 https://x.com/Shigariko_/status/1842314030704386128
-https://x.com/Shigariko_/status/1842850368012906651
 https://x.com/Shigariko_/status/1843082879221539078
 https://x.com/Shigariko_/status/1843467463729787202
 https://x.com/Shigariko_/status/1843763982588625052
@@ -561,6 +559,7 @@ https://x.com/Shigariko_/status/2006184455732437341
 https://x.com/Shigariko_/status/2006559103318176053
 https://x.com/Shigariko_/status/2006895268726522194
 https://x.com/Shigariko_/status/2007252765140300227
+https://x.com/Shigariko_/status/2007665964142473702
 https://x.com/Shigariko_/status/2007963035449913459
 https://x.com/Shigariko_/status/2008340809356382718
 https://x.com/Shigariko_/status/2008684613791871052
@@ -723,3 +722,6 @@ https://x.com/Shigariko_/status/2065983426617041123
 https://x.com/Shigariko_/status/2066322544299565260
 https://x.com/Shigariko_/status/2066706749823057946
 https://x.com/Shigariko_/status/2067065884989149265
+https://x.com/Shigariko_/status/2067394469717311868
+https://x.com/Shigariko_/status/2067744170090123424
+https://x.com/Shigariko_/status/2068108722971484613
