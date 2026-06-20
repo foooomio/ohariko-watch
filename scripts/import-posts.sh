@@ -4,6 +4,8 @@ set -euo pipefail
 
 read -rsp "API Token: " token < /dev/tty
 
+echo
+
 case "$1" in
   local) url="http://localhost:5173/api/add-url" ;;
   remote) url="https://ohariko-watch.com/api/add-url" ;;
