@@ -3,7 +3,15 @@ import type { ReactNode } from "react";
 
 interface Props {
   label: string;
-  metric: string;
+  metric: {
+    value: number;
+    formatter: (value: number) => string;
+  };
+  diff?: {
+    value: number;
+    formatter: (value: number) => string;
+    color: (value: number) => string;
+  };
   description: string;
   icon: ReactNode;
   isLoading: boolean;
@@ -12,6 +20,7 @@ interface Props {
 export function SummaryCard({
   label,
   metric,
+  diff,
   description,
   icon,
   isLoading,
@@ -24,9 +33,16 @@ export function SummaryCard({
       </Group>
 
       <Skeleton visible={isLoading}>
-        <Text size="xl" fw={700}>
-          {metric}
-        </Text>
+        <Group align="baseline" gap="xs">
+          <Text size="xl" fw={700}>
+            {metric.formatter(metric.value)}
+          </Text>
+          {diff && (
+            <Text size="xs" c={diff.color(diff.value)}>
+              {diff.formatter(diff.value)}
+            </Text>
+          )}
+        </Group>
 
         <Text size="xs" c="brown.8" textWrap="balance">
           {description}

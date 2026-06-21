@@ -6,7 +6,7 @@ export function buildSummaryData(records: DailyRecord[]) {
   let failureCount = 0;
   let totalTime = 0;
 
-  for (const { timeOfDay } of records.slice(-30)) {
+  for (const { timeOfDay } of records) {
     if (!timeOfDay) {
       continue;
     }

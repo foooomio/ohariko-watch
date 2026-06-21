@@ -23,17 +23,33 @@ interface Props {
 }
 
 export function Summary({ records, currentStreak, longestStreak }: Props) {
-  const { successRate, averageTime } = buildSummaryData(records);
-
-  const successRateStr = (successRate * 100).toFixed(1) + " %";
-  const averageTimeStr = timeOfDayToHmm(averageTime);
+  const recent = buildSummaryData(records.slice(-30));
+  const previous = buildSummaryData(records.slice(-60, -30));
 
   return (
     <Grid>
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="おはりこ成功率"
-          metric={successRateStr}
+          metric={{
+            value: recent.successRate,
+            formatter: (value) =>
+              value.toLocaleString("ja", {
+                style: "percent",
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+              }),
+          }}
+          diff={{
+            value: recent.successRate - previous.successRate,
+            formatter: (value) =>
+              (value * 100).toLocaleString("ja", {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+                signDisplay: "always",
+              }) + "pt",
+            color: (value) => (value < 0 ? "red" : "green"),
+          }}
           description="直近30日間"
           icon={<SunIcon />}
           isLoading={records.length === 0}
@@ -43,7 +59,19 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="平均投稿時刻"
-          metric={averageTimeStr}
+          metric={{
+            value: recent.averageTime,
+            formatter: (value) => timeOfDayToHmm(value),
+          }}
+          diff={{
+            value: recent.averageTime - previous.averageTime,
+            formatter: (value) =>
+              (value / MINUTE).toLocaleString("ja", {
+                maximumFractionDigits: 0,
+                signDisplay: "always",
+              }) + "分",
+            color: (value) => (value < 0 ? "green" : "red"),
+          }}
           description="直近30日間"
           icon={<ClockIcon />}
           isLoading={records.length === 0}
@@ -53,10 +81,11 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="現在連続成功"
-          metric={currentStreak?.days + " 日"}
-          description={
-            currentStreak?.startDate + " 〜 " + currentStreak?.endDate
-          }
+          metric={{
+            value: currentStreak?.days ?? 0,
+            formatter: (value) => value + "日",
+          }}
+          description={`${currentStreak?.startDate} 〜 ${currentStreak?.endDate}`}
           icon={<TrendUpIcon />}
           isLoading={!currentStreak}
         />
@@ -65,10 +94,11 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="最長連続成功"
-          metric={longestStreak?.days + " 日"}
-          description={
-            longestStreak?.startDate + " 〜 " + longestStreak?.endDate
-          }
+          metric={{
+            value: longestStreak?.days ?? 0,
+            formatter: (value) => value + "日",
+          }}
+          description={`${longestStreak?.startDate} 〜 ${longestStreak?.endDate}`}
           icon={<TrophyIcon />}
           isLoading={!longestStreak}
         />
