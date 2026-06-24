@@ -17,7 +17,11 @@ export function Home() {
 
   const records = recordsJson.data?.payload ?? [];
   const streaks = streaksJson.data?.payload ?? [];
-  const sortedStreaks = streaks.toSorted((a, b) => b.days - a.days);
+  const sortedStreaks = streaks.toSorted((a, b) =>
+    b.days === a.days
+      ? b.startDate.localeCompare(a.startDate)
+      : b.days - a.days,
+  );
 
   const lastUpdated = recordsJson.data?.generatedAt
     ? new Date(recordsJson.data.generatedAt).toLocaleString("sv")
@@ -27,8 +31,8 @@ export function Home() {
     <Layout lastUpdated={lastUpdated}>
       <Summary
         records={records}
-        currentStreak={streaks.at(-1)}
-        longestStreak={sortedStreaks.at(0)}
+        streaks={streaks}
+        sortedStreaks={sortedStreaks}
       />
       <PostingTimeScatter records={records} />
       <PostingTimeHistogram records={records} />

@@ -18,13 +18,20 @@ function timeOfDayToHmm(timeOfDay: number): string {
 
 interface Props {
   records: DailyRecord[];
-  currentStreak: Streak | undefined;
-  longestStreak: Streak | undefined;
+  streaks: Streak[];
+  sortedStreaks: Streak[];
 }
 
-export function Summary({ records, currentStreak, longestStreak }: Props) {
+export function Summary({ records, streaks, sortedStreaks }: Props) {
   const recent = buildSummaryData(records.slice(-30));
   const previous = buildSummaryData(records.slice(-60, -30));
+
+  const currentStreak = streaks.at(-1);
+  const longestStreak = sortedStreaks.at(0);
+
+  const currentStreakIndex = sortedStreaks.findIndex(
+    (streak) => streak.startDate === currentStreak?.startDate,
+  );
 
   return (
     <Grid>
@@ -40,7 +47,7 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
                 maximumFractionDigits: 1,
               }),
           }}
-          diff={{
+          sub={{
             value: recent.successRate - previous.successRate,
             formatter: (value) =>
               (value * 100).toLocaleString("ja", {
@@ -63,7 +70,7 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
             value: recent.averageTime,
             formatter: (value) => timeOfDayToHmm(value),
           }}
-          diff={{
+          sub={{
             value: recent.averageTime - previous.averageTime,
             formatter: (value) =>
               (value / MINUTE).toLocaleString("ja", {
@@ -85,7 +92,12 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
             value: currentStreak?.days ?? 0,
             formatter: (value) => value + "日",
           }}
-          description={`${currentStreak?.startDate} 〜 ${currentStreak?.endDate}`}
+          sub={{
+            value: currentStreakIndex + 1,
+            formatter: (value) => "現在" + value + "位",
+            color: () => "green",
+          }}
+          description={`${currentStreak?.startDate}\u00A0\u200B〜\u00A0${currentStreak?.endDate}`}
           icon={<TrendUpIcon />}
           isLoading={!currentStreak}
         />
@@ -98,7 +110,7 @@ export function Summary({ records, currentStreak, longestStreak }: Props) {
             value: longestStreak?.days ?? 0,
             formatter: (value) => value + "日",
           }}
-          description={`${longestStreak?.startDate} 〜 ${longestStreak?.endDate}`}
+          description={`${longestStreak?.startDate}\u00A0\u200B〜\u00A0${longestStreak?.endDate}`}
           icon={<TrophyIcon />}
           isLoading={!longestStreak}
         />
