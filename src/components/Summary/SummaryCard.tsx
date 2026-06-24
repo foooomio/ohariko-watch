@@ -7,7 +7,7 @@ interface Props {
     value: number;
     formatter: (value: number) => string;
   };
-  diff?: {
+  sub?: {
     value: number;
     formatter: (value: number) => string;
     color: (value: number) => string;
@@ -20,7 +20,7 @@ interface Props {
 export function SummaryCard({
   label,
   metric,
-  diff,
+  sub,
   description,
   icon,
   isLoading,
@@ -37,9 +37,9 @@ export function SummaryCard({
           <Text size="xl" fw={700}>
             {metric.formatter(metric.value)}
           </Text>
-          {diff && (
-            <Text size="xs" c={diff.color(diff.value)}>
-              {diff.formatter(diff.value)}
+          {sub && (
+            <Text size="xs" c={sub.color(sub.value)}>
+              {sub.formatter(sub.value)}
             </Text>
           )}
         </Group>
