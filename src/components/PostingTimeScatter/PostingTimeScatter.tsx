@@ -32,6 +32,7 @@ export function PostingTimeScatter({ records }: Props) {
             color={{
               success: colors.green[4],
               failure: colors.red[4],
+              trendLine: colors.cyan[6],
             }}
           />
         </Skeleton>
