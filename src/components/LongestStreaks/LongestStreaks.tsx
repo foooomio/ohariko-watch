@@ -8,11 +8,12 @@ import {
   Title,
 } from "@mantine/core";
 import { RankingIcon } from "@phosphor-icons/react";
-import type { Streak } from "~/shared/types/stats";
 import { buildStreaksTableData } from "./buildStreaksTableData";
+import type { SortedBy } from "~/shared/types/sortedBy";
+import type { Streak } from "~/shared/types/stats";
 
 interface Props {
-  sortedStreaks: readonly Streak[];
+  sortedStreaks: SortedBy<Streak, "days", "desc">;
 }
 
 export function LongestStreaks({ sortedStreaks }: Props) {

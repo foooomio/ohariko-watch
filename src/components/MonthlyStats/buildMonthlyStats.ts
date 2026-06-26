@@ -42,11 +42,11 @@ export function buildMonthlyStats(
     map.set(yearMonth, acc);
   }
 
-  return [...map.entries()].map(
-    ([yearMonth, { successCount, totalCount, totalTime }]) => ({
+  return [...map.entries()]
+    .toSorted(([a], [b]) => a.localeCompare(b))
+    .map(([yearMonth, { successCount, totalCount, totalTime }]) => ({
       yearMonth,
       successRate: successCount / totalCount,
       averageTime: totalTime / totalCount,
-    }),
-  );
+    }));
 }

@@ -9,6 +9,7 @@ import {
   TrophyIcon,
 } from "@phosphor-icons/react";
 import type { DailyRecord, Streak } from "~/shared/types/stats";
+import type { SortedBy } from "~/shared/types/sortedBy";
 
 function timeOfDayToHmm(timeOfDay: number): string {
   const h = Math.floor(timeOfDay / HOUR);
@@ -17,9 +18,9 @@ function timeOfDayToHmm(timeOfDay: number): string {
 }
 
 interface Props {
-  records: readonly DailyRecord[];
-  streaks: readonly Streak[];
-  sortedStreaks: readonly Streak[];
+  records: SortedBy<DailyRecord, "date", "asc">;
+  streaks: SortedBy<Streak, "startDate", "asc">;
+  sortedStreaks: SortedBy<Streak, "days", "desc">;
 }
 
 export function Summary({ records, streaks, sortedStreaks }: Props) {

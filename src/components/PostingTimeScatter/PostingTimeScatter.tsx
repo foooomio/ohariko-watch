@@ -8,10 +8,11 @@ import {
 } from "@mantine/core";
 import { ClockIcon } from "@phosphor-icons/react";
 import { PostingTimeScatterChart } from "./PostingTimeScatterChart";
+import type { SortedBy } from "~/shared/types/sortedBy";
 import type { DailyRecord } from "~/shared/types/stats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  records: SortedBy<DailyRecord, "date", "asc">;
 }
 
 export function PostingTimeScatter({ records }: Props) {

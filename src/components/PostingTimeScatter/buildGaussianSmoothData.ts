@@ -1,7 +1,8 @@
+import type { SortedBy } from "~/shared/types/sortedBy";
 import type { DailyRecord } from "~/shared/types/stats";
 
 export function buildGaussianSmoothData(
-  records: readonly DailyRecord[],
+  records: SortedBy<DailyRecord, "date", "asc">,
   sigma: number,
 ): [number, number | null][] {
   const radius = Math.ceil(sigma * 3);

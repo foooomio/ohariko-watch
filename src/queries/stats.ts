@@ -4,6 +4,8 @@ import type {
   StatsJsonName,
   StatsValueMap,
 } from "~/shared/types/json";
+import type { SortedBy } from "~/shared/types/sortedBy";
+import type { DailyRecord, Streak } from "~/shared/types/stats";
 
 const BASE_URL = import.meta.env.VITE_ASSETS_BASE_URL;
 
@@ -26,22 +28,21 @@ async function fetchStatsJson<T extends StatsJsonName>(
   return await res.json();
 }
 
-function initialData() {
-  return {
-    payload: [],
-    generatedAt: 0,
-  };
-}
-
-export const statsJson = {
+export const statsQueries = {
   records: queryOptions({
     queryKey: ["stats", "records"] as const,
     queryFn: () => fetchStatsJson("records"),
-    initialData: initialData(),
+    initialData: {
+      payload: [] as unknown as SortedBy<DailyRecord, "date", "asc">,
+      generatedAt: 0,
+    },
   }),
   streaks: queryOptions({
     queryKey: ["stats", "streaks"] as const,
     queryFn: () => fetchStatsJson("streaks"),
-    initialData: initialData(),
+    initialData: {
+      payload: [] as unknown as SortedBy<Streak, "startDate", "asc">,
+      generatedAt: 0,
+    },
   }),
 };

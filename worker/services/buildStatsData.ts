@@ -1,3 +1,5 @@
+import { dateRange, DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
+import type { SortedBy } from "~/shared/types/sortedBy";
 import type {
   DailyRecord,
   EmptyDailyRecord,
@@ -5,14 +7,15 @@ import type {
   Streak,
 } from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
-import { dateRange, DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
 
 export interface Stats {
-  records: DailyRecord[];
-  streaks: Streak[];
+  records: SortedBy<DailyRecord, "date", "asc">;
+  streaks: SortedBy<Streak, "startDate", "asc">;
 }
 
-export function buildStatsData(sortedPosts: PostRow[]): Stats {
+export function buildStatsData(
+  sortedPosts: SortedBy<PostRow, "date", "asc">,
+): Stats {
   const start = sortedPosts.at(0);
   const end = sortedPosts.at(-1);
 
@@ -80,5 +83,5 @@ export function buildStatsData(sortedPosts: PostRow[]): Stats {
 
   streaks.push(streak);
 
-  return { records, streaks };
+  return { records, streaks } as unknown as Stats;
 }

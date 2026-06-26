@@ -6,11 +6,12 @@ import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
 import { MonthlyStats } from "@/components/MonthlyStats";
 import { WeekdayStats } from "@/components/WeekdayStats";
 import { LongestStreaks } from "@/components/LongestStreaks";
-import { statsJson } from "@/queries/stats";
+import { statsQueries } from "@/queries/stats";
+import { sortedStreaksByDaysDesc } from "@/lib/streak";
 
 export function Home() {
-  const recordsJson = useQuery(statsJson.records);
-  const streaksJson = useQuery(statsJson.streaks);
+  const recordsJson = useQuery(statsQueries.records);
+  const streaksJson = useQuery(statsQueries.streaks);
 
   if (recordsJson.error || streaksJson.error) {
     console.error(recordsJson.error, streaksJson.error);
@@ -19,11 +20,7 @@ export function Home() {
   const records = recordsJson.data.payload;
   const streaks = streaksJson.data.payload;
 
-  const sortedStreaks = streaks.toSorted((a, b) =>
-    b.days === a.days
-      ? b.startDate.localeCompare(a.startDate)
-      : b.days - a.days,
-  );
+  const sortedStreaks = sortedStreaksByDaysDesc(streaks);
 
   const generatedAt = recordsJson.data.generatedAt;
 
