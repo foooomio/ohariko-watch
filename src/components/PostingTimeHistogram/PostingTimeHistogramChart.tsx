@@ -5,7 +5,7 @@ import type { DailyRecord } from "~/shared/types/stats";
 import { buildHistogramData } from "./buildHistogramData";
 
 interface Props {
-  records: DailyRecord[];
+  records: readonly DailyRecord[];
   color: {
     success: string;
     failure: string;
@@ -27,7 +27,6 @@ export function PostingTimeHistogramChart({ records, color }: Props) {
       axisPointer: {
         type: "shadow",
       },
-      valueFormatter: (value) => value + "回",
     },
     xAxis: {
       type: "category",
@@ -46,6 +45,9 @@ export function PostingTimeHistogramChart({ records, color }: Props) {
           value,
           itemStyle: { color: index < 12 ? color.success : color.failure },
         })),
+        tooltip: {
+          valueFormatter: (value) => value + "回",
+        },
       },
     ],
   };

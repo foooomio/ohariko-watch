@@ -11,7 +11,7 @@ import { MonthlyStatsChart } from "./MonthlyStatsChart";
 import type { DailyRecord } from "~/shared/types/stats";
 
 interface Props {
-  records: DailyRecord[];
+  records: readonly DailyRecord[];
 }
 
 export function MonthlyStats({ records }: Props) {

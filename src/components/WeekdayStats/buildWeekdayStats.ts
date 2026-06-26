@@ -6,7 +6,9 @@ export interface WeekdayStats {
   averageTime: number;
 }
 
-export function buildWeekdayStats(records: DailyRecord[]): WeekdayStats[] {
+export function buildWeekdayStats(
+  records: readonly DailyRecord[],
+): WeekdayStats[] {
   const stats = Array.from({ length: 7 }, () => ({
     successCount: 0,
     totalCount: 0,

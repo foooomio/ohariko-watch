@@ -1,7 +1,7 @@
 import type { DailyRecord } from "~/shared/types/stats";
 
 export function buildMovingAverageData(
-  records: DailyRecord[],
+  records: readonly DailyRecord[],
   windowSize: number,
 ): [number, number | null][] {
   let sum = 0;

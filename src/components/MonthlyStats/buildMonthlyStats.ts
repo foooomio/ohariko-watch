@@ -13,7 +13,9 @@ interface Accumulator {
   totalTime: number;
 }
 
-export function buildMonthlyStats(records: DailyRecord[]): YearMonthStats[] {
+export function buildMonthlyStats(
+  records: readonly DailyRecord[],
+): YearMonthStats[] {
   const map = new Map<string, Accumulator>();
 
   for (const { date, timeOfDay } of records) {

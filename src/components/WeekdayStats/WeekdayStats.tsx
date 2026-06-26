@@ -11,7 +11,7 @@ import { WeekdayStatsChart } from "./WeekdayStatsChart";
 import type { DailyRecord } from "~/shared/types/stats";
 
 interface Props {
-  records: DailyRecord[];
+  records: readonly DailyRecord[];
 }
 
 export function WeekdayStats({ records }: Props) {

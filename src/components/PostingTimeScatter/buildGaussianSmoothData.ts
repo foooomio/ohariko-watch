@@ -1,7 +1,7 @@
 import type { DailyRecord } from "~/shared/types/stats";
 
 export function buildGaussianSmoothData(
-  records: DailyRecord[],
+  records: readonly DailyRecord[],
   sigma: number,
 ): [number, number | null][] {
   const radius = Math.ceil(sigma * 3);

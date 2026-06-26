@@ -12,7 +12,7 @@ import type { Streak } from "~/shared/types/stats";
 import { buildStreaksTableData } from "./buildStreaksTableData";
 
 interface Props {
-  sortedStreaks: Streak[];
+  sortedStreaks: readonly Streak[];
 }
 
 export function LongestStreaks({ sortedStreaks }: Props) {

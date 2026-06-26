@@ -11,7 +11,7 @@ import { PostingTimeScatterChart } from "./PostingTimeScatterChart";
 import type { DailyRecord } from "~/shared/types/stats";
 
 interface Props {
-  records: DailyRecord[];
+  records: readonly DailyRecord[];
 }
 
 export function PostingTimeScatter({ records }: Props) {

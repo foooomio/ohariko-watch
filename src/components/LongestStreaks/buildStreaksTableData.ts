@@ -8,7 +8,7 @@ export interface StreaksTableRowData {
 }
 
 export function buildStreaksTableData(
-  sortedStreaks: Streak[],
+  sortedStreaks: readonly Streak[],
 ): StreaksTableRowData[] {
   const emoji = ["🥇", "🥈", "🥉"];
 
