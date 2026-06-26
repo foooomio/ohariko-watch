@@ -3,10 +3,13 @@ import { FooterLink } from "./FooterLink";
 import { FooterText } from "./FooterText";
 
 interface Props {
-  lastUpdated: string;
+  lastUpdatedAt: number;
 }
 
-export function Footer({ lastUpdated }: Props) {
+export function Footer({ lastUpdatedAt }: Props) {
+  const lastUpdated =
+    lastUpdatedAt > 0 ? new Date(lastUpdatedAt).toLocaleString("sv") : "";
+
   return (
     <Card padding="lg">
       <Stack gap="xs">

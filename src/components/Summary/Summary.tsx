@@ -9,6 +9,7 @@ import {
   TrophyIcon,
 } from "@phosphor-icons/react";
 import type { DailyRecord, Streak } from "~/shared/types/stats";
+import type { SortedBy } from "~/shared/types/sortedBy";
 
 function timeOfDayToHmm(timeOfDay: number): string {
   const h = Math.floor(timeOfDay / HOUR);
@@ -17,20 +18,21 @@ function timeOfDayToHmm(timeOfDay: number): string {
 }
 
 interface Props {
-  records: DailyRecord[];
-  streaks: Streak[];
-  sortedStreaks: Streak[];
+  records: SortedBy<DailyRecord, "date", "asc">;
+  streaks: SortedBy<Streak, "startDate", "asc">;
+  sortedStreaks: SortedBy<Streak, "days", "desc">;
 }
 
 export function Summary({ records, streaks, sortedStreaks }: Props) {
   const recent = buildSummaryData(records.slice(-30));
   const previous = buildSummaryData(records.slice(-60, -30));
 
-  const currentStreak = streaks.at(-1);
+  const latestStreak = streaks.at(-1);
   const longestStreak = sortedStreaks.at(0);
 
-  const currentStreakIndex = sortedStreaks.findIndex(
-    (streak) => streak.startDate === currentStreak?.startDate,
+  const isStreakOngoing = latestStreak?.endDate === records.at(-1)?.date;
+  const latestStreakIndex = sortedStreaks.findIndex(
+    (streak) => streak.startDate === latestStreak?.startDate,
   );
 
   return (
@@ -87,19 +89,20 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
 
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
-          label="現在連続成功"
+          label={(isStreakOngoing ? "現在" : "前回") + "連続成功"}
           metric={{
-            value: currentStreak?.days ?? 0,
+            value: latestStreak?.days ?? 0,
             formatter: (value) => value + "日",
           }}
           sub={{
-            value: currentStreakIndex + 1,
-            formatter: (value) => "現在" + value + "位",
-            color: () => "green",
+            value: latestStreakIndex + 1,
+            formatter: (value) =>
+              (isStreakOngoing ? "現在" : "前回") + value + "位",
+            color: () => (isStreakOngoing ? "green" : "red"),
           }}
-          description={`${currentStreak?.startDate}\u00A0\u200B〜\u00A0${currentStreak?.endDate}`}
+          description={`${latestStreak?.startDate}\u00A0\u200B〜\u00A0${latestStreak?.endDate}`}
           icon={<TrendUpIcon />}
-          isLoading={!currentStreak}
+          isLoading={!latestStreak}
         />
       </Grid.Col>
 

@@ -1,7 +1,12 @@
 import { isBeforeNoon } from "~/shared/lib/date";
 import type { DailyRecord } from "~/shared/types/stats";
 
-export function buildSummaryData(records: DailyRecord[]) {
+export interface SummaryData {
+  successRate: number;
+  averageTime: number;
+}
+
+export function buildSummaryData(records: readonly DailyRecord[]): SummaryData {
   let successCount = 0;
   let failureCount = 0;
   let totalTime = 0;
@@ -23,7 +28,7 @@ export function buildSummaryData(records: DailyRecord[]) {
   const postCount = successCount + failureCount;
 
   return {
-    successRate: successCount / postCount,
-    averageTime: totalTime / postCount,
+    successRate: postCount > 0 ? successCount / postCount : 0,
+    averageTime: postCount > 0 ? totalTime / postCount : 0,
   };
 }

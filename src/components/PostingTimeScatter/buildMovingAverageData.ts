@@ -1,7 +1,8 @@
+import type { SortedBy } from "~/shared/types/sortedBy";
 import type { DailyRecord } from "~/shared/types/stats";
 
 export function buildMovingAverageData(
-  records: DailyRecord[],
+  records: SortedBy<DailyRecord, "date", "asc">,
   windowSize: number,
 ): [number, number | null][] {
   let sum = 0;

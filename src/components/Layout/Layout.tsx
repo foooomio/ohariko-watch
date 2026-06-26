@@ -5,16 +5,16 @@ import type { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  lastUpdated: string;
+  lastUpdatedAt: number;
 }
 
-export function Layout({ children, lastUpdated }: Props) {
+export function Layout({ children, lastUpdatedAt }: Props) {
   return (
     <Container size="lg" py="lg">
       <Stack>
         <Header />
         {children}
-        <Footer lastUpdated={lastUpdated} />
+        <Footer lastUpdatedAt={lastUpdatedAt} />
       </Stack>
     </Container>
   );

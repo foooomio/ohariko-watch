@@ -2,15 +2,16 @@ import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
 import { HOUR } from "~/shared/lib/date";
-import type { DailyRecord } from "~/shared/types/stats";
 import { buildScatterData } from "./buildScatterData";
 import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
+import type { SortedBy } from "~/shared/types/sortedBy";
+import type { DailyRecord } from "~/shared/types/stats";
 
 const noPostMarker =
   '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>';
 
 interface Props {
-  records: DailyRecord[];
+  records: SortedBy<DailyRecord, "date", "asc">;
   color: {
     success: string;
     failure: string;
@@ -36,9 +37,9 @@ export function PostingTimeScatterChart({ records, color }: Props) {
         const lines: string[] = [];
         lines.push(time.format(trend.value[0], "{yyyy}-{MM}-{dd}", true));
         if (point) {
-          const hhmm = time.format(point.value[1], "{HH}:{mm}", true);
-          const span = `<span style="color:#6d6e73;font-weight:900">${hhmm}</span>`;
-          lines.push(`${point.marker}${point.seriesName} ${span}`);
+          const text = time.format(point.value[1], "{HH}:{mm}", true);
+          const html = `<span style="color:#6d6e73;font-weight:900">${text}</span>`;
+          lines.push(`${point.marker}${point.seriesName} ${html}`);
         } else {
           lines.push(`${noPostMarker}投稿なし`);
         }

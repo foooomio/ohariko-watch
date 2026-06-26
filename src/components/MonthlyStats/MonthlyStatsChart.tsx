@@ -6,7 +6,7 @@ import { HOUR } from "~/shared/lib/date";
 import { buildMonthlyStats } from "./buildMonthlyStats";
 
 interface Props {
-  records: DailyRecord[];
+  records: readonly DailyRecord[];
   color: {
     successRate: string;
     failureRate: string;
@@ -16,6 +16,11 @@ interface Props {
 
 export function MonthlyStatsChart({ records, color }: Props) {
   const stats = buildMonthlyStats(records);
+
+  const percentFormatter = new Intl.NumberFormat("ja", {
+    style: "percent",
+    maximumFractionDigits: 1,
+  });
 
   const option: EChartsOption = {
     grid: {
@@ -32,15 +37,6 @@ export function MonthlyStatsChart({ records, color }: Props) {
       axisPointer: {
         type: "shadow",
       },
-      valueFormatter: (value) => {
-        if (typeof value !== "number") {
-          return "";
-        } else if (value > 1) {
-          return time.format(value, "{HH}:{mm}", true);
-        } else {
-          return Math.round(value * 100) + "%";
-        }
-      },
     },
     xAxis: {
       type: "category",
@@ -53,7 +49,7 @@ export function MonthlyStatsChart({ records, color }: Props) {
         max: 1,
         interval: 0.2,
         axisLabel: {
-          formatter: (value) => Math.round(value * 100) + "%",
+          formatter: (value) => percentFormatter.format(value),
         },
       },
       {
@@ -76,6 +72,10 @@ export function MonthlyStatsChart({ records, color }: Props) {
         backgroundStyle: { color: color.failureRate },
         data: stats.map(({ successRate }) => successRate),
         itemStyle: { color: color.successRate },
+        tooltip: {
+          valueFormatter: (value) =>
+            typeof value === "number" ? percentFormatter.format(value) : "",
+        },
       },
       {
         name: "平均投稿時刻",
@@ -84,6 +84,9 @@ export function MonthlyStatsChart({ records, color }: Props) {
         yAxisIndex: 1,
         data: stats.map(({ averageTime }) => averageTime),
         itemStyle: { color: color.averageTime },
+        tooltip: {
+          valueFormatter: (value) => time.format(value, "{HH}:{mm}", true),
+        },
       },
     ],
   };

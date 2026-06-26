@@ -1,3 +1,4 @@
+import type { SortedBy } from "./sortedBy";
 import type { DailyRecord, Streak } from "./stats";
 
 export interface StatsJson<T> {
@@ -6,8 +7,8 @@ export interface StatsJson<T> {
 }
 
 export interface StatsValueMap {
-  records: DailyRecord[];
-  streaks: Streak[];
+  records: SortedBy<DailyRecord, "date", "asc">;
+  streaks: SortedBy<Streak, "startDate", "asc">;
 }
 
 export type StatsJsonName = keyof StatsValueMap;

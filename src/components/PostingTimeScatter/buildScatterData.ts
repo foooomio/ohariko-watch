@@ -6,7 +6,7 @@ export interface ScatterData {
   extra: { url: string };
 }
 
-export function buildScatterData(records: DailyRecord[]): {
+export function buildScatterData(records: readonly DailyRecord[]): {
   successData: ScatterData[];
   failureData: ScatterData[];
 } {

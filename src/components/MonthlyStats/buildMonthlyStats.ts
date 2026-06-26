@@ -13,7 +13,9 @@ interface Accumulator {
   totalTime: number;
 }
 
-export function buildMonthlyStats(records: DailyRecord[]): YearMonthStats[] {
+export function buildMonthlyStats(
+  records: readonly DailyRecord[],
+): YearMonthStats[] {
   const map = new Map<string, Accumulator>();
 
   for (const { date, timeOfDay } of records) {
@@ -40,11 +42,11 @@ export function buildMonthlyStats(records: DailyRecord[]): YearMonthStats[] {
     map.set(yearMonth, acc);
   }
 
-  return [...map.entries()].map(
-    ([yearMonth, { successCount, totalCount, totalTime }]) => ({
+  return [...map.entries()]
+    .toSorted(([a], [b]) => a.localeCompare(b))
+    .map(([yearMonth, { successCount, totalCount, totalTime }]) => ({
       yearMonth,
       successRate: successCount / totalCount,
       averageTime: totalTime / totalCount,
-    }),
-  );
+    }));
 }

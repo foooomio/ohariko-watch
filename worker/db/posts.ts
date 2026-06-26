@@ -1,10 +1,12 @@
+import type { SortedBy } from "~/shared/types/sortedBy";
+
 export interface PostRow {
   date: string;
   timestamp: number;
   url: string;
 }
 
-export async function listPosts(db: D1Database): Promise<PostRow[]> {
+export async function listPosts(db: D1Database) {
   const { results } = await db
     .prepare(
       `
@@ -15,10 +17,10 @@ export async function listPosts(db: D1Database): Promise<PostRow[]> {
     )
     .all<PostRow>();
 
-  return results;
+  return results as unknown as SortedBy<PostRow, "date", "asc">;
 }
 
-export async function insertPost(db: D1Database, post: PostRow): Promise<void> {
+export async function insertPost(db: D1Database, post: PostRow) {
   await db
     .prepare(
       `

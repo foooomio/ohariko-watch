@@ -1,3 +1,4 @@
+import type { SortedBy } from "~/shared/types/sortedBy";
 import type { Streak } from "~/shared/types/stats";
 
 export interface StreaksTableRowData {
@@ -8,7 +9,7 @@ export interface StreaksTableRowData {
 }
 
 export function buildStreaksTableData(
-  sortedStreaks: Streak[],
+  sortedStreaks: SortedBy<Streak, "days", "desc">,
 ): StreaksTableRowData[] {
   const emoji = ["🥇", "🥈", "🥉"];
 
