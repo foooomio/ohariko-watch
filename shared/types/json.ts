@@ -1,13 +1,13 @@
 import type { SortedBy } from "./sortedBy";
-import type { DailyRecord, Streak } from "./stats";
+import type { Post, Streak } from "./stats";
 
 export interface StatsJson<T> {
-  generatedAt: number;
+  generatedAt: Temporal.ZonedDateTime | string;
   payload: T;
 }
 
 export interface StatsValueMap {
-  records: SortedBy<DailyRecord, "date", "asc">;
+  posts: SortedBy<Post, "date", "asc">;
   streaks: SortedBy<Streak, "startDate", "asc">;
 }
 

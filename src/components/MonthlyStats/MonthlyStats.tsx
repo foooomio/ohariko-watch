@@ -8,13 +8,13 @@ import {
 } from "@mantine/core";
 import { CalendarDotsIcon } from "@phosphor-icons/react";
 import { MonthlyStatsChart } from "./MonthlyStatsChart";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
 }
 
-export function MonthlyStats({ records }: Props) {
+export function MonthlyStats({ posts }: Props) {
   const { colors } = useMantineTheme();
 
   return (
@@ -26,9 +26,9 @@ export function MonthlyStats({ records }: Props) {
             月別推移
           </Title>
         </Group>
-        <Skeleton visible={records.length === 0} height={300}>
+        <Skeleton visible={posts.length === 0} height={300}>
           <MonthlyStatsChart
-            records={records}
+            posts={posts}
             color={{
               successRate: colors.green[4],
               failureRate: colors.red[2],

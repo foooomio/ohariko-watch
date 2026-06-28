@@ -1,38 +1,34 @@
 import { Grid } from "@mantine/core";
 import { SummaryCard } from "./SummaryCard";
 import { buildSummaryData } from "./buildSummaryData";
-import { HOUR, MINUTE } from "~/shared/lib/date";
+import { MINUTE, toPlainTime } from "~/shared/lib/date";
 import {
   ClockIcon,
   SunIcon,
   TrendUpIcon,
   TrophyIcon,
 } from "@phosphor-icons/react";
-import type { DailyRecord, Streak } from "~/shared/types/stats";
+import type { Post, Streak } from "~/shared/types/stats";
 import type { SortedBy } from "~/shared/types/sortedBy";
 
-function timeOfDayToHmm(timeOfDay: number): string {
-  const h = Math.floor(timeOfDay / HOUR);
-  const m = Math.floor((timeOfDay % HOUR) / MINUTE);
-  return h + ":" + String(m).padStart(2, "0");
-}
-
 interface Props {
-  records: SortedBy<DailyRecord, "date", "asc">;
+  posts: SortedBy<Post, "date", "asc">;
   streaks: SortedBy<Streak, "startDate", "asc">;
   sortedStreaks: SortedBy<Streak, "days", "desc">;
 }
 
-export function Summary({ records, streaks, sortedStreaks }: Props) {
-  const recent = buildSummaryData(records.slice(-30));
-  const previous = buildSummaryData(records.slice(-60, -30));
+export function Summary({ posts, streaks, sortedStreaks }: Props) {
+  const recent = buildSummaryData(posts.slice(-30));
+  const previous = buildSummaryData(posts.slice(-60, -30));
 
   const latestStreak = streaks.at(-1);
   const longestStreak = sortedStreaks.at(0);
 
-  const isStreakOngoing = latestStreak?.endDate === records.at(-1)?.date;
-  const latestStreakIndex = sortedStreaks.findIndex(
-    (streak) => streak.startDate === latestStreak?.startDate,
+  const latestPost = posts.at(-1);
+  const isStreakOngoing =
+    latestStreak && latestPost && latestStreak.endDate.equals(latestPost.date);
+  const latestStreakIndex = sortedStreaks.findIndex((streak) =>
+    latestStreak?.startDate.equals(streak.startDate),
   );
 
   return (
@@ -45,7 +41,6 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
             formatter: (value) =>
               value.toLocaleString("ja", {
                 style: "percent",
-                minimumFractionDigits: 1,
                 maximumFractionDigits: 1,
               }),
           }}
@@ -53,7 +48,6 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
             value: recent.successRate - previous.successRate,
             formatter: (value) =>
               (value * 100).toLocaleString("ja", {
-                minimumFractionDigits: 1,
                 maximumFractionDigits: 1,
                 signDisplay: "always",
               }) + "pt",
@@ -61,7 +55,7 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
           }}
           description="直近30日間"
           icon={<SunIcon />}
-          isLoading={records.length === 0}
+          isLoading={posts.length === 0}
         />
       </Grid.Col>
 
@@ -70,7 +64,10 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
           label="平均投稿時刻"
           metric={{
             value: recent.averageTime,
-            formatter: (value) => timeOfDayToHmm(value),
+            formatter: (value) =>
+              toPlainTime(Math.round(value)).toString({
+                smallestUnit: "minute",
+              }),
           }}
           sub={{
             value: recent.averageTime - previous.averageTime,
@@ -83,7 +80,7 @@ export function Summary({ records, streaks, sortedStreaks }: Props) {
           }}
           description="直近30日間"
           icon={<ClockIcon />}
-          isLoading={records.length === 0}
+          isLoading={posts.length === 0}
         />
       </Grid.Col>
 

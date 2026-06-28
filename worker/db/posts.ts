@@ -24,10 +24,10 @@ export async function insertPost(db: D1Database, post: PostRow) {
   await db
     .prepare(
       `
-    REPLACE INTO posts (timestamp, date, url)
+    REPLACE INTO posts (date, timestamp, url)
     VALUES (?, ?, ?)
     `,
     )
-    .bind(post.timestamp, post.date, post.url)
+    .bind(post.date, post.timestamp, post.url)
     .run();
 }

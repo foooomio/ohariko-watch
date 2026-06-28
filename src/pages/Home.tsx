@@ -6,35 +6,31 @@ import { PostingTimeHistogram } from "@/components/PostingTimeHistogram";
 import { MonthlyStats } from "@/components/MonthlyStats";
 import { WeekdayStats } from "@/components/WeekdayStats";
 import { LongestStreaks } from "@/components/LongestStreaks";
-import { statsQueries } from "@/queries/stats";
+import { postsOptions, streaksOptions } from "@/queries/stats";
 import { sortedStreaksByDaysDesc } from "@/lib/streak";
 
 export function Home() {
-  const recordsJson = useQuery(statsQueries.records);
-  const streaksJson = useQuery(statsQueries.streaks);
+  const postsJson = useQuery(postsOptions());
+  const streaksJson = useQuery(streaksOptions());
 
-  if (recordsJson.error || streaksJson.error) {
-    console.error(recordsJson.error, streaksJson.error);
+  if (postsJson.error || streaksJson.error) {
+    console.error(postsJson.error, streaksJson.error);
   }
 
-  const records = recordsJson.data.payload;
+  const posts = postsJson.data.payload;
   const streaks = streaksJson.data.payload;
 
   const sortedStreaks = sortedStreaksByDaysDesc(streaks);
 
-  const generatedAt = recordsJson.data.generatedAt;
+  const generatedAt = postsJson.data.generatedAt;
 
   return (
     <Layout lastUpdatedAt={generatedAt}>
-      <Summary
-        records={records}
-        streaks={streaks}
-        sortedStreaks={sortedStreaks}
-      />
-      <PostingTimeScatter records={records} />
-      <PostingTimeHistogram records={records} />
-      <MonthlyStats records={records} />
-      <WeekdayStats records={records} />
+      <Summary posts={posts} streaks={streaks} sortedStreaks={sortedStreaks} />
+      <PostingTimeScatter posts={posts} />
+      <PostingTimeHistogram posts={posts} />
+      <MonthlyStats posts={posts} />
+      <WeekdayStats posts={posts} />
       <LongestStreaks sortedStreaks={sortedStreaks} />
     </Layout>
   );

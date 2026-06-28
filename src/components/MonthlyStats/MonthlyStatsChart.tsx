@@ -1,12 +1,12 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 import { HOUR } from "~/shared/lib/date";
 import { buildMonthlyStats } from "./buildMonthlyStats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
   color: {
     successRate: string;
     failureRate: string;
@@ -14,8 +14,8 @@ interface Props {
   };
 }
 
-export function MonthlyStatsChart({ records, color }: Props) {
-  const stats = buildMonthlyStats(records);
+export function MonthlyStatsChart({ posts, color }: Props) {
+  const stats = buildMonthlyStats(posts);
 
   const percentFormatter = new Intl.NumberFormat("ja", {
     style: "percent",

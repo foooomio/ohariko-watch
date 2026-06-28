@@ -5,13 +5,13 @@ import { HOUR } from "~/shared/lib/date";
 import { buildScatterData } from "./buildScatterData";
 import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
 import type { SortedBy } from "~/shared/types/sortedBy";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 const noPostMarker =
   '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>';
 
 interface Props {
-  records: SortedBy<DailyRecord, "date", "asc">;
+  posts: SortedBy<Post, "date", "asc">;
   color: {
     success: string;
     failure: string;
@@ -19,10 +19,10 @@ interface Props {
   };
 }
 
-export function PostingTimeScatterChart({ records, color }: Props) {
-  const { successData, failureData } = buildScatterData(records);
+export function PostingTimeScatterChart({ posts, color }: Props) {
+  const { successData, failureData } = buildScatterData(posts);
 
-  const gaussianSmoothData = buildGaussianSmoothData(records, 7);
+  const gaussianSmoothData = buildGaussianSmoothData(posts, 7);
 
   const option: EChartsOption = {
     grid: {
@@ -65,7 +65,8 @@ export function PostingTimeScatterChart({ records, color }: Props) {
       {
         type: "slider",
         xAxisIndex: 0,
-        startValue: Date.parse(records.at(-180)?.date ?? ""),
+        startValue: posts.at(-180)?.date.toZonedDateTime("UTC")
+          .epochMilliseconds,
         showDetail: false,
         bottom: 8,
         brushSelect: false,

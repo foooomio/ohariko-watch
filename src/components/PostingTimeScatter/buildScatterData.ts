@@ -1,29 +1,31 @@
-import { isBeforeNoon } from "~/shared/lib/date";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 export interface ScatterData {
   value: number[];
   extra: { url: string };
 }
 
-export function buildScatterData(records: readonly DailyRecord[]): {
+export function buildScatterData(posts: readonly Post[]): {
   successData: ScatterData[];
   failureData: ScatterData[];
 } {
   const successData: ScatterData[] = [];
   const failureData: ScatterData[] = [];
 
-  for (const { date, timeOfDay, url } of records) {
-    if (!timeOfDay) {
+  for (const { date, datetime, elapsed, url } of posts) {
+    if (!elapsed) {
       continue;
     }
 
     const data = {
-      value: [Date.parse(date), timeOfDay],
+      value: [
+        date.toZonedDateTime("UTC").epochMilliseconds,
+        elapsed.total("millisecond"),
+      ],
       extra: { url },
     };
 
-    if (isBeforeNoon(timeOfDay)) {
+    if (datetime.hour < 12) {
       successData.push(data);
     } else {
       failureData.push(data);

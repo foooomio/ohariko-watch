@@ -1,28 +1,27 @@
-import { isBeforeNoon } from "~/shared/lib/date";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 export interface SummaryData {
   successRate: number;
   averageTime: number;
 }
 
-export function buildSummaryData(records: readonly DailyRecord[]): SummaryData {
+export function buildSummaryData(posts: readonly Post[]): SummaryData {
   let successCount = 0;
   let failureCount = 0;
   let totalTime = 0;
 
-  for (const { timeOfDay } of records) {
-    if (!timeOfDay) {
+  for (const { datetime, elapsed } of posts) {
+    if (!elapsed) {
       continue;
     }
 
-    if (isBeforeNoon(timeOfDay)) {
+    if (datetime.hour < 12) {
       successCount++;
     } else {
       failureCount++;
     }
 
-    totalTime += timeOfDay;
+    totalTime += elapsed.total("millisecond");
   }
 
   const postCount = successCount + failureCount;

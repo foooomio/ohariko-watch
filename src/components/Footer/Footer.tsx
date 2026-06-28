@@ -3,13 +3,10 @@ import { FooterLink } from "./FooterLink";
 import { FooterText } from "./FooterText";
 
 interface Props {
-  lastUpdatedAt: number;
+  lastUpdatedAt: Temporal.ZonedDateTime | string;
 }
 
 export function Footer({ lastUpdatedAt }: Props) {
-  const lastUpdated =
-    lastUpdatedAt > 0 ? new Date(lastUpdatedAt).toLocaleString("sv") : "";
-
   return (
     <Card padding="lg">
       <Stack gap="xs">
@@ -33,7 +30,13 @@ export function Footer({ lastUpdatedAt }: Props) {
           </FooterLink>
         </Group>
 
-        <FooterText>最終更新日時：{lastUpdated}</FooterText>
+        <FooterText>
+          最終更新日時：
+          {lastUpdatedAt.toString({
+            smallestUnit: "second",
+            timeZoneName: "never",
+          })}
+        </FooterText>
       </Stack>
     </Card>
   );

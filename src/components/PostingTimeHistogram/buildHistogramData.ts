@@ -1,17 +1,14 @@
-import { HOUR } from "~/shared/lib/date";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
-export function buildHistogramData(records: readonly DailyRecord[]): number[] {
+export function buildHistogramData(posts: readonly Post[]): number[] {
   const histogram: number[] = Array(24).fill(0);
 
-  for (const { timeOfDay } of records) {
-    if (!timeOfDay) {
+  for (const { datetime } of posts) {
+    if (!datetime) {
       continue;
     }
 
-    const hour = Math.floor(timeOfDay / HOUR);
-
-    histogram[hour]++;
+    histogram[datetime.hour]++;
   }
 
   return histogram;

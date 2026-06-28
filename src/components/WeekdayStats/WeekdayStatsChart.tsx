@@ -1,12 +1,12 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 import { HOUR } from "~/shared/lib/date";
 import { buildWeekdayStats } from "./buildWeekdayStats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
   color: {
     successRate: string;
     failureRate: string;
@@ -14,8 +14,8 @@ interface Props {
   };
 }
 
-export function WeekdayStatsChart({ records, color }: Props) {
-  const stats = buildWeekdayStats(records);
+export function WeekdayStatsChart({ posts, color }: Props) {
+  const stats = buildWeekdayStats(posts);
 
   const percentFormatter = new Intl.NumberFormat("ja", {
     style: "percent",
