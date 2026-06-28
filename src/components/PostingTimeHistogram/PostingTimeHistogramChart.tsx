@@ -1,19 +1,19 @@
 import type { EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 import { buildHistogramData } from "./buildHistogramData";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
   color: {
     success: string;
     failure: string;
   };
 }
 
-export function PostingTimeHistogramChart({ records, color }: Props) {
-  const histogram = buildHistogramData(records);
+export function PostingTimeHistogramChart({ posts, color }: Props) {
+  const histogram = buildHistogramData(posts);
 
   const option: EChartsOption = {
     grid: {

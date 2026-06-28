@@ -35,6 +35,9 @@ importers:
       react-dom:
         specifier: ^19.2.7
         version: 19.2.7(react@19.2.7)
+      temporal-polyfill-lite:
+        specifier: ^0.4.1
+        version: 0.4.1
     devDependencies:
       '@cloudflare/vite-plugin':
         specifier: ^1.42.2
@@ -995,6 +998,9 @@ packages:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
     engines: {node: '>=20'}
 
+  temporal-polyfill-lite@0.4.1:
+    resolution: {integrity: sha512-LkyxGT+Kud8HD560XKBa8zDg3Eg0Rl0sQVBIeLR0DrOkC1ezCsrkH+9MCMhqlYQDMayxtAhoqh6ObIfGgovqtQ==}
+
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
 
@@ -1929,6 +1935,8 @@ snapshots:
   tabbable@6.4.0: {}
 
   tagged-tag@1.0.0: {}
+
+  temporal-polyfill-lite@0.4.1: {}
 
   tinybench@2.9.0: {}
 

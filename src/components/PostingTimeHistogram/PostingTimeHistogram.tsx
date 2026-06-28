@@ -8,13 +8,13 @@ import {
 } from "@mantine/core";
 import { ChartBarIcon } from "@phosphor-icons/react";
 import { PostingTimeHistogramChart } from "./PostingTimeHistogramChart";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
 }
 
-export function PostingTimeHistogram({ records }: Props) {
+export function PostingTimeHistogram({ posts }: Props) {
   const { colors } = useMantineTheme();
 
   return (
@@ -26,9 +26,9 @@ export function PostingTimeHistogram({ records }: Props) {
             投稿時刻分布
           </Title>
         </Group>
-        <Skeleton visible={records.length === 0} height={300}>
+        <Skeleton visible={posts.length === 0} height={300}>
           <PostingTimeHistogramChart
-            records={records}
+            posts={posts}
             color={{
               success: colors.green[4],
               failure: colors.red[4],

@@ -1,5 +1,4 @@
 import type { PostRow } from "../db/posts";
-import { timestampToDateString } from "~/shared/lib/date";
 import { snowflakeIdToTimestamp } from "~/shared/lib/snowflake";
 
 export function extractPost(text: string): PostRow | null {
@@ -15,7 +14,10 @@ export function extractPost(text: string): PostRow | null {
 
   const timestamp = snowflakeIdToTimestamp(BigInt(snowflakeId));
 
-  const date = timestampToDateString(timestamp, "Asia/Tokyo");
+  const date = Temporal.Instant.fromEpochMilliseconds(timestamp)
+    .toZonedDateTimeISO("Asia/Tokyo")
+    .toPlainDate()
+    .toString();
 
   return { date, timestamp, url };
 }

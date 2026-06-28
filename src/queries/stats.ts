@@ -5,14 +5,46 @@ import type {
   StatsValueMap,
 } from "~/shared/types/json";
 import type { SortedBy } from "~/shared/types/sortedBy";
-import type { DailyRecord, Streak } from "~/shared/types/stats";
+import type { Post, Streak } from "~/shared/types/stats";
 
-const BASE_URL = import.meta.env.VITE_ASSETS_BASE_URL;
+function reviver(name: StatsJsonName): (key: string, value: any) => any {
+  switch (name) {
+    case "posts":
+      return (key, value) => {
+        if (value === null) {
+          return value;
+        }
+        switch (key) {
+          case "date":
+            return Temporal.PlainDate.from(value);
+          case "datetime":
+          case "generatedAt":
+            return Temporal.ZonedDateTime.from(value);
+          case "elapsed":
+            return Temporal.Duration.from(value);
+          default:
+            return value;
+        }
+      };
+    case "streaks":
+      return (key, value) => {
+        switch (key) {
+          case "startDate":
+          case "endDate":
+            return Temporal.PlainDate.from(value);
+          case "generatedAt":
+            return Temporal.ZonedDateTime.from(value);
+          default:
+            return value;
+        }
+      };
+  }
+}
 
 async function fetchStatsJson<T extends StatsJsonName>(
   name: T,
 ): Promise<StatsJson<StatsValueMap[T]>> {
-  const url = BASE_URL + `/stats/${name}.json`;
+  const url = `${import.meta.env.VITE_ASSETS_BASE_URL}/stats/${name}.json`;
 
   const res = await fetch(url, {
     headers: {
@@ -25,24 +57,33 @@ async function fetchStatsJson<T extends StatsJsonName>(
     throw new Error(`${res.status} ${res.statusText}`);
   }
 
-  return await res.json();
+  const text = await res.text();
+
+  return JSON.parse(text, reviver(name));
 }
 
-export const statsQueries = {
-  records: queryOptions({
-    queryKey: ["stats", "records"] as const,
-    queryFn: () => fetchStatsJson("records"),
+export function postsOptions() {
+  return queryOptions({
+    queryKey: ["stats", "posts"] as const,
+    queryFn: () => fetchStatsJson("posts"),
     initialData: {
-      payload: [] as unknown as SortedBy<DailyRecord, "date", "asc">,
-      generatedAt: 0,
+      payload: [] as unknown as SortedBy<Post, "date", "asc">,
+      generatedAt: "",
     },
-  }),
-  streaks: queryOptions({
+    initialDataUpdatedAt: 0,
+    staleTime: Temporal.Duration.from({ hours: 1 }).total("millisecond"),
+  });
+}
+
+export function streaksOptions() {
+  return queryOptions({
     queryKey: ["stats", "streaks"] as const,
     queryFn: () => fetchStatsJson("streaks"),
     initialData: {
       payload: [] as unknown as SortedBy<Streak, "startDate", "asc">,
-      generatedAt: 0,
+      generatedAt: "",
     },
-  }),
-};
+    initialDataUpdatedAt: 0,
+    staleTime: Temporal.Duration.from({ hours: 1 }).total("millisecond"),
+  });
+}

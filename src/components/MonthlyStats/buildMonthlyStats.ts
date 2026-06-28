@@ -1,5 +1,4 @@
-import { isBeforeNoon } from "~/shared/lib/date";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 export interface YearMonthStats {
   yearMonth: string;
@@ -13,17 +12,15 @@ interface Accumulator {
   totalTime: number;
 }
 
-export function buildMonthlyStats(
-  records: readonly DailyRecord[],
-): YearMonthStats[] {
+export function buildMonthlyStats(posts: readonly Post[]): YearMonthStats[] {
   const map = new Map<string, Accumulator>();
 
-  for (const { date, timeOfDay } of records) {
-    if (!timeOfDay) {
+  for (const { date, datetime, elapsed } of posts) {
+    if (!elapsed) {
       continue;
     }
 
-    const yearMonth = date.slice(0, 7);
+    const yearMonth = date.toPlainYearMonth().toString();
 
     const acc = map.get(yearMonth) ?? {
       successCount: 0,
@@ -33,11 +30,11 @@ export function buildMonthlyStats(
 
     acc.totalCount++;
 
-    if (isBeforeNoon(timeOfDay)) {
+    if (datetime.hour < 12) {
       acc.successCount++;
     }
 
-    acc.totalTime += timeOfDay;
+    acc.totalTime += elapsed.total("millisecond");
 
     map.set(yearMonth, acc);
   }

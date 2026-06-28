@@ -12,7 +12,7 @@ export async function putStatsJson<T extends StatsJsonName>(
   const key = `stats/${name}.json`;
 
   const json: StatsJson<StatsValueMap[T]> = {
-    generatedAt: Date.now(),
+    generatedAt: Temporal.Now.zonedDateTimeISO("Asia/Tokyo"),
     payload,
   };
 

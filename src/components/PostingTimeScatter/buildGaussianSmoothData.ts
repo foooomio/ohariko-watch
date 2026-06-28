@@ -1,25 +1,25 @@
 import type { SortedBy } from "~/shared/types/sortedBy";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 export function buildGaussianSmoothData(
-  records: SortedBy<DailyRecord, "date", "asc">,
+  posts: SortedBy<Post, "date", "asc">,
   sigma: number,
 ): [number, number | null][] {
   const radius = Math.ceil(sigma * 3);
   const denominatorFactor = 2 * sigma * sigma;
 
-  return records.map((target, targetIndex) => {
+  return posts.map((target, targetIndex) => {
     let weightedSum = 0;
     let weightTotal = 0;
 
     for (
       let sourceIndex = Math.max(0, targetIndex - radius);
-      sourceIndex <= Math.min(records.length - 1, targetIndex + radius);
+      sourceIndex <= Math.min(posts.length - 1, targetIndex + radius);
       sourceIndex++
     ) {
-      const value = records[sourceIndex].timeOfDay;
+      const elapsed = posts[sourceIndex].elapsed;
 
-      if (!value) {
+      if (!elapsed) {
         continue;
       }
 
@@ -27,12 +27,12 @@ export function buildGaussianSmoothData(
 
       const weight = Math.exp(-(distance * distance) / denominatorFactor);
 
-      weightedSum += value * weight;
+      weightedSum += elapsed.total("millisecond") * weight;
       weightTotal += weight;
     }
 
     return [
-      Date.parse(target.date),
+      target.date.toZonedDateTime("UTC").epochMilliseconds,
       weightTotal > 0 ? weightedSum / weightTotal : null,
     ];
   });

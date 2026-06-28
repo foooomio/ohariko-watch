@@ -1,87 +1,84 @@
-import { dateRange, DAY, isBeforeNoon, JST_OFFSET } from "~/shared/lib/date";
+import { dateRange } from "~/shared/lib/date";
 import type { SortedBy } from "~/shared/types/sortedBy";
-import type {
-  DailyRecord,
-  EmptyDailyRecord,
-  FilledDailyRecord,
-  Streak,
-} from "~/shared/types/stats";
+import type { EmptyPost, FilledPost, Post, Streak } from "~/shared/types/stats";
 import type { PostRow } from "../db/posts";
 
 export interface Stats {
-  records: SortedBy<DailyRecord, "date", "asc">;
+  posts: SortedBy<Post, "date", "asc">;
   streaks: SortedBy<Streak, "startDate", "asc">;
 }
 
 export function buildStatsData(
-  sortedPosts: SortedBy<PostRow, "date", "asc">,
+  postRows: SortedBy<PostRow, "date", "asc">,
 ): Stats {
-  const start = sortedPosts.at(0);
-  const end = sortedPosts.at(-1);
+  const start = postRows.at(0);
+  const end = postRows.at(-1);
 
   if (!start || !end) {
     throw new Error("No posts");
   }
 
-  const records: DailyRecord[] = [];
+  const posts: Post[] = [];
 
-  const streaks: Streak[] = [];
-  let streak: Streak = {
-    days: 0,
-    startDate: "",
-    endDate: "",
-  };
+  const streaks: Partial<Streak>[] = [];
+
+  let currentStreak: Partial<Streak> & { days: number } = { days: 0 };
+
   let isStreakOngoing = true;
 
-  let postIndex = 0;
+  let postRowIndex = 0;
 
-  for (const dateString of dateRange(start.date, end.date)) {
-    const post = sortedPosts.at(postIndex);
+  for (const currentDate of dateRange(
+    Temporal.PlainDate.from(start.date),
+    Temporal.PlainDate.from(end.date),
+  )) {
+    const postRow = postRows.at(postRowIndex);
 
-    if (!post) {
-      throw new Error("Invalid post index");
+    if (!postRow) {
+      throw new Error("Invalid post row index");
     }
 
-    if (post.date === dateString) {
-      const timeOfDay = (post.timestamp + JST_OFFSET) % DAY;
+    if (postRow.date === currentDate.toString()) {
+      const datetime = Temporal.Instant.fromEpochMilliseconds(
+        postRow.timestamp,
+      ).toZonedDateTimeISO("Asia/Tokyo");
+      const elapsed = datetime.toPlainTime().since({ hour: 0 });
 
-      records.push({
-        ...post,
-        timeOfDay,
-      } satisfies FilledDailyRecord);
+      posts.push({
+        date: currentDate,
+        datetime,
+        elapsed,
+        url: postRow.url,
+      } satisfies FilledPost);
 
-      if (isBeforeNoon(timeOfDay)) {
-        streak.days++;
-        streak.startDate ||= dateString;
-        streak.endDate = dateString;
+      if (datetime.hour < 12) {
+        currentStreak.days++;
+        currentStreak.startDate ??= currentDate;
+        currentStreak.endDate = currentDate;
       } else {
         isStreakOngoing = false;
       }
 
-      postIndex++;
+      postRowIndex++;
     } else {
-      records.push({
-        date: dateString,
-        timestamp: null,
+      posts.push({
+        date: currentDate,
+        datetime: null,
+        elapsed: null,
         url: null,
-        timeOfDay: null,
-      } satisfies EmptyDailyRecord);
+      } satisfies EmptyPost);
 
       isStreakOngoing = false;
     }
 
-    if (!isStreakOngoing && streak.days > 1) {
-      streaks.push(streak);
-      streak = {
-        days: 0,
-        startDate: "",
-        endDate: "",
-      };
+    if (!isStreakOngoing && currentStreak.days > 1) {
+      streaks.push(currentStreak);
+      currentStreak = { days: 0 };
       isStreakOngoing = true;
     }
   }
 
-  streaks.push(streak);
+  streaks.push(currentStreak);
 
-  return { records, streaks } as unknown as Stats;
+  return { posts, streaks } as unknown as Stats;
 }

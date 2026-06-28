@@ -8,13 +8,13 @@ import {
 } from "@mantine/core";
 import { CalendarDotsIcon } from "@phosphor-icons/react";
 import { WeekdayStatsChart } from "./WeekdayStatsChart";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 interface Props {
-  records: readonly DailyRecord[];
+  posts: readonly Post[];
 }
 
-export function WeekdayStats({ records }: Props) {
+export function WeekdayStats({ posts }: Props) {
   const { colors } = useMantineTheme();
 
   return (
@@ -26,9 +26,9 @@ export function WeekdayStats({ records }: Props) {
             曜日別分析
           </Title>
         </Group>
-        <Skeleton visible={records.length === 0} height={300}>
+        <Skeleton visible={posts.length === 0} height={300}>
           <WeekdayStatsChart
-            records={records}
+            posts={posts}
             color={{
               successRate: colors.green[4],
               failureRate: colors.red[2],

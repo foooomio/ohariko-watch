@@ -1,21 +1,21 @@
-export interface FilledDailyRecord {
-  date: string;
-  timestamp: number;
+export interface FilledPost {
+  date: Temporal.PlainDate;
+  datetime: Temporal.ZonedDateTime;
+  elapsed: Temporal.Duration;
   url: string;
-  timeOfDay: number;
 }
 
-export interface EmptyDailyRecord {
-  date: string;
-  timestamp: null;
+export interface EmptyPost {
+  date: Temporal.PlainDate;
+  datetime: null;
+  elapsed: null;
   url: null;
-  timeOfDay: null;
 }
 
-export type DailyRecord = FilledDailyRecord | EmptyDailyRecord;
+export type Post = FilledPost | EmptyPost;
 
 export interface Streak {
   days: number;
-  startDate: string;
-  endDate: string;
+  startDate: Temporal.PlainDate;
+  endDate: Temporal.PlainDate;
 }

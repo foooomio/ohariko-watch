@@ -9,13 +9,13 @@ import {
 import { ClockIcon } from "@phosphor-icons/react";
 import { PostingTimeScatterChart } from "./PostingTimeScatterChart";
 import type { SortedBy } from "~/shared/types/sortedBy";
-import type { DailyRecord } from "~/shared/types/stats";
+import type { Post } from "~/shared/types/stats";
 
 interface Props {
-  records: SortedBy<DailyRecord, "date", "asc">;
+  posts: SortedBy<Post, "date", "asc">;
 }
 
-export function PostingTimeScatter({ records }: Props) {
+export function PostingTimeScatter({ posts }: Props) {
   const { colors } = useMantineTheme();
 
   return (
@@ -27,9 +27,9 @@ export function PostingTimeScatter({ records }: Props) {
             日別投稿時刻
           </Title>
         </Group>
-        <Skeleton visible={records.length === 0} height={300}>
+        <Skeleton visible={posts.length === 0} height={300}>
           <PostingTimeScatterChart
-            records={records}
+            posts={posts}
             color={{
               success: colors.green[4],
               failure: colors.red[4],

@@ -32,10 +32,10 @@ export function buildStreaksTableData(
     }
 
     rows.push({
-      key: startDate + "_" + endDate,
+      key: `${startDate}_${endDate}`,
       rank,
       daysStr,
-      period: startDate + " 〜 " + endDate,
+      period: `${startDate} 〜 ${endDate}`,
     });
 
     index++;

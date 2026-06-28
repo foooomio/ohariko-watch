@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  lastUpdatedAt: number;
+  lastUpdatedAt: Temporal.ZonedDateTime | string;
 }
 
 export function Layout({ children, lastUpdatedAt }: Props) {
