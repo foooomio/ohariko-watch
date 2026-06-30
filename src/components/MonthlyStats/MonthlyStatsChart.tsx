@@ -1,12 +1,12 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { Post } from "~/shared/types/stats";
 import { HOUR } from "~/shared/lib/date";
 import { buildMonthlyStats } from "./buildMonthlyStats";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
 interface Props {
-  posts: readonly Post[];
   color: {
     successRate: string;
     failureRate: string;
@@ -14,7 +14,10 @@ interface Props {
   };
 }
 
-export function MonthlyStatsChart({ posts, color }: Props) {
+export default function MonthlyStatsChart({ color }: Props) {
+  const { data } = useSuspenseQuery(postsOptions());
+  const posts = data.payload;
+
   const stats = buildMonthlyStats(posts);
 
   const percentFormatter = new Intl.NumberFormat("ja", {

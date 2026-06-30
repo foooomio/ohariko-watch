@@ -1,12 +1,16 @@
 import { Card, Group, Stack } from "@mantine/core";
 import { FooterLink } from "./FooterLink";
 import { FooterText } from "./FooterText";
+import { useQuery } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
-interface Props {
-  lastUpdatedAt: Temporal.ZonedDateTime | string;
-}
+export function Footer() {
+  const { data } = useQuery(postsOptions());
+  const lastUpdatedAt = data?.generatedAt.toString({
+    smallestUnit: "second",
+    timeZoneName: "never",
+  });
 
-export function Footer({ lastUpdatedAt }: Props) {
   return (
     <Card padding="lg">
       <Stack gap="xs">
@@ -30,13 +34,7 @@ export function Footer({ lastUpdatedAt }: Props) {
           </FooterLink>
         </Group>
 
-        <FooterText>
-          最終更新日時：
-          {lastUpdatedAt.toString({
-            smallestUnit: "second",
-            timeZoneName: "never",
-          })}
-        </FooterText>
+        <FooterText>最終更新日時：{lastUpdatedAt}</FooterText>
       </Stack>
     </Card>
   );

@@ -22,6 +22,7 @@
     "hono": "^4.12.27",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-error-boundary": "^6.1.2",
     "temporal-polyfill-lite": "^0.4.1"
   },
   "devDependencies": {

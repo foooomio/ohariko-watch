@@ -1,12 +1,12 @@
 import { Card, Group, Title } from "@mantine/core";
 import { TodaysPostCondition } from "./TodaysPostCondition";
-import type { Post } from "~/shared/types/stats";
+import { useQuery } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
-interface Props {
-  latestPost: Post | undefined;
-}
+export function TodaysPost() {
+  const { data } = useQuery(postsOptions());
+  const latestPost = data?.payload.at(-1);
 
-export function TodaysPost({ latestPost }: Props) {
   return (
     <Card>
       <Group justify="space-between">
