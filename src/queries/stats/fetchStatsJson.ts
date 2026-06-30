@@ -5,10 +5,12 @@ import type {
 } from "~/shared/types/json";
 import { reviver } from "./reviver";
 
+const { VITE_ASSETS_BASE_URL } = import.meta.env;
+
 export async function fetchStatsJson<T extends StatsJsonName>(
   name: T,
 ): Promise<StatsJson<StatsValueMap[T]>> {
-  const url = `${import.meta.env.VITE_ASSETS_BASE_URL}/stats/${name}.json`;
+  const url = `${VITE_ASSETS_BASE_URL}/stats/${name}.json`;
 
   const res = await fetch(url, {
     headers: {

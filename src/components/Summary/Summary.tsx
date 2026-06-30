@@ -1,7 +1,7 @@
 import { Grid } from "@mantine/core";
 import { SummaryCard } from "./SummaryCard";
 import { buildSummaryData } from "./buildSummaryData";
-import { MINUTE, toPlainTime } from "~/shared/lib/date";
+import { minute, toPlainTime } from "~/shared/lib/date";
 import {
   ClockIcon,
   SunIcon,
@@ -74,7 +74,7 @@ export function Summary() {
           sub={{
             value: recent.averageTime - previous.averageTime,
             formatter: (value) =>
-              (value / MINUTE).toLocaleString("ja", {
+              (value / minute().total("millisecond")).toLocaleString("ja", {
                 maximumFractionDigits: 0,
                 signDisplay: "always",
               }) + "分",

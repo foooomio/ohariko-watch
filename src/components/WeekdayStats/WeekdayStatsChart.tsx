@@ -1,7 +1,7 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import { HOUR } from "~/shared/lib/date";
+import { hour } from "~/shared/lib/date";
 import { buildWeekdayStats } from "./buildWeekdayStats";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { postsOptions } from "@/queries/stats";
@@ -57,9 +57,9 @@ export default function WeekdayStatsChart({ color }: Props) {
       },
       {
         type: "value",
-        min: 4 * HOUR,
-        max: 14 * HOUR,
-        interval: 2 * HOUR,
+        min: hour(4).total("millisecond"),
+        max: hour(14).total("millisecond"),
+        interval: hour(2).total("millisecond"),
         axisLabel: {
           formatter: (value) => time.format(value, "{HH}:{mm}", true),
         },

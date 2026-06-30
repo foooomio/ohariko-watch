@@ -1,7 +1,7 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import { HOUR } from "~/shared/lib/date";
+import { hour } from "~/shared/lib/date";
 import { buildScatterData } from "./buildScatterData";
 import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -25,6 +25,10 @@ export default function PostingTimeScatterChart({ color }: Props) {
   const { successData, failureData } = buildScatterData(posts);
 
   const gaussianSmoothData = buildGaussianSmoothData(posts, 7);
+
+  const startValue = posts
+    .at(-180)
+    ?.date.toZonedDateTime("UTC").epochMilliseconds;
 
   const option: EChartsOption = {
     grid: {
@@ -55,9 +59,9 @@ export default function PostingTimeScatterChart({ color }: Props) {
     },
     yAxis: {
       type: "value",
-      min: 2 * HOUR,
-      max: 16 * HOUR,
-      interval: 2 * HOUR,
+      min: hour(2).total("millisecond"),
+      max: hour(16).total("millisecond"),
+      interval: hour(2).total("millisecond"),
       axisLabel: {
         formatter: (value) => time.format(value, "{HH}:{mm}", true),
       },
@@ -67,8 +71,7 @@ export default function PostingTimeScatterChart({ color }: Props) {
       {
         type: "slider",
         xAxisIndex: 0,
-        startValue: posts.at(-180)?.date.toZonedDateTime("UTC")
-          .epochMilliseconds,
+        startValue,
         showDetail: false,
         bottom: 8,
         brushSelect: false,
@@ -107,7 +110,7 @@ export default function PostingTimeScatterChart({ color }: Props) {
           symbol: "none",
           lineStyle: { color: color.failure, type: "dashed", width: 2 },
           label: { show: false },
-          data: [{ yAxis: 12 * HOUR }],
+          data: [{ yAxis: hour(12).total("millisecond") }],
         },
       },
     ],
