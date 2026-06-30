@@ -1,18 +1,21 @@
 import type { EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { Post } from "~/shared/types/stats";
 import { buildHistogramData } from "./buildHistogramData";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
 interface Props {
-  posts: readonly Post[];
   color: {
     success: string;
     failure: string;
   };
 }
 
-export function PostingTimeHistogramChart({ posts, color }: Props) {
+export default function PostingTimeHistogramChart({ color }: Props) {
+  const { data } = useSuspenseQuery(postsOptions());
+  const posts = data.payload;
+
   const histogram = buildHistogramData(posts);
 
   const option: EChartsOption = {

@@ -8,16 +8,18 @@ import {
   TrendUpIcon,
   TrophyIcon,
 } from "@phosphor-icons/react";
-import type { Post, Streak } from "~/shared/types/stats";
-import type { SortedBy } from "~/shared/types/sortedBy";
+import { useQuery } from "@tanstack/react-query";
+import { postsOptions, streaksOptions } from "@/queries/stats";
+import { useSortedStreaks } from "@/hooks/useSortedStreaks";
 
-interface Props {
-  posts: SortedBy<Post, "date", "asc">;
-  streaks: SortedBy<Streak, "startDate", "asc">;
-  sortedStreaks: SortedBy<Streak, "days", "desc">;
-}
+export function Summary() {
+  const { data: postsData } = useQuery(postsOptions());
+  const { data: streaksData } = useQuery(streaksOptions());
 
-export function Summary({ posts, streaks, sortedStreaks }: Props) {
+  const posts = postsData?.payload ?? [];
+  const streaks = streaksData?.payload ?? [];
+  const sortedStreaks = useSortedStreaks(streaks);
+
   const recent = buildSummaryData(posts.slice(-30));
   const previous = buildSummaryData(posts.slice(-60, -30));
 

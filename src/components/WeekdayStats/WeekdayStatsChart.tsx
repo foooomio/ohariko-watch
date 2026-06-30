@@ -1,12 +1,12 @@
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
-import type { Post } from "~/shared/types/stats";
 import { HOUR } from "~/shared/lib/date";
 import { buildWeekdayStats } from "./buildWeekdayStats";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
 interface Props {
-  posts: readonly Post[];
   color: {
     successRate: string;
     failureRate: string;
@@ -14,7 +14,10 @@ interface Props {
   };
 }
 
-export function WeekdayStatsChart({ posts, color }: Props) {
+export default function WeekdayStatsChart({ color }: Props) {
+  const { data } = useSuspenseQuery(postsOptions());
+  const posts = data.payload;
+
   const stats = buildWeekdayStats(posts);
 
   const percentFormatter = new Intl.NumberFormat("ja", {

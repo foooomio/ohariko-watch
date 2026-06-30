@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import {
   Card,
   Group,
@@ -7,15 +8,10 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { ClockIcon } from "@phosphor-icons/react";
-import { PostingTimeScatterChart } from "./PostingTimeScatterChart";
-import type { SortedBy } from "~/shared/types/sortedBy";
-import type { Post } from "~/shared/types/stats";
 
-interface Props {
-  posts: SortedBy<Post, "date", "asc">;
-}
+const PostingTimeScatterChart = lazy(() => import("./PostingTimeScatterChart"));
 
-export function PostingTimeScatter({ posts }: Props) {
+export function PostingTimeScatter() {
   const { colors } = useMantineTheme();
 
   return (
@@ -27,16 +23,15 @@ export function PostingTimeScatter({ posts }: Props) {
             日別投稿時刻
           </Title>
         </Group>
-        <Skeleton visible={posts.length === 0} height={300}>
+        <Suspense fallback={<Skeleton height={300} />}>
           <PostingTimeScatterChart
-            posts={posts}
             color={{
               success: colors.green[4],
               failure: colors.red[4],
               trendLine: colors.cyan[6],
             }}
           />
-        </Skeleton>
+        </Suspense>
       </Stack>
     </Card>
   );

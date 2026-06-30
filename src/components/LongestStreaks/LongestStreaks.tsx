@@ -9,14 +9,14 @@ import {
 } from "@mantine/core";
 import { RankingIcon } from "@phosphor-icons/react";
 import { buildStreaksTableData } from "./buildStreaksTableData";
-import type { SortedBy } from "~/shared/types/sortedBy";
-import type { Streak } from "~/shared/types/stats";
+import { useQuery } from "@tanstack/react-query";
+import { streaksOptions } from "@/queries/stats";
+import { useSortedStreaks } from "@/hooks/useSortedStreaks";
 
-interface Props {
-  sortedStreaks: SortedBy<Streak, "days", "desc">;
-}
+export function LongestStreaks() {
+  const { data } = useQuery(streaksOptions());
+  const sortedStreaks = useSortedStreaks(data?.payload ?? []);
 
-export function LongestStreaks({ sortedStreaks }: Props) {
   const rows = buildStreaksTableData(sortedStreaks);
 
   return (
