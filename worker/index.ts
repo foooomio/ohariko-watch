@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import { bearerAuth } from "hono/bearer-auth";
 import { extractPost } from "./services/extractPost";
-import { buildStatsData } from "./services/buildStatsData";
+import { buildPostsData } from "./services/buildPostsData";
+import { buildStreaksData } from "./services/buildStreaksData";
 import { insertPost, listPosts } from "./db/posts";
 import { putStatsJson } from "./storage/stats";
 
@@ -33,7 +34,8 @@ app.post("/api/add-url", async (c) => {
 app.post("/api/rebuild-json", async (c) => {
   const postRows = await listPosts(c.env.DB);
 
-  const { posts, streaks } = buildStatsData(postRows);
+  const posts = buildPostsData(postRows);
+  const streaks = buildStreaksData(posts);
 
   await Promise.all([
     putStatsJson(c.env.BUCKET, "posts", posts),
