@@ -78,7 +78,9 @@ export function buildStatsData(
     }
   }
 
-  streaks.push(currentStreak);
+  if (currentStreak.days > 1) {
+    streaks.push(currentStreak);
+  }
 
   return { posts, streaks } as unknown as Stats;
 }
