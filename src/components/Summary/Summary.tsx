@@ -9,19 +9,39 @@ import {
   TrophyIcon,
 } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
-import { postsOptions, streaksOptions } from "@/queries/stats";
-import { useSortedStreaks } from "@/hooks/useSortedStreaks";
+import {
+  postsOptions,
+  sortedStreaksOptions,
+  staleTime,
+  streaksOptions,
+} from "@/queries/stats";
 
 export function Summary() {
-  const { data: postsData } = useQuery(postsOptions());
-  const { data: streaksData } = useQuery(streaksOptions());
+  const { data: postsJson } = useQuery(postsOptions);
+  const { data: streaksJson } = useQuery(streaksOptions);
+  const { data: sortedStreaksJson } = useQuery(sortedStreaksOptions);
 
-  const posts = postsData?.payload ?? [];
-  const streaks = streaksData?.payload ?? [];
-  const sortedStreaks = useSortedStreaks(streaks);
+  const { data: recent } = useQuery({
+    queryKey: postsOptions.queryKey.concat("buildSummaryData", "recent"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildSummaryData(data.payload.slice(-30));
+    },
+    staleTime,
+  });
 
-  const recent = buildSummaryData(posts.slice(-30));
-  const previous = buildSummaryData(posts.slice(-60, -30));
+  const { data: previous } = useQuery({
+    queryKey: postsOptions.queryKey.concat("buildSummaryData", "previous"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildSummaryData(data.payload.slice(-60, -30));
+    },
+    staleTime,
+  });
+
+  const posts = postsJson?.payload ?? [];
+  const streaks = streaksJson?.payload ?? [];
+  const sortedStreaks = sortedStreaksJson?.payload ?? [];
 
   const latestStreak = streaks.at(-1);
   const longestStreak = sortedStreaks.at(0);
@@ -33,13 +53,18 @@ export function Summary() {
     latestStreak?.startDate.equals(streak.startDate),
   );
 
+  const successRate =
+    (recent && previous && recent.successRate - previous.successRate) || 0;
+  const averageTime =
+    (recent && previous && recent.averageTime - previous.averageTime) || 0;
+
   return (
     <Grid>
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="おはりこ成功率"
           metric={{
-            value: recent.successRate,
+            value: recent?.successRate ?? 0,
             formatter: (value) =>
               value.toLocaleString("ja", {
                 style: "percent",
@@ -47,7 +72,7 @@ export function Summary() {
               }),
           }}
           sub={{
-            value: recent.successRate - previous.successRate,
+            value: successRate,
             formatter: (value) =>
               (value * 100).toLocaleString("ja", {
                 maximumFractionDigits: 1,
@@ -65,14 +90,14 @@ export function Summary() {
         <SummaryCard
           label="平均投稿時刻"
           metric={{
-            value: recent.averageTime,
+            value: recent?.averageTime ?? 0,
             formatter: (value) =>
               toPlainTime(Math.round(value)).toString({
                 smallestUnit: "minute",
               }),
           }}
           sub={{
-            value: recent.averageTime - previous.averageTime,
+            value: averageTime,
             formatter: (value) =>
               (value / minute().total("millisecond")).toLocaleString("ja", {
                 maximumFractionDigits: 0,
@@ -88,7 +113,7 @@ export function Summary() {
 
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
-          label={(isStreakOngoing ? "現在" : "前回") + "連続成功"}
+          label={(isStreakOngoing ? "現在" : "前回") + "連続記録"}
           metric={{
             value: latestStreak?.days ?? 0,
             formatter: (value) => value + "日",
@@ -107,7 +132,7 @@ export function Summary() {
 
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
-          label="最長連続成功"
+          label="最長連続記録"
           metric={{
             value: longestStreak?.days ?? 0,
             formatter: (value) => value + "日",

@@ -1,4 +1,3 @@
-import { Layout } from "@/components/Layout";
 import { TodaysPost } from "@/components/TodaysPost";
 import { Summary } from "@/components/Summary";
 import { PostingTimeScatter } from "@/components/PostingTimeScatter";
@@ -9,7 +8,7 @@ import { LongestStreaks } from "@/components/LongestStreaks";
 
 export function Home() {
   return (
-    <Layout>
+    <>
       <TodaysPost />
       <Summary />
       <PostingTimeScatter />
@@ -17,6 +16,6 @@ export function Home() {
       <MonthlyStats />
       <WeekdayStats />
       <LongestStreaks />
-    </Layout>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { hour } from "~/shared/lib/date";
 import { buildScatterData } from "./buildScatterData";
 import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions } from "@/queries/stats";
+import { postsOptions, staleTime } from "@/queries/stats";
 
 const noPostMarker =
   '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>';
@@ -19,16 +19,31 @@ interface Props {
 }
 
 export default function PostingTimeScatterChart({ color }: Props) {
-  const { data } = useSuspenseQuery(postsOptions());
-  const posts = data.payload;
+  const {
+    data: { successData, failureData },
+  } = useSuspenseQuery({
+    queryKey: postsOptions.queryKey.concat("buildScatterData"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildScatterData(data.payload);
+    },
+    staleTime,
+  });
 
-  const { successData, failureData } = buildScatterData(posts);
+  const { data: gaussianSmoothData } = useSuspenseQuery({
+    queryKey: postsOptions.queryKey.concat("buildGaussianSmoothData"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildGaussianSmoothData(data.payload, 7);
+    },
+    staleTime,
+  });
 
-  const gaussianSmoothData = buildGaussianSmoothData(posts, 7);
-
-  const startValue = posts
-    .at(-180)
-    ?.date.toZonedDateTime("UTC").epochMilliseconds;
+  const { data: startValue } = useSuspenseQuery({
+    ...postsOptions,
+    select: (data) =>
+      data.payload.at(-180)?.date.toZonedDateTime("UTC").epochMilliseconds,
+  });
 
   const option: EChartsOption = {
     grid: {

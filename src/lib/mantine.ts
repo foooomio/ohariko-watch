@@ -1,4 +1,9 @@
-import { Card, createTheme, type MantineColorsTuple } from "@mantine/core";
+import {
+  Anchor,
+  Card,
+  createTheme,
+  type MantineColorsTuple,
+} from "@mantine/core";
 
 const brown: MantineColorsTuple = [
   "#f7f3f2",
@@ -19,6 +24,12 @@ export const theme = createTheme({
     brown,
   },
   components: {
+    Anchor: Anchor.extend({
+      defaultProps: {
+        underline: "always",
+        c: "brown.8",
+      },
+    }),
     Card: Card.extend({
       defaultProps: {
         withBorder: true,

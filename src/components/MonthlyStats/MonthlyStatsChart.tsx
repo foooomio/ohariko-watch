@@ -4,7 +4,7 @@ import { echarts } from "@/lib/echarts";
 import { hour } from "~/shared/lib/date";
 import { buildMonthlyStats } from "./buildMonthlyStats";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions } from "@/queries/stats";
+import { postsOptions, staleTime } from "@/queries/stats";
 
 interface Props {
   color: {
@@ -15,10 +15,15 @@ interface Props {
 }
 
 export default function MonthlyStatsChart({ color }: Props) {
-  const { data } = useSuspenseQuery(postsOptions());
-  const posts = data.payload;
-
-  const stats = buildMonthlyStats(posts);
+  const { data } = useSuspenseQuery({
+    queryKey: postsOptions.queryKey.concat("buildMonthlyStats"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildMonthlyStats(data.payload);
+    },
+    staleTime,
+  });
+  console.log(data);
 
   const percentFormatter = new Intl.NumberFormat("ja", {
     style: "percent",
@@ -43,7 +48,7 @@ export default function MonthlyStatsChart({ color }: Props) {
     },
     xAxis: {
       type: "category",
-      data: stats.map(({ yearMonth }) => yearMonth),
+      data: data.map(({ yearMonth }) => yearMonth),
     },
     yAxis: [
       {
@@ -73,7 +78,7 @@ export default function MonthlyStatsChart({ color }: Props) {
         yAxisIndex: 0,
         showBackground: true,
         backgroundStyle: { color: color.failureRate },
-        data: stats.map(({ successRate }) => successRate),
+        data: data.map(({ successRate }) => successRate),
         itemStyle: { color: color.successRate },
         tooltip: {
           valueFormatter: (value) =>
@@ -85,7 +90,7 @@ export default function MonthlyStatsChart({ color }: Props) {
         type: "line",
         smooth: false,
         yAxisIndex: 1,
-        data: stats.map(({ averageTime }) => averageTime),
+        data: data.map(({ averageTime }) => averageTime),
         itemStyle: { color: color.averageTime },
         tooltip: {
           valueFormatter: (value) => time.format(value, "{HH}:{mm}", true),
