@@ -6,9 +6,9 @@ export function Footer() {
   const { data: lastUpdatedAt } = useQuery({
     ...postsOptions,
     select: (data) =>
-      data.generatedAt.toString({
-        smallestUnit: "second",
-        timeZoneName: "never",
+      data.generatedAt.toLocaleString("sv", {
+        dateStyle: "short",
+        timeStyle: "short",
       }),
   });
 
