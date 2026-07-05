@@ -2,6 +2,7 @@ import {
   Anchor,
   Card,
   createTheme,
+  Table,
   type MantineColorsTuple,
 } from "@mantine/core";
 
@@ -38,6 +39,13 @@ export const theme = createTheme({
         root: {
           borderColor: brown[1],
         },
+      },
+    }),
+    Table: Table.extend({
+      defaultProps: {
+        striped: true,
+        stripedColor: "brown.0",
+        withRowBorders: false,
       },
     }),
   },

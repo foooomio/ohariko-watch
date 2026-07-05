@@ -14,8 +14,8 @@ export function Streaks() {
         <Title order={2} size="h4">
           連続記録リスト
         </Title>
-        <Table.ScrollContainer minWidth={350}>
-          <Table striped stripedColor="brown.0" tabularNums>
+        <Table.ScrollContainer minWidth={400}>
+          <Table tabularNums>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>順位</Table.Th>

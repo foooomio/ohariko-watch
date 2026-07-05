@@ -28,10 +28,10 @@ export function PostingTimeScatter() {
           </Group>
           <Button
             component={Link}
-            to="/streaks"
+            to="/posts"
             size="compact-sm"
             variant="white"
-            c="brown"
+            c="brown.8"
           >
             リストで見る
           </Button>

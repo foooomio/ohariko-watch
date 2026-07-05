@@ -34,16 +34,17 @@ export function LongestStreaks() {
             to="/streaks"
             size="compact-sm"
             variant="white"
-            c="brown"
+            c="brown.8"
           >
             すべて見る
           </Button>
         </Group>
         <Skeleton visible={!data}>
-          <Table.ScrollContainer minWidth={350}>
-            <Table striped stripedColor="brown.0" tabularNums>
+          <Table.ScrollContainer minWidth={400}>
+            <Table tabularNums>
               <Table.Thead>
                 <Table.Tr>
+                  <Table.Th w={16}></Table.Th>
                   <Table.Th>順位</Table.Th>
                   <Table.Th>日数</Table.Th>
                   <Table.Th>開始日</Table.Th>
@@ -52,11 +53,10 @@ export function LongestStreaks() {
               </Table.Thead>
               <Table.Tbody>
                 {data?.map(({ days, startDate, endDate }, index) => (
-                  <Table.Tr>
+                  <Table.Tr key={`${startDate}_${endDate}`}>
+                    <Table.Td>{["🥇", "🥈", "🥉"][index]}</Table.Td>
                     <Table.Td>
-                      <Text fw={700}>
-                        {["🥇", "🥈", "🥉"][index]} {index + 1}位
-                      </Text>
+                      <Text fw={700}>{index + 1}位</Text>
                     </Table.Td>
                     <Table.Td>
                       <Text fw={700}>{days}</Text>
