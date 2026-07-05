@@ -23,7 +23,6 @@ export default function MonthlyStatsChart({ color }: Props) {
     },
     staleTime,
   });
-  console.log(data);
 
   const percentFormatter = new Intl.NumberFormat("ja", {
     style: "percent",
