@@ -3,7 +3,7 @@ import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
 import { buildHistogramData } from "./buildHistogramData";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions } from "@/queries/stats";
+import { postsOptions, staleTime } from "@/queries/stats";
 
 interface Props {
   color: {
@@ -13,10 +13,14 @@ interface Props {
 }
 
 export default function PostingTimeHistogramChart({ color }: Props) {
-  const { data } = useSuspenseQuery(postsOptions());
-  const posts = data.payload;
-
-  const histogram = buildHistogramData(posts);
+  const { data } = useSuspenseQuery({
+    queryKey: postsOptions.queryKey.concat("buildHistogramData"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildHistogramData(data.payload);
+    },
+    staleTime,
+  });
 
   const option: EChartsOption = {
     grid: {
@@ -44,7 +48,7 @@ export default function PostingTimeHistogramChart({ color }: Props) {
     series: [
       {
         type: "bar",
-        data: histogram.map((value, index) => ({
+        data: data.map((value, index) => ({
           value,
           itemStyle: { color: index < 12 ? color.success : color.failure },
         })),

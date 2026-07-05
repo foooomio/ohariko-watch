@@ -1,5 +1,5 @@
-import { Group, Text } from "@mantine/core";
-import { ArrowSquareOutIcon } from "@phosphor-icons/react";
+import { Group, HoverCard, Text } from "@mantine/core";
+import { ArrowSquareOutIcon, InfoIcon } from "@phosphor-icons/react";
 import type { Post } from "~/shared/types/stats";
 
 interface Props {
@@ -19,9 +19,21 @@ export function TodaysPostCondition({ latestPost }: Props) {
 
   if (!today.equals(latestPost.date)) {
     return (
-      <Text size="lg" fw={700}>
-        未投稿
-      </Text>
+      <Group gap="xs">
+        <Text size="lg" fw={700}>
+          未投稿
+        </Text>
+        <HoverCard position="bottom-end" shadow="md">
+          <HoverCard.Target>
+            <InfoIcon size={24} style={{ cursor: "pointer", padding: "2px" }} />
+          </HoverCard.Target>
+          <HoverCard.Dropdown maw="80vw">
+            <Text size="sm">
+              手動更新のため反映まで時間がかかる場合があります。
+            </Text>
+          </HoverCard.Dropdown>
+        </HoverCard>
+      </Group>
     );
   }
 

@@ -4,9 +4,21 @@
   "files.associations": {
     ".dev.vars*": "dotenv"
   },
+  "files.readonlyInclude": {
+    "**/pnpm-lock.yaml": true,
+    "**/routeTree.gen.ts": true,
+    "**/worker-configuration.d.ts": true
+  },
+  "search.exclude": {
+    "**/pnpm-lock.yaml": true,
+    "**/routeTree.gen.ts": true,
+    "**/worker-configuration.d.ts": true
+  },
   "cSpell.words": [
     "ANYCOLOR",
     "autospace",
+    "foooomio",
+    "fooooooomio",
     "mantine",
     "Nums",
     "ohariko",

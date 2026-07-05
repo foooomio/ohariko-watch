@@ -12,6 +12,9 @@ import {
 
 import { CanvasRenderer } from "echarts/renderers";
 
+// @ts-ignore
+import "echarts/i18n/langJA";
+
 echarts.use([
   LineChart,
   BarChart,
@@ -23,10 +26,5 @@ echarts.use([
   MarkLineComponent,
   CanvasRenderer,
 ]);
-
-// @ts-ignore
-import langJA from "echarts/lib/i18n/langJA";
-
-echarts.registerLocale("JA", langJA);
 
 export { echarts };

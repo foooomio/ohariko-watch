@@ -10,14 +10,17 @@ import {
 import { RankingIcon } from "@phosphor-icons/react";
 import { buildStreaksTableData } from "./buildStreaksTableData";
 import { useQuery } from "@tanstack/react-query";
-import { streaksOptions } from "@/queries/stats";
-import { useSortedStreaks } from "@/hooks/useSortedStreaks";
+import { sortedStreaksOptions, staleTime } from "@/queries/stats";
 
 export function LongestStreaks() {
-  const { data } = useQuery(streaksOptions());
-  const sortedStreaks = useSortedStreaks(data?.payload ?? []);
-
-  const rows = buildStreaksTableData(sortedStreaks);
+  const { data } = useQuery({
+    queryKey: sortedStreaksOptions.queryKey.concat("buildStreaksTableData"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(sortedStreaksOptions);
+      return buildStreaksTableData(data.payload);
+    },
+    staleTime,
+  });
 
   return (
     <Card p={{ base: "lg", md: "xl" }}>
@@ -25,10 +28,10 @@ export function LongestStreaks() {
         <Group gap="xs">
           <RankingIcon size="20" />
           <Title order={2} size="h4">
-            連続成功ランキング
+            連続記録ランキング
           </Title>
         </Group>
-        <Skeleton visible={sortedStreaks.length === 0} height={230}>
+        <Skeleton visible={!data} height={230}>
           <Table.ScrollContainer
             minWidth={400}
             maxHeight={230}
@@ -46,17 +49,18 @@ export function LongestStreaks() {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
-                {rows.map(({ key, rank, daysStr, period }) => (
-                  <Table.Tr key={key}>
-                    <Table.Td>
-                      <Text fw={700}>{rank}</Text>
-                    </Table.Td>
-                    <Table.Td>
-                      <Text fw={700}>{daysStr}</Text>
-                    </Table.Td>
-                    <Table.Td>{period}</Table.Td>
-                  </Table.Tr>
-                ))}
+                {!!data &&
+                  data.map(({ key, rank, daysStr, period }) => (
+                    <Table.Tr key={key}>
+                      <Table.Td>
+                        <Text fw={700}>{rank}</Text>
+                      </Table.Td>
+                      <Table.Td>
+                        <Text fw={700}>{daysStr}</Text>
+                      </Table.Td>
+                      <Table.Td>{period}</Table.Td>
+                    </Table.Tr>
+                  ))}
               </Table.Tbody>
             </Table>
           </Table.ScrollContainer>
