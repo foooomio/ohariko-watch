@@ -8,18 +8,18 @@ export function Footer() {
     select: (data) =>
       data.generatedAt.toLocaleString("sv", {
         dateStyle: "short",
-        timeStyle: "short",
+        timeStyle: "medium",
       }),
   });
 
   return (
     <Card padding="lg">
       <Stack gap="xs">
-        <Text size="xs" c="brown.7">
+        <Text size="xs" c="brown.8">
           おはりこ観測所は非公式ファンサイトです。司賀りこ様およびANYCOLOR株式会社様とは一切関係ありません。
         </Text>
 
-        <Text size="xs" c="brown.7">
+        <Text size="xs" c="brown.8">
           このサイトのデータは
           <Anchor href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">
             CC0 1.0
@@ -27,7 +27,7 @@ export function Footer() {
           ライセンスのもと自由にご使用いただけます。
         </Text>
 
-        <Text size="xs" c="brown.7">
+        <Text size="xs" c="brown.8">
           最終更新日時：{lastUpdatedAt}
         </Text>
       </Stack>

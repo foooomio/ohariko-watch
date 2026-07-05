@@ -14,13 +14,13 @@ export function Posts() {
         <Title order={2} size="h4">
           投稿リスト
         </Title>
-        <Table.ScrollContainer minWidth={350}>
-          <Table striped stripedColor="brown.0" tabularNums>
+        <Table.ScrollContainer minWidth={320}>
+          <Table tabularNums>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>日付</Table.Th>
-                <Table.Th>日時</Table.Th>
-                <Table.Th>投稿</Table.Th>
+                <Table.Th>時刻</Table.Th>
+                <Table.Th>URL</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
@@ -29,8 +29,7 @@ export function Posts() {
                   <Table.Td>{date.toString()}</Table.Td>
                   <Table.Td>
                     {datetime?.toLocaleString("sv", {
-                      dateStyle: "short",
-                      timeStyle: "short",
+                      timeStyle: "medium",
                     }) ?? "投稿なし"}
                   </Table.Td>
                   <Table.Td>

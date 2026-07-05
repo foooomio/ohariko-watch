@@ -4,8 +4,8 @@ import { echarts } from "@/lib/echarts";
 import { hour } from "~/shared/lib/date";
 import { buildScatterData } from "./buildScatterData";
 import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions, staleTime } from "@/queries/stats";
+import { useSuspenseQueries } from "@tanstack/react-query";
+import { postsOptions } from "@/queries/stats";
 
 const noPostMarker =
   '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>';
@@ -19,30 +19,37 @@ interface Props {
 }
 
 export default function PostingTimeScatterChart({ color }: Props) {
-  const {
-    data: { successData, failureData },
-  } = useSuspenseQuery({
-    queryKey: postsOptions.queryKey.concat("buildScatterData"),
-    queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
-      return buildScatterData(data.payload);
+  const [
+    {
+      data: { successData, failureData },
     },
-    staleTime,
-  });
-
-  const { data: gaussianSmoothData } = useSuspenseQuery({
-    queryKey: postsOptions.queryKey.concat("buildGaussianSmoothData"),
-    queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
-      return buildGaussianSmoothData(data.payload, 7);
-    },
-    staleTime,
-  });
-
-  const { data: startValue } = useSuspenseQuery({
-    ...postsOptions,
-    select: (data) =>
-      data.payload.at(-180)?.date.toZonedDateTime("UTC").epochMilliseconds,
+    { data: gaussianSmoothData },
+    { data: startValue },
+  ] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: postsOptions.queryKey.concat("buildScatterData"),
+        queryFn: async ({ client }) => {
+          const data = await client.ensureQueryData(postsOptions);
+          return buildScatterData(data.payload);
+        },
+      },
+      {
+        queryKey: postsOptions.queryKey.concat("buildGaussianSmoothData"),
+        queryFn: async ({ client }) => {
+          const data = await client.ensureQueryData(postsOptions);
+          return buildGaussianSmoothData(data.payload, 7);
+        },
+      },
+      {
+        queryKey: postsOptions.queryKey.concat("scatterChart", "startValue"),
+        queryFn: async ({ client }) => {
+          const data = await client.ensureQueryData(postsOptions);
+          return data.payload.at(-180)?.date.toZonedDateTime("UTC")
+            .epochMilliseconds;
+        },
+      },
+    ],
   });
 
   const option: EChartsOption = {

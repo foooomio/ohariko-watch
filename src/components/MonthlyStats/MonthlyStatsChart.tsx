@@ -4,7 +4,7 @@ import { echarts } from "@/lib/echarts";
 import { hour } from "~/shared/lib/date";
 import { buildMonthlyStats } from "./buildMonthlyStats";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions, staleTime } from "@/queries/stats";
+import { postsOptions } from "@/queries/stats";
 
 interface Props {
   color: {
@@ -21,7 +21,6 @@ export default function MonthlyStatsChart({ color }: Props) {
       const data = await client.ensureQueryData(postsOptions);
       return buildMonthlyStats(data.payload);
     },
-    staleTime,
   });
 
   const percentFormatter = new Intl.NumberFormat("ja", {

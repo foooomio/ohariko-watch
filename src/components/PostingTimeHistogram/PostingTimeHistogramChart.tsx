@@ -3,7 +3,7 @@ import ReactEChartsCore from "echarts-for-react/esm/core";
 import { echarts } from "@/lib/echarts";
 import { buildHistogramData } from "./buildHistogramData";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsOptions, staleTime } from "@/queries/stats";
+import { postsOptions } from "@/queries/stats";
 
 interface Props {
   color: {
@@ -19,7 +19,6 @@ export default function PostingTimeHistogramChart({ color }: Props) {
       const data = await client.ensureQueryData(postsOptions);
       return buildHistogramData(data.payload);
     },
-    staleTime,
   });
 
   const option: EChartsOption = {

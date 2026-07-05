@@ -12,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   postsOptions,
   sortedStreaksOptions,
-  staleTime,
   streaksOptions,
 } from "@/queries/stats";
 
@@ -27,7 +26,6 @@ export function Summary() {
       const data = await client.ensureQueryData(postsOptions);
       return buildSummaryData(data.payload.slice(-30));
     },
-    staleTime,
   });
 
   const { data: previous } = useQuery({
@@ -36,7 +34,6 @@ export function Summary() {
       const data = await client.ensureQueryData(postsOptions);
       return buildSummaryData(data.payload.slice(-60, -30));
     },
-    staleTime,
   });
 
   const posts = postsJson?.payload ?? [];
