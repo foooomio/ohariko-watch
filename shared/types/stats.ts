@@ -15,6 +15,7 @@ export interface EmptyPost {
 export type Post = FilledPost | EmptyPost;
 
 export interface Streak {
+  rank: number;
   days: number;
   startDate: Temporal.PlainDate;
   endDate: Temporal.PlainDate;

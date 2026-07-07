@@ -11,11 +11,11 @@ import {
 import { RankingIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { sortedStreaksOptions } from "@/queries/stats";
+import { streaksOptions } from "@/queries/stats";
 
 export function LongestStreaks() {
   const { data } = useQuery({
-    ...sortedStreaksOptions,
+    ...streaksOptions,
     select: (data) => data.payload.slice(0, 3),
   });
 
@@ -50,12 +50,12 @@ export function LongestStreaks() {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {data?.map(({ days, startDate, endDate }, index) => (
+              {data?.map(({ rank, days, startDate, endDate }) => (
                 <Table.Tr key={`${startDate}_${endDate}`}>
-                  <Table.Td>{["🥇", "🥈", "🥉"][index]}</Table.Td>
+                  <Table.Td>{[, "🥇", "🥈", "🥉"][rank]}</Table.Td>
                   <Table.Td>
                     <Text fw={700} textWrap="nowrap">
-                      {index + 1}位
+                      {rank}位
                     </Text>
                   </Table.Td>
                   <Table.Td>

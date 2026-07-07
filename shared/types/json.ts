@@ -8,7 +8,7 @@ export interface StatsJson<T> {
 
 export interface StatsValueMap {
   posts: SortedBy<Post, "date", "asc">;
-  streaks: SortedBy<Streak, "startDate", "asc">;
+  streaks: SortedBy<Streak, "days", "desc">;
 }
 
 export type StatsJsonName = keyof StatsValueMap;
