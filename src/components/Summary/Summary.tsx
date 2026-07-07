@@ -9,16 +9,12 @@ import {
   TrophyIcon,
 } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  postsOptions,
-  sortedStreaksOptions,
-  streaksOptions,
-} from "@/queries/stats";
+import { postsOptions, streaksOptions } from "@/queries/stats";
+import { byStartDateDesc } from "~/shared/lib/comparators/streaks";
 
 export function Summary() {
   const { data: postsJson } = useQuery(postsOptions);
   const { data: streaksJson } = useQuery(streaksOptions);
-  const { data: sortedStreaksJson } = useQuery(sortedStreaksOptions);
 
   const { data: recent } = useQuery({
     queryKey: postsOptions.queryKey.concat("buildSummaryData", "recent"),
@@ -38,17 +34,13 @@ export function Summary() {
 
   const posts = postsJson?.payload ?? [];
   const streaks = streaksJson?.payload ?? [];
-  const sortedStreaks = sortedStreaksJson?.payload ?? [];
 
-  const latestStreak = streaks.at(-1);
-  const longestStreak = sortedStreaks.at(0);
+  const latestStreak = streaks.toSorted(byStartDateDesc).at(0);
+  const longestStreak = streaks.at(0);
 
   const latestPost = posts.at(-1);
   const isStreakOngoing =
     latestStreak && latestPost && latestStreak.endDate.equals(latestPost.date);
-  const latestStreakIndex = sortedStreaks.findIndex((streak) =>
-    latestStreak?.startDate.equals(streak.startDate),
-  );
 
   const successRate =
     (recent && previous && recent.successRate - previous.successRate) || 0;
@@ -116,7 +108,7 @@ export function Summary() {
             formatter: (value) => value + "日",
           }}
           sub={{
-            value: latestStreakIndex + 1,
+            value: latestStreak?.rank ?? 0,
             formatter: (value) =>
               (isStreakOngoing ? "現在" : "前回") + value + "位",
             color: () => (isStreakOngoing ? "green" : "red"),

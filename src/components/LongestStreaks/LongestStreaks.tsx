@@ -11,11 +11,11 @@ import {
 import { RankingIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { sortedStreaksOptions } from "@/queries/stats";
+import { streaksOptions } from "@/queries/stats";
 
 export function LongestStreaks() {
   const { data } = useQuery({
-    ...sortedStreaksOptions,
+    ...streaksOptions,
     select: (data) => data.payload.slice(0, 3),
   });
 
@@ -40,34 +40,38 @@ export function LongestStreaks() {
           </Button>
         </Group>
         <Skeleton visible={!data}>
-          <Table.ScrollContainer minWidth={400}>
-            <Table tabularNums>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th w={16}></Table.Th>
-                  <Table.Th>順位</Table.Th>
-                  <Table.Th>日数</Table.Th>
-                  <Table.Th>開始日</Table.Th>
-                  <Table.Th>終了日</Table.Th>
+          <Table tabularNums>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th w={16}></Table.Th>
+                <Table.Th>順位</Table.Th>
+                <Table.Th>日数</Table.Th>
+                <Table.Th>期間</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
+              {data?.map(({ rank, days, startDate, endDate }) => (
+                <Table.Tr key={`${startDate}_${endDate}`}>
+                  <Table.Td>{[, "🥇", "🥈", "🥉"][rank]}</Table.Td>
+                  <Table.Td>
+                    <Text fw={700} textWrap="nowrap">
+                      {rank}位
+                    </Text>
+                  </Table.Td>
+                  <Table.Td>
+                    <Text fw={700} textWrap="nowrap">
+                      {days}日
+                    </Text>
+                  </Table.Td>
+                  <Table.Td>
+                    <Text textWrap="balance">
+                      {`${startDate}\u00A0\u200B〜\u00A0${endDate}`}
+                    </Text>
+                  </Table.Td>
                 </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {data?.map(({ days, startDate, endDate }, index) => (
-                  <Table.Tr key={`${startDate}_${endDate}`}>
-                    <Table.Td>{["🥇", "🥈", "🥉"][index]}</Table.Td>
-                    <Table.Td>
-                      <Text fw={700}>{index + 1}位</Text>
-                    </Table.Td>
-                    <Table.Td>
-                      <Text fw={700}>{days}</Text>
-                    </Table.Td>
-                    <Table.Td>{startDate.toString()}</Table.Td>
-                    <Table.Td>{endDate.toString()}</Table.Td>
-                  </Table.Tr>
-                )) ?? null}
-              </Table.Tbody>
-            </Table>
-          </Table.ScrollContainer>
+              )) ?? null}
+            </Table.Tbody>
+          </Table>
         </Skeleton>
       </Stack>
     </Card>
