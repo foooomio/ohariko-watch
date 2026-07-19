@@ -16,7 +16,7 @@ export function PostsTable() {
 
   const { data } = useQuery(postsOptions);
 
-  const posts = data?.payload.toSorted(comparator(sortOption)) ?? [];
+  const posts = data.toSorted(comparator(sortOption));
 
   const onSortByDate = () => {
     let order: SortOrder = "asc";
@@ -40,13 +40,13 @@ export function PostsTable() {
         <Table.Thead>
           <Table.Tr>
             <Table.Th onClick={onSortByDate} style={{ cursor: "pointer" }}>
-              <Group justify="space-between">
+              <Group justify="space-between" gap="xs">
                 日付
                 <SortIcon sortKey="date" sortOption={sortOption} />
               </Group>
             </Table.Th>
             <Table.Th onClick={onSortByElapsed} style={{ cursor: "pointer" }}>
-              <Group justify="space-between">
+              <Group justify="space-between" gap="xs">
                 時刻
                 <SortIcon sortKey="elapsed" sortOption={sortOption} />
               </Group>

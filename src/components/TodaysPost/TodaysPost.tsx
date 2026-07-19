@@ -4,10 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { postsOptions } from "@/queries/stats";
 
 export function TodaysPost() {
-  const { data } = useQuery({
-    ...postsOptions,
-    select: (data) => data.payload.at(-1),
-  });
+  const { data } = useQuery(postsOptions);
 
   return (
     <Card>
@@ -15,7 +12,7 @@ export function TodaysPost() {
         <Title order={2} size="h4">
           本日のおはりこ
         </Title>
-        <TodaysPostCondition latestPost={data} />
+        <TodaysPostCondition latestPost={data.at(-1)} />
       </Group>
     </Card>
   );

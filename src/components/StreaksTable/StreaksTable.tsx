@@ -16,7 +16,7 @@ export function StreaksTable() {
 
   const { data } = useQuery(streaksOptions);
 
-  const streaks = data?.payload.toSorted(comparator(sortOption)) ?? [];
+  const streaks = data.toSorted(comparator(sortOption));
 
   const onSortByDays = () => {
     let order: SortOrder = "asc";
@@ -41,20 +41,14 @@ export function StreaksTable() {
           <Table.Tr>
             <Table.Th>順位</Table.Th>
             <Table.Th onClick={onSortByDays} style={{ cursor: "pointer" }}>
-              <Group justify="space-between">
+              <Group justify="space-between" gap="xs">
                 日数
                 <SortIcon sortKey="days" sortOption={sortOption} />
               </Group>
             </Table.Th>
             <Table.Th onClick={onSortByStartDate} style={{ cursor: "pointer" }}>
-              <Group justify="space-between">
-                開始日
-                <SortIcon sortKey="startDate" sortOption={sortOption} />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={onSortByStartDate} style={{ cursor: "pointer" }}>
-              <Group justify="space-between">
-                終了日
+              <Group justify="space-between" gap="xs">
+                期間
                 <SortIcon sortKey="startDate" sortOption={sortOption} />
               </Group>
             </Table.Th>

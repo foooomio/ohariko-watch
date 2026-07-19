@@ -12,8 +12,7 @@ export const StreaksTableRow = memo(function StreaksTableRow({
     <Table.Tr>
       <Table.Td>{rank}</Table.Td>
       <Table.Td>{days}</Table.Td>
-      <Table.Td>{startDate.toString()}</Table.Td>
-      <Table.Td>{endDate.toString()}</Table.Td>
+      <Table.Td>{`${startDate} - ${endDate}`}</Table.Td>
     </Table.Tr>
   );
 });
