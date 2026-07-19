@@ -13,11 +13,27 @@ import { postsOptions, streaksOptions } from "@/queries/stats";
 import { byStartDateDesc } from "~/shared/lib/comparators/streaks";
 
 export function Summary() {
-  const { data: posts } = useQuery(postsOptions);
-  const { data: streaks } = useQuery(streaksOptions);
+  const { data: postsJson } = useQuery(postsOptions);
+  const { data: streaksJson } = useQuery(streaksOptions);
 
-  const recent = buildSummaryData(posts.slice(-30));
-  const previous = buildSummaryData(posts.slice(-60, -30));
+  const { data: recent } = useQuery({
+    queryKey: postsOptions.queryKey.concat("buildSummaryData", "recent"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildSummaryData(data.payload.slice(-30));
+    },
+  });
+
+  const { data: previous } = useQuery({
+    queryKey: postsOptions.queryKey.concat("buildSummaryData", "previous"),
+    queryFn: async ({ client }) => {
+      const data = await client.ensureQueryData(postsOptions);
+      return buildSummaryData(data.payload.slice(-60, -30));
+    },
+  });
+
+  const posts = postsJson?.payload ?? [];
+  const streaks = streaksJson?.payload ?? [];
 
   const latestStreak = streaks.toSorted(byStartDateDesc).at(0);
   const longestStreak = streaks.at(0);
@@ -26,13 +42,18 @@ export function Summary() {
   const isStreakOngoing =
     latestStreak && latestPost && latestStreak.endDate.equals(latestPost.date);
 
+  const successRate =
+    (recent && previous && recent.successRate - previous.successRate) || 0;
+  const averageTime =
+    (recent && previous && recent.averageTime - previous.averageTime) || 0;
+
   return (
     <Grid>
       <Grid.Col span={{ base: 6, md: 3 }}>
         <SummaryCard
           label="おはりこ成功率"
           metric={{
-            value: recent.successRate,
+            value: recent?.successRate ?? 0,
             formatter: (value) =>
               value.toLocaleString("ja", {
                 style: "percent",
@@ -40,7 +61,7 @@ export function Summary() {
               }),
           }}
           sub={{
-            value: recent.successRate - previous.successRate,
+            value: successRate,
             formatter: (value) =>
               (value * 100).toLocaleString("ja", {
                 maximumFractionDigits: 1,
@@ -58,14 +79,14 @@ export function Summary() {
         <SummaryCard
           label="平均投稿時刻"
           metric={{
-            value: recent.averageTime,
+            value: recent?.averageTime ?? 0,
             formatter: (value) =>
               toPlainTime(Math.round(value)).toString({
                 smallestUnit: "minute",
               }),
           }}
           sub={{
-            value: recent.averageTime - previous.averageTime,
+            value: averageTime,
             formatter: (value) => {
               const m = Math.abs(value / minute().total("millisecond"));
               return `${m.toFixed()}分${value < 0 ? "早" : "遅"}`;

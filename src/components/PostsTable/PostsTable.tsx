@@ -16,7 +16,7 @@ export function PostsTable() {
 
   const { data } = useQuery(postsOptions);
 
-  const posts = data.toSorted(comparator(sortOption));
+  const posts = data?.payload.toSorted(comparator(sortOption)) ?? [];
 
   const onSortByDate = () => {
     let order: SortOrder = "asc";
