@@ -2,7 +2,7 @@ import type { SortedBy } from "./sortedBy";
 import type { Post, Streak } from "./stats";
 
 export interface StatsJson<T> {
-  generatedAt: Temporal.ZonedDateTime | string;
+  generatedAt: Temporal.ZonedDateTime;
   payload: T;
 }
 

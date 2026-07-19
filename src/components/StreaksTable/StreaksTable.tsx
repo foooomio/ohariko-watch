@@ -16,7 +16,7 @@ export function StreaksTable() {
 
   const { data } = useQuery(streaksOptions);
 
-  const streaks = data.toSorted(comparator(sortOption));
+  const streaks = data?.payload.toSorted(comparator(sortOption)) ?? [];
 
   const onSortByDays = () => {
     let order: SortOrder = "asc";
