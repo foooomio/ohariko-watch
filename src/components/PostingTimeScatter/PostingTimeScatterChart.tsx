@@ -45,8 +45,10 @@ export default function PostingTimeScatterChart({ color }: Props) {
         queryKey: postsOptions.queryKey.concat("scatterChart", "startValue"),
         queryFn: async ({ client }) => {
           const data = await client.ensureQueryData(postsOptions);
-          return data.payload.at(-180)?.date.toZonedDateTime("UTC")
-            .epochMilliseconds;
+          return (
+            data.payload.at(-180)?.date.toZonedDateTime("UTC")
+              .epochMilliseconds ?? 0
+          );
         },
       },
     ],
