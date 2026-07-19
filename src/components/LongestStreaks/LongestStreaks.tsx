@@ -14,10 +14,9 @@ import { useQuery } from "@tanstack/react-query";
 import { streaksOptions } from "@/queries/stats";
 
 export function LongestStreaks() {
-  const { data } = useQuery({
-    ...streaksOptions,
-    select: (data) => data.payload.slice(0, 3),
-  });
+  const { data } = useQuery(streaksOptions);
+
+  const streaks = data.slice(0, 3);
 
   return (
     <Card p={{ base: "lg", md: "xl" }}>
@@ -39,7 +38,7 @@ export function LongestStreaks() {
             すべて見る
           </Button>
         </Group>
-        <Skeleton visible={!data}>
+        <Skeleton visible={streaks.length === 0}>
           <Table tabularNums>
             <Table.Thead>
               <Table.Tr>
@@ -50,7 +49,7 @@ export function LongestStreaks() {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {data?.map(({ rank, days, startDate, endDate }) => (
+              {streaks.map(({ rank, days, startDate, endDate }) => (
                 <Table.Tr key={`${startDate}_${endDate}`}>
                   <Table.Td>{[, "🥇", "🥈", "🥉"][rank]}</Table.Td>
                   <Table.Td>
@@ -65,11 +64,11 @@ export function LongestStreaks() {
                   </Table.Td>
                   <Table.Td>
                     <Text textWrap="balance">
-                      {`${startDate}\u00A0\u200B〜\u00A0${endDate}`}
+                      {`${startDate} - ${endDate}`}
                     </Text>
                   </Table.Td>
                 </Table.Tr>
-              )) ?? null}
+              ))}
             </Table.Tbody>
           </Table>
         </Skeleton>
