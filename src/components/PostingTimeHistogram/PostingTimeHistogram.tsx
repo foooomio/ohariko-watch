@@ -1,17 +1,8 @@
-import { lazy, Suspense } from "react";
-import {
-  Card,
-  Group,
-  Skeleton,
-  Stack,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Group, Skeleton, Stack, Title, useMantineTheme } from "@mantine/core";
 import { ChartBarIcon } from "@phosphor-icons/react";
+import { lazy, Suspense } from "react";
 
-const PostingTimeHistogramChart = lazy(
-  () => import("./PostingTimeHistogramChart"),
-);
+const PostingTimeHistogramChart = lazy(() => import("./PostingTimeHistogramChart"));
 
 export function PostingTimeHistogram() {
   const { colors } = useMantineTheme();

@@ -1,11 +1,13 @@
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
+
 import { echarts } from "@/lib/echarts";
-import { hour } from "~/shared/lib/date";
-import { buildScatterData } from "./buildScatterData";
-import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
-import { useSuspenseQueries } from "@tanstack/react-query";
 import { postsOptions } from "@/queries/stats";
+import { hour } from "~/shared/lib/date";
+
+import { buildGaussianSmoothData } from "./buildGaussianSmoothData";
+import { buildScatterData } from "./buildScatterData";
 
 const noPostMarker =
   '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>';
@@ -45,8 +47,7 @@ export default function PostingTimeScatterChart({ color }: Props) {
         queryKey: postsOptions.queryKey.concat("scatterChart", "startValue"),
         queryFn: async ({ client }) => {
           const data = await client.ensureQueryData(postsOptions);
-          return data.payload.at(-180)?.date.toZonedDateTime("UTC")
-            .epochMilliseconds;
+          return data.payload.at(-180)?.date.toZonedDateTime("UTC").epochMilliseconds;
         },
       },
     ],

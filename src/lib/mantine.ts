@@ -1,10 +1,4 @@
-import {
-  Anchor,
-  Card,
-  createTheme,
-  Table,
-  type MantineColorsTuple,
-} from "@mantine/core";
+import { Anchor, Card, createTheme, Table, type MantineColorsTuple } from "@mantine/core";
 
 const brown: MantineColorsTuple = [
   "#f7f3f2",

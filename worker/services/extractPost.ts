@@ -1,5 +1,6 @@
-import type { PostRow } from "../db/posts";
 import { snowflakeIdToTimestamp } from "~/shared/lib/snowflake";
+
+import type { PostRow } from "../db/posts";
 
 export function extractPost(text: string): PostRow | null {
   const regexp = /https:\/\/x\.com\/(?:Shigariko_|i)\/status\/(\d+)/i;

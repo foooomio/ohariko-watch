@@ -1,7 +1,8 @@
+import type { QueryClient } from "@tanstack/react-query";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+
 import { Layout } from "@/components/Layout";
 import { postsOptions, streaksOptions } from "@/queries/stats";
-import type { QueryClient } from "@tanstack/react-query";
 
 interface Context {
   queryClient: QueryClient;

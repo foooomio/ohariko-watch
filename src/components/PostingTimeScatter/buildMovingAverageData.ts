@@ -21,9 +21,6 @@ export function buildMovingAverageData(
       count--;
     }
 
-    return [
-      added.date.toZonedDateTime("UTC").epochMilliseconds,
-      count > 0 ? sum / count : null,
-    ];
+    return [added.date.toZonedDateTime("UTC").epochMilliseconds, count > 0 ? sum / count : null];
   });
 }

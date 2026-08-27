@@ -17,14 +17,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export function SummaryCard({
-  label,
-  metric,
-  sub,
-  description,
-  icon,
-  isLoading,
-}: Props) {
+export function SummaryCard({ label, metric, sub, description, icon, isLoading }: Props) {
   return (
     <Card padding="lg">
       <Group gap={6}>

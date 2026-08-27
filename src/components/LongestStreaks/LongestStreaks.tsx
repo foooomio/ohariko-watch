@@ -1,16 +1,8 @@
-import {
-  Button,
-  Card,
-  Group,
-  Skeleton,
-  Stack,
-  Table,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Button, Card, Group, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { RankingIcon } from "@phosphor-icons/react";
-import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+
 import { streaksOptions } from "@/queries/stats";
 
 export function LongestStreaks() {
@@ -29,13 +21,7 @@ export function LongestStreaks() {
               連続記録ランキング
             </Title>
           </Group>
-          <Button
-            component={Link}
-            to="/streaks"
-            size="compact-sm"
-            variant="white"
-            c="brown.8"
-          >
+          <Button component={Link} to="/streaks" size="compact-sm" variant="white" c="brown.8">
             すべて見る
           </Button>
         </Group>
@@ -64,9 +50,7 @@ export function LongestStreaks() {
                     </Text>
                   </Table.Td>
                   <Table.Td>
-                    <Text textWrap="balance">
-                      {`${startDate} - ${endDate}`}
-                    </Text>
+                    <Text textWrap="balance">{`${startDate} - ${endDate}`}</Text>
                   </Table.Td>
                 </Table.Tr>
               )) ?? null}

@@ -6,9 +6,7 @@ export interface PostRow {
   url: string;
 }
 
-export async function listPosts(
-  db: D1Database,
-): Promise<SortedBy<PostRow, "date", "asc">> {
+export async function listPosts(db: D1Database): Promise<SortedBy<PostRow, "date", "asc">> {
   const { results } = await db
     .prepare(
       `

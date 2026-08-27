@@ -1,12 +1,14 @@
-import { useState } from "react";
 import { Group, Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { streaksOptions } from "@/queries/stats";
+import { useState } from "react";
+
 import { SortIcon } from "@/components/SortIcon";
-import { StreaksTableRow } from "./StreaksTableRow";
-import { comparator } from "./comparator";
-import type { Streak } from "~/shared/types/stats";
+import { streaksOptions } from "@/queries/stats";
 import type { SortOption, SortOrder } from "~/shared/types/sortedBy";
+import type { Streak } from "~/shared/types/stats";
+
+import { comparator } from "./comparator";
+import { StreaksTableRow } from "./StreaksTableRow";
 
 export function StreaksTable() {
   const [sortOption, setSortOption] = useState<SortOption<Streak>>({

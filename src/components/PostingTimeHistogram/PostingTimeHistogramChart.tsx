@@ -1,9 +1,11 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
+
 import { echarts } from "@/lib/echarts";
-import { buildHistogramData } from "./buildHistogramData";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { postsOptions } from "@/queries/stats";
+
+import { buildHistogramData } from "./buildHistogramData";
 
 interface Props {
   color: {
@@ -58,11 +60,5 @@ export default function PostingTimeHistogramChart({ color }: Props) {
     ],
   };
 
-  return (
-    <ReactEChartsCore
-      echarts={echarts}
-      option={option}
-      opts={{ locale: "JA" }}
-    />
-  );
+  return <ReactEChartsCore echarts={echarts} option={option} opts={{ locale: "JA" }} />;
 }

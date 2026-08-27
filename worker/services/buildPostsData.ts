@@ -1,6 +1,7 @@
 import { dateRange } from "~/shared/lib/date";
 import type { SortedBy } from "~/shared/types/sortedBy";
 import type { EmptyPost, FilledPost, Post } from "~/shared/types/stats";
+
 import type { PostRow } from "../db/posts";
 
 export function buildPostsData(
@@ -28,9 +29,9 @@ export function buildPostsData(
     }
 
     if (postRow.date === currentDate.toString()) {
-      const datetime = Temporal.Instant.fromEpochMilliseconds(
-        postRow.timestamp,
-      ).toZonedDateTimeISO("Asia/Tokyo");
+      const datetime = Temporal.Instant.fromEpochMilliseconds(postRow.timestamp).toZonedDateTimeISO(
+        "Asia/Tokyo",
+      );
 
       const elapsed = datetime.toPlainTime().since({ hour: 0 });
 

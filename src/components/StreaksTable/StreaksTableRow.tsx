@@ -1,5 +1,6 @@
-import { memo } from "react";
 import { Table } from "@mantine/core";
+import { memo } from "react";
+
 import type { Streak } from "~/shared/types/stats";
 
 export const StreaksTableRow = memo(function StreaksTableRow({

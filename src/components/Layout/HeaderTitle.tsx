@@ -1,5 +1,6 @@
 import { Anchor, Group, Image, Title } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
+
 import Logo from "@/assets/logo.svg";
 
 export function HeaderTitle() {

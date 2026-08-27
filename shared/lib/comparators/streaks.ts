@@ -9,13 +9,9 @@ export function byStartDateDesc(a: Streak, b: Streak): number {
 }
 
 export function byDaysAsc(a: Streak, b: Streak): number {
-  return a.days === b.days
-    ? Temporal.PlainDate.compare(a.startDate, b.startDate)
-    : a.days - b.days;
+  return a.days === b.days ? Temporal.PlainDate.compare(a.startDate, b.startDate) : a.days - b.days;
 }
 
 export function byDaysDesc(a: Streak, b: Streak): number {
-  return b.days === a.days
-    ? Temporal.PlainDate.compare(b.startDate, a.startDate)
-    : b.days - a.days;
+  return b.days === a.days ? Temporal.PlainDate.compare(b.startDate, a.startDate) : b.days - a.days;
 }

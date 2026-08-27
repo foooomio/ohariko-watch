@@ -1,16 +1,13 @@
 import { Grid } from "@mantine/core";
-import { SummaryCard } from "./SummaryCard";
-import { buildSummaryData } from "./buildSummaryData";
-import { minute, toPlainTime } from "~/shared/lib/date";
-import {
-  ClockIcon,
-  SunIcon,
-  TrendUpIcon,
-  TrophyIcon,
-} from "@phosphor-icons/react";
+import { ClockIcon, SunIcon, TrendUpIcon, TrophyIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
+
 import { postsOptions, streaksOptions } from "@/queries/stats";
 import { byStartDateDesc } from "~/shared/lib/comparators/streaks";
+import { minute, toPlainTime } from "~/shared/lib/date";
+
+import { buildSummaryData } from "./buildSummaryData";
+import { SummaryCard } from "./SummaryCard";
 
 export function Summary() {
   const { data: postsJson } = useQuery(postsOptions);
@@ -42,10 +39,8 @@ export function Summary() {
   const isStreakOngoing =
     latestStreak && latestPost && latestStreak.endDate.equals(latestPost.date);
 
-  const successRate =
-    (recent && previous && recent.successRate - previous.successRate) || 0;
-  const averageTime =
-    (recent && previous && recent.averageTime - previous.averageTime) || 0;
+  const successRate = (recent && previous && recent.successRate - previous.successRate) || 0;
+  const averageTime = (recent && previous && recent.averageTime - previous.averageTime) || 0;
 
   return (
     <Grid>
@@ -108,8 +103,7 @@ export function Summary() {
           }}
           sub={{
             value: latestStreak?.rank ?? 0,
-            formatter: (value) =>
-              (isStreakOngoing ? "現在" : "前回") + value + "位",
+            formatter: (value) => (isStreakOngoing ? "現在" : "前回") + value + "位",
             color: () => (isStreakOngoing ? "green" : "red"),
           }}
           description={`${latestStreak?.startDate} - ${latestStreak?.endDate}`}

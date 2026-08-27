@@ -1,10 +1,12 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { time, type EChartsOption } from "echarts";
 import ReactEChartsCore from "echarts-for-react/esm/core";
+
 import { echarts } from "@/lib/echarts";
-import { hour } from "~/shared/lib/date";
-import { buildMonthlyStats } from "./buildMonthlyStats";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { postsOptions } from "@/queries/stats";
+import { hour } from "~/shared/lib/date";
+
+import { buildMonthlyStats } from "./buildMonthlyStats";
 
 interface Props {
   color: {
@@ -97,11 +99,5 @@ export default function MonthlyStatsChart({ color }: Props) {
     ],
   };
 
-  return (
-    <ReactEChartsCore
-      echarts={echarts}
-      option={option}
-      opts={{ locale: "JA" }}
-    />
-  );
+  return <ReactEChartsCore echarts={echarts} option={option} opts={{ locale: "JA" }} />;
 }

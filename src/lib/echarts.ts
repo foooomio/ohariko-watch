@@ -1,7 +1,4 @@
-import * as echarts from "echarts/core";
-
 import { LineChart, BarChart, ScatterChart } from "echarts/charts";
-
 import {
   LegendPlainComponent,
   GridSimpleComponent,
@@ -9,9 +6,8 @@ import {
   TooltipComponent,
   MarkLineComponent,
 } from "echarts/components";
-
+import * as echarts from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-
 // @ts-ignore
 import "echarts/i18n/langJA";
 

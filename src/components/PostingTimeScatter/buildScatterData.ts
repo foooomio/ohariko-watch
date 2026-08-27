@@ -18,10 +18,7 @@ export function buildScatterData(posts: readonly Post[]): {
     }
 
     const data = {
-      value: [
-        date.toZonedDateTime("UTC").epochMilliseconds,
-        elapsed.total("millisecond"),
-      ],
+      value: [date.toZonedDateTime("UTC").epochMilliseconds, elapsed.total("millisecond")],
       extra: { url },
     };
 

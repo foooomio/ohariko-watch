@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+
 import { fetchStatsJson } from "./fetchStatsJson";
 
 export const postsOptions = queryOptions({
