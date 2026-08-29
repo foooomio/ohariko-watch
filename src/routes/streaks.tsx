@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+
 import { Streaks } from "@/pages/Streaks";
 
 export const Route = createFileRoute("/streaks")({

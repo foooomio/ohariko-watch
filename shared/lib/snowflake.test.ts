@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { snowflakeIdToTimestamp } from "./snowflake";
 
 describe("snowflakeIdToTimestamp", () => {

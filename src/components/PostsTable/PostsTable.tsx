@@ -1,12 +1,14 @@
-import { useState } from "react";
 import { Group, Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { postsOptions } from "@/queries/stats";
+import { useState } from "react";
+
 import { SortIcon } from "@/components/SortIcon";
-import { PostsTableRow } from "./PostsTableRow";
-import { comparator } from "./comparator";
-import type { Post } from "~/shared/types/stats";
+import { postsOptions } from "@/queries/stats";
 import type { SortOption, SortOrder } from "~/shared/types/sortedBy";
+import type { Post } from "~/shared/types/stats";
+
+import { comparator } from "./comparator";
+import { PostsTableRow } from "./PostsTableRow";
 
 export function PostsTable() {
   const [sortOption, setSortOption] = useState<SortOption<Post>>({

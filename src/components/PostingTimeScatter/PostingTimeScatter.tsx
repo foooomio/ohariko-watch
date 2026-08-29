@@ -1,15 +1,7 @@
-import { lazy, Suspense } from "react";
-import {
-  Button,
-  Card,
-  Group,
-  Skeleton,
-  Stack,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Button, Card, Group, Skeleton, Stack, Title, useMantineTheme } from "@mantine/core";
 import { ClockIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 
 const PostingTimeScatterChart = lazy(() => import("./PostingTimeScatterChart"));
 
@@ -26,13 +18,7 @@ export function PostingTimeScatter() {
               日別投稿時刻
             </Title>
           </Group>
-          <Button
-            component={Link}
-            to="/posts"
-            size="compact-sm"
-            variant="white"
-            c="brown.8"
-          >
+          <Button component={Link} to="/posts" size="compact-sm" variant="white" c="brown.8">
             リストで見る
           </Button>
         </Group>

@@ -1,13 +1,6 @@
-import { lazy, Suspense } from "react";
-import {
-  Card,
-  Group,
-  Skeleton,
-  Stack,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Group, Skeleton, Stack, Title, useMantineTheme } from "@mantine/core";
 import { CalendarDotsIcon } from "@phosphor-icons/react";
+import { lazy, Suspense } from "react";
 
 const MonthlyStatsChart = lazy(() => import("./MonthlyStatsChart"));
 

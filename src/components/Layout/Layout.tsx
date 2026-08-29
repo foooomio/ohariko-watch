@@ -1,18 +1,11 @@
-import {
-  AppShell,
-  Burger,
-  Container,
-  Group,
-  Stack,
-  useMantineTheme,
-} from "@mantine/core";
+import { AppShell, Burger, Container, Group, Stack, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { ErrorBoundary } from "react-error-boundary";
 import type { ReactNode } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
+import { Footer } from "./Footer";
 import { HeaderTitle } from "./HeaderTitle";
 import { LinkButton } from "./LinkButton";
-import { Footer } from "./Footer";
 import { links } from "./links";
 
 interface Props {

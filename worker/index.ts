@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { bearerAuth } from "hono/bearer-auth";
-import { extractPost } from "./services/extractPost";
+
+import { insertPost, listPosts } from "./db/posts";
 import { buildPostsData } from "./services/buildPostsData";
 import { buildStreaksData } from "./services/buildStreaksData";
-import { insertPost, listPosts } from "./db/posts";
+import { extractPost } from "./services/extractPost";
 import { putStatsJson } from "./storage/stats";
 
 import "temporal-polyfill-lite/global";
@@ -52,8 +53,7 @@ app.get("/assets/*", async (c) => {
     return c.notFound();
   }
   return c.body(object.body, 200, {
-    "Content-Type":
-      object.httpMetadata?.contentType ?? "application/octet-stream",
+    "Content-Type": object.httpMetadata?.contentType ?? "application/octet-stream",
   });
 });
 

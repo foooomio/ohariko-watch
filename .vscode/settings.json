@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "files.associations": {
     ".dev.vars*": "dotenv"
   },
@@ -22,6 +22,7 @@
     "mantine",
     "Nums",
     "ohariko",
+    "oxfmt",
     "Shigariko",
     "VITE"
   ]

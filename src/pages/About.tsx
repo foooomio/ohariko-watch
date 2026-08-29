@@ -29,9 +29,7 @@ export function About() {
           <Title order={2} size="h4">
             データについて
           </Title>
-          <Text>
-            データは手動更新のため、反映まで時間がかかる場合があります。
-          </Text>
+          <Text>データは手動更新のため、反映まで時間がかかる場合があります。</Text>
           <Text>
             このサイトのデータは、
             <Anchor href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">
@@ -74,9 +72,7 @@ export function About() {
           </Text>
           <Text>
             このサイトの
-            <Anchor href="https://github.com/foooomio/ohariko-watch">
-              ソースコード
-            </Anchor>
+            <Anchor href="https://github.com/foooomio/ohariko-watch">ソースコード</Anchor>
             は、MITライセンスのもと公開しています。
           </Text>
         </Stack>

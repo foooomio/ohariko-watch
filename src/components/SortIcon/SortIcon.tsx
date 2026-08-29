@@ -1,8 +1,5 @@
-import {
-  CaretDownIcon,
-  CaretUpDownIcon,
-  CaretUpIcon,
-} from "@phosphor-icons/react";
+import { CaretDownIcon, CaretUpDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+
 import type { SortOption } from "~/shared/types/sortedBy";
 
 interface Props<T> {

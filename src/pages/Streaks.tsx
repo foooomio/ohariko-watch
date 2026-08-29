@@ -1,5 +1,6 @@
-import { useEffect, useState, useTransition } from "react";
 import { Card, Stack, Title } from "@mantine/core";
+import { useEffect, useState, useTransition } from "react";
+
 import { StreaksTable } from "@/components/StreaksTable";
 
 export function Streaks() {

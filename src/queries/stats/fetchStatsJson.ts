@@ -1,8 +1,5 @@
-import type {
-  StatsJson,
-  StatsJsonName,
-  StatsValueMap,
-} from "~/shared/types/json";
+import type { StatsJson, StatsJsonName, StatsValueMap } from "~/shared/types/json";
+
 import { reviver } from "./reviver";
 
 const { VITE_ASSETS_BASE_URL } = import.meta.env;

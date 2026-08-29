@@ -1,7 +1,9 @@
 import { Card, Group, Title } from "@mantine/core";
-import { TodaysPostCondition } from "./TodaysPostCondition";
 import { useQuery } from "@tanstack/react-query";
+
 import { postsOptions } from "@/queries/stats";
+
+import { TodaysPostCondition } from "./TodaysPostCondition";
 
 export function TodaysPost() {
   const { data } = useQuery({

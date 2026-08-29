@@ -1,5 +1,6 @@
 import { Group, HoverCard, Text, useMantineTheme } from "@mantine/core";
 import { ArrowSquareOutIcon, InfoIcon } from "@phosphor-icons/react";
+
 import type { Post } from "~/shared/types/stats";
 
 interface Props {
@@ -29,13 +30,8 @@ export function TodaysPostCondition({ latestPost }: Props) {
           <HoverCard.Target>
             <InfoIcon size={24} style={{ cursor: "pointer", padding: "2px" }} />
           </HoverCard.Target>
-          <HoverCard.Dropdown
-            maw="80vw"
-            style={{ borderColor: theme.colors.brown[1] }}
-          >
-            <Text size="sm">
-              手動更新のため反映まで時間がかかる場合があります。
-            </Text>
+          <HoverCard.Dropdown maw="80vw" style={{ borderColor: theme.colors.brown[1] }}>
+            <Text size="sm">手動更新のため反映まで時間がかかる場合があります。</Text>
           </HoverCard.Dropdown>
         </HoverCard>
       </Group>

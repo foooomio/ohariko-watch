@@ -1,5 +1,6 @@
 import { Anchor, Card, Stack, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+
 import { postsOptions } from "@/queries/stats";
 
 export function Footer() {
@@ -21,9 +22,7 @@ export function Footer() {
 
         <Text size="xs" c="brown.8">
           このサイトのデータは
-          <Anchor href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">
-            CC0 1.0
-          </Anchor>
+          <Anchor href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">CC0 1.0</Anchor>
           ライセンスのもと自由にご使用いただけます。
         </Text>
 
