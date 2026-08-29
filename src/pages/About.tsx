@@ -77,6 +77,15 @@ export function About() {
           </Text>
         </Stack>
       </Card>
+
+      <Card>
+        <Stack>
+          <Title order={2} size="h4">
+            著作権表示
+          </Title>
+          <Anchor href="/license.md">使用しているライブラリのライセンス</Anchor>
+        </Stack>
+      </Card>
     </>
   );
 }
