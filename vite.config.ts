@@ -17,4 +17,9 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  build: {
+    license: {
+      fileName: "license.md",
+    },
+  },
 });
