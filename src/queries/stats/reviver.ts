@@ -1,6 +1,4 @@
-import type { StatsJsonName } from "~/shared/types/json";
-
-function postsReviver(key: string, value: any): any {
+export function postsReviver(key: string, value: any): any {
   if (value === null) {
     return value;
   }
@@ -18,7 +16,7 @@ function postsReviver(key: string, value: any): any {
   }
 }
 
-function streaksReviver(key: string, value: any): any {
+export function streaksReviver(key: string, value: any): any {
   switch (key) {
     case "startDate":
     case "endDate":
@@ -27,14 +25,5 @@ function streaksReviver(key: string, value: any): any {
       return Temporal.ZonedDateTime.from(value);
     default:
       return value;
-  }
-}
-
-export function reviver(name: StatsJsonName): (key: string, value: any) => any {
-  switch (name) {
-    case "posts":
-      return postsReviver;
-    case "streaks":
-      return streaksReviver;
   }
 }
