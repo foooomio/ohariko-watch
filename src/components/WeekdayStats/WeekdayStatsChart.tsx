@@ -20,7 +20,7 @@ export default function WeekdayStatsChart({ color }: Props) {
   const { data } = useSuspenseQuery({
     queryKey: postsOptions.queryKey.concat("buildWeekdayStats"),
     queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
+      const data = await client.query({ ...postsOptions, staleTime: "static" });
       return buildWeekdayStats(data.payload);
     },
   });

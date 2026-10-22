@@ -10,8 +10,8 @@ interface Context {
 
 export const Route = createRootRouteWithContext<Context>()({
   loader: ({ context }) => {
-    context.queryClient.ensureQueryData(postsOptions);
-    context.queryClient.ensureQueryData(streaksOptions);
+    context.queryClient.query({ ...postsOptions, staleTime: "static" });
+    context.queryClient.query({ ...streaksOptions, staleTime: "static" });
   },
   component: RouteComponent,
 });

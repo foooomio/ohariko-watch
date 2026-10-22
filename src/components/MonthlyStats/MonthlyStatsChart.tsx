@@ -20,7 +20,7 @@ export default function MonthlyStatsChart({ color }: Props) {
   const { data } = useSuspenseQuery({
     queryKey: postsOptions.queryKey.concat("buildMonthlyStats"),
     queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
+      const data = await client.query({ ...postsOptions, staleTime: "static" });
       return buildMonthlyStats(data.payload);
     },
   });
