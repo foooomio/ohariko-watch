@@ -32,21 +32,21 @@ export default function PostingTimeScatterChart({ color }: Props) {
       {
         queryKey: postsOptions.queryKey.concat("buildScatterData"),
         queryFn: async ({ client }) => {
-          const data = await client.ensureQueryData(postsOptions);
+          const data = await client.query({ ...postsOptions, staleTime: "static" });
           return buildScatterData(data.payload);
         },
       },
       {
         queryKey: postsOptions.queryKey.concat("buildGaussianSmoothData"),
         queryFn: async ({ client }) => {
-          const data = await client.ensureQueryData(postsOptions);
+          const data = await client.query({ ...postsOptions, staleTime: "static" });
           return buildGaussianSmoothData(data.payload, 7);
         },
       },
       {
         queryKey: postsOptions.queryKey.concat("scatterChart", "startValue"),
         queryFn: async ({ client }) => {
-          const data = await client.ensureQueryData(postsOptions);
+          const data = await client.query({ ...postsOptions, staleTime: "static" });
           return data.payload.at(-180)?.date.toZonedDateTime("UTC").epochMilliseconds;
         },
       },

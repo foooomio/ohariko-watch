@@ -16,7 +16,7 @@ export function Summary() {
   const { data: recent } = useQuery({
     queryKey: postsOptions.queryKey.concat("buildSummaryData", "recent"),
     queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
+      const data = await client.query({ ...postsOptions, staleTime: "static" });
       return buildSummaryData(data.payload.slice(-30));
     },
   });
@@ -24,7 +24,7 @@ export function Summary() {
   const { data: previous } = useQuery({
     queryKey: postsOptions.queryKey.concat("buildSummaryData", "previous"),
     queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
+      const data = await client.query({ ...postsOptions, staleTime: "static" });
       return buildSummaryData(data.payload.slice(-60, -30));
     },
   });

@@ -18,7 +18,7 @@ export default function PostingTimeHistogramChart({ color }: Props) {
   const { data } = useSuspenseQuery({
     queryKey: postsOptions.queryKey.concat("buildHistogramData"),
     queryFn: async ({ client }) => {
-      const data = await client.ensureQueryData(postsOptions);
+      const data = await client.query({ ...postsOptions, staleTime: "static" });
       return buildHistogramData(data.payload);
     },
   });
